@@ -1,5 +1,4 @@
 import { FormIcon, StepForwardIcon } from "lucide-react"
-import { motion } from "motion/react"
 import { type SubmitEvent } from "react"
 
 import { Badge } from "@/components/ui/badge"
@@ -14,12 +13,7 @@ export default function EntrancePage() {
   }
 
   return (
-    <motion.form
-      animate={{ opacity: 1, y: 0 }}
-      className="flex h-dvh items-center justify-center"
-      initial={{ opacity: 0, y: 50 }}
-      onSubmit={handleSubmit}
-    >
+    <form className="flex h-dvh items-center justify-center" onSubmit={handleSubmit}>
       <Card className="z-10 w-96">
         <CardHeader>
           <CardTitle>
@@ -47,6 +41,6 @@ export default function EntrancePage() {
           </Button>
         </CardFooter>
       </Card>
-    </motion.form>
+    </form>
   )
 }
