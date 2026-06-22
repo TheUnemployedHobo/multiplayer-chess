@@ -1,5 +1,4 @@
 import { ArrowBigLeftIcon, LogInIcon, SquareMousePointerIcon } from "lucide-react"
-import { motion } from "motion/react"
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -11,11 +10,7 @@ import avatars from "@/lib/avatars"
 
 export default function EntranceAvatarChoosing() {
   return (
-    <motion.section
-      animate={{ opacity: 1, y: 0 }}
-      className="flex h-dvh items-center justify-center"
-      initial={{ opacity: 0, y: 50 }}
-    >
+    <section className="flex h-dvh items-center justify-center">
       <Card className="z-10 w-96">
         <CardHeader>
           <CardTitle>
@@ -61,6 +56,6 @@ export default function EntranceAvatarChoosing() {
           </Button>
         </CardFooter>
       </Card>
-    </motion.section>
+    </section>
   )
 }
