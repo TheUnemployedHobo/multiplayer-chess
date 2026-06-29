@@ -1,4 +1,5 @@
 import { ArrowBigLeftIcon, LogInIcon, SquareMousePointerIcon } from "lucide-react"
+import { useLocation } from "wouter"
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -8,7 +9,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import avatars from "@/lib/avatars"
 
-export default function EntranceAvatarChoosing() {
+export default function EntranceAvatarChoosingPage() {
+  const [, setLocation] = useLocation()
+
+  const handleEnter = () => {
+    const username = history.state.username
+    const password = history.state.password
+
+    console.log(username, password)
+
+    history.replaceState(null, "")
+  }
+
+  const handleBack = () => setLocation("/entrance/register", { replace: true })
+
   return (
     <section className="flex h-dvh items-center justify-center">
       <Card className="z-10 w-96">
@@ -46,13 +60,13 @@ export default function EntranceAvatarChoosing() {
           </Popover>
         </CardContent>
         <CardFooter className="gap-x-3">
-          <Button className="grow" size="lg" type="submit" variant="secondary">
+          <Button className="grow" onClick={handleBack} size="lg" type="submit" variant="secondary">
             <ArrowBigLeftIcon />
-            Back
+            <span>Back</span>
           </Button>
-          <Button className="grow" size="lg" type="submit" variant="default">
+          <Button className="grow" onClick={handleEnter} size="lg" type="submit" variant="default">
             <LogInIcon />
-            Enter
+            <span>Enter</span>
           </Button>
         </CardFooter>
       </Card>
