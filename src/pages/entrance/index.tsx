@@ -20,7 +20,7 @@ export default function EntrancePage() {
   const [page, setPage] = useState<1 | 2 | 3 | 4>(1)
   const [, setLocation] = useLocation()
 
-  const handleFormOneAction = async (formData: FormData) => {
+  const handleFirstFormAction = async (formData: FormData) => {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
 
@@ -32,7 +32,7 @@ export default function EntrancePage() {
     } else toast.error("Login failed", { description: "Please check your username and password and try again." })
   }
 
-  const handleFormTwoAction = (formData: FormData) => {
+  const handleSecondFormAction = (formData: FormData) => {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
     const repass = formData.get("re-pass") as string
@@ -43,12 +43,12 @@ export default function EntrancePage() {
     } else toast.error("Passwords do not match", { description: "Please re-enter the same password in both fields." })
   }
 
-  const handleFormThreeAction = (formData: FormData) => {
+  const handleThirdFormAction = (formData: FormData) => {
     setInfo((p) => ({ ...p, avatar: formData.get("avatar") as string }))
     setPage(4)
   }
 
-  const handleFormFourAction = async (formData: FormData) => {
+  const handleFourthFormAction = async (formData: FormData) => {
     const elo = formData.get("elo") as string
     const statusCode = await register(info.username, info.password, info.avatar, +elo)
 
@@ -59,8 +59,8 @@ export default function EntrancePage() {
     else toast.error("Registration failed", { description: "An error occurred during registration. Please try again." })
   }
 
-  if (page === 1) return <EntranceLogInForm handleAction={handleFormOneAction} setPage={setPage} />
-  if (page === 2) return <EntranceRegisterForm handleAction={handleFormTwoAction} setPage={setPage} />
-  if (page === 3) return <EntranceAvatarForm handleAction={handleFormThreeAction} />
-  if (page === 4) return <EntranceEloRatingForm handleAction={handleFormFourAction} />
+  if (page === 1) return <EntranceLogInForm handleAction={handleFirstFormAction} setPage={setPage} />
+  if (page === 2) return <EntranceRegisterForm handleAction={handleSecondFormAction} setPage={setPage} />
+  if (page === 3) return <EntranceAvatarForm handleAction={handleThirdFormAction} />
+  if (page === 4) return <EntranceEloRatingForm handleAction={handleFourthFormAction} />
 }
