@@ -4,7 +4,7 @@ import { Chessboard, type PieceDropHandlerArgs, type SquareHandlerArgs } from "r
 
 import useChessStore from "@/hooks/use-chess-store"
 
-function PlayBoardPlank() {
+export default function PlayBoardPlank() {
   const position = useChessStore((s) => s.position)
   const squareStyles = useChessStore((s) => s.squareStyles)
   const selectedSquare = useChessStore((s) => s.selectedSquare)
@@ -39,5 +39,3 @@ function PlayBoardPlank() {
     </div>
   )
 }
-
-export default PlayBoardPlank
