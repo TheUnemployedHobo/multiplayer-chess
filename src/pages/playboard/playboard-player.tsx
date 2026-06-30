@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
 
-function PlayBoardPlayer() {
+export default function PlayBoardPlayer() {
   return (
     <Item variant="muted">
       <ItemMedia>
@@ -23,5 +23,3 @@ function PlayBoardPlayer() {
     </Item>
   )
 }
-
-export default PlayBoardPlayer
