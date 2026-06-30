@@ -4,8 +4,8 @@ import { useLocation } from "wouter"
 
 import { logIn, register } from "@/lib/services"
 
-import EntranceLogInPage from "./entrance-login-form"
-import EntranceAvatarPage from "./entrance-register-avatar"
+import EntranceAvatarForm from "./entrance-avatar-form"
+import EntranceLogInForm from "./entrance-login-form"
 import EntranceRegisterForm from "./entrance-register-form"
 
 export type EntranceFormPropsType = {
@@ -48,7 +48,7 @@ export default function EntrancePage() {
     } else toast.error("Registration failed", { description: "Please try again in a moment." })
   }
 
-  if (page === 1) return <EntranceLogInPage handleAction={handlePageOneAction} setPage={setPage} />
+  if (page === 1) return <EntranceLogInForm handleAction={handlePageOneAction} setPage={setPage} />
   if (page === 2) return <EntranceRegisterForm handleAction={handlePageTwoAction} setPage={setPage} />
-  if (page === 3) return <EntranceAvatarPage handleAction={handlePageThreeAction} />
+  if (page === 3) return <EntranceAvatarForm handleAction={handlePageThreeAction} />
 }
