@@ -2,14 +2,13 @@ import { Route, Switch } from "wouter"
 
 import { ThemeProvider } from "@/components/theme-provider"
 
-import EntranceAvatarChoosingPage from "./pages/entrance/entrance-avatar-choosing"
-import EntranceEnterPage from "./pages/entrance/entrance-enter"
+import { Toaster } from "./components/ui/sonner"
 import EntranceRegisterPage from "./pages/entrance/entrance-register"
+import EntranceSignInPage from "./pages/entrance/entrance-sign-in"
 
 const routes = [
   { component: EntranceRegisterPage, path: "/entrance/register" },
-  { component: EntranceAvatarChoosingPage, path: "/entrance/avatar-choosing" },
-  { component: EntranceEnterPage, path: "/entrance/enter" },
+  { component: EntranceSignInPage, path: "/entrance/sign-in" },
   { component: () => <>404: Page not found</>, path: undefined },
 ]
 
@@ -21,6 +20,7 @@ export default function App() {
           <Route key={path} {...{ component, path }} />
         ))}
       </Switch>
+      <Toaster position="bottom-right" />
     </ThemeProvider>
   )
 }
