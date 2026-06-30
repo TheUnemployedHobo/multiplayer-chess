@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label"
 
 import type { EntranceFormPropsType } from "."
 
-export default function EntranceLogInPage({ handleAction, setPage }: EntranceFormPropsType) {
+export default function EntranceLogInForm({ handleAction, setPage }: EntranceFormPropsType) {
   return (
     <form action={handleAction} className="flex h-dvh items-center justify-center">
       <Card className="z-10 mx-5 w-96">
