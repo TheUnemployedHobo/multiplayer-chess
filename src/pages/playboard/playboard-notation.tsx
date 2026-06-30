@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-function PlayBoardNotation() {
+export default function PlayBoardNotation() {
   return (
     <Card className="grow">
       <CardHeader>
@@ -11,5 +11,3 @@ function PlayBoardNotation() {
     </Card>
   )
 }
-
-export default PlayBoardNotation
