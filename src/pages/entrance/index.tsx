@@ -49,13 +49,13 @@ export default function EntrancePage() {
   }
 
   const handleFormFourAction = async (formData: FormData) => {
-    if (await register(info.username, info.password, info.avatar)) {
-      setLocation("/entrance/login")
+    const elo = formData.get("elo") as string
+
+    if (await register(info.username, info.password, info.avatar, +elo)) {
+      setPage(1)
       toast.success("Account created successfully", { description: "You can now log in with your credentials." })
     } else toast.error("Registration failed", { description: "Please try again in a moment." })
   }
-
-  console.log(info)
 
   if (page === 1) return <EntranceLogInForm handleAction={handleFormOneAction} setPage={setPage} />
   if (page === 2) return <EntranceRegisterForm handleAction={handleFormTwoAction} setPage={setPage} />
