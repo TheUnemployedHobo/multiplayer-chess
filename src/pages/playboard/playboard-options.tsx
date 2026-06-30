@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-function PlayBoardOptions() {
+export default function PlayBoardOptions() {
   return (
     <Card>
       <CardHeader>
@@ -26,5 +26,3 @@ function PlayBoardOptions() {
     </Card>
   )
 }
-
-export default PlayBoardOptions
