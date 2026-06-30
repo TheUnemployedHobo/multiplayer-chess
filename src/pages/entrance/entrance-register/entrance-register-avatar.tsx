@@ -40,14 +40,15 @@ export default function EntranceAvatarPage({ handleFn }: PropsType) {
               </Avatar>
             </PopoverTrigger>
             <PopoverContent>
-              <ToggleGroup className="flex flex-wrap justify-between" type="single" variant="outline">
+              <ToggleGroup
+                className="flex flex-wrap justify-between"
+                onValueChange={(value) => value && setAvatar(avatars.find(({ name }) => name === value)!)}
+                type="single"
+                value={avatar.name}
+                variant="outline"
+              >
                 {avatars.map((each) => (
-                  <ToggleGroupItem
-                    className="size-14 rounded-full p-0"
-                    key={each.name}
-                    onClick={() => setAvatar(each)}
-                    value={each.name}
-                  >
+                  <ToggleGroupItem className="size-14 rounded-full p-0" key={each.name} value={each.name}>
                     <Avatar size="lg">
                       <AvatarImage alt={each.name} src={each.svgSrc} />
                     </Avatar>
