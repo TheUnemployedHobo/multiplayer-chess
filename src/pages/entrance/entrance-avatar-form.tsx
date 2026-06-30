@@ -1,4 +1,4 @@
-import { SquareMousePointerIcon, UserRoundPlusIcon } from "lucide-react"
+import { SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
 import { useState } from "react"
 
 import SubmitButton from "@/components/submit-button"
@@ -14,13 +14,8 @@ import type { EntranceFormPropsType } from "."
 export default function EntranceAvatarForm({ handleAction }: Omit<EntranceFormPropsType, "setPage">) {
   const [avatar, setAvatar] = useState(avatars.at(0)!)
 
-  const handleEnter = async (formData: FormData) => {
-    formData.set("avatar", avatar.name)
-    await handleAction(formData)
-  }
-
   return (
-    <form action={handleEnter} className="flex h-dvh items-center justify-center">
+    <form action={handleAction} className="flex h-dvh items-center justify-center">
       <Card className="z-10 mx-5 w-96">
         <CardHeader>
           <CardTitle>
@@ -62,9 +57,10 @@ export default function EntranceAvatarForm({ handleAction }: Omit<EntranceFormPr
           </Popover>
         </CardContent>
         <CardFooter>
-          <SubmitButton icon={<UserRoundPlusIcon />} text="Register" />
+          <SubmitButton icon={<StepForwardIcon />} text="Continue" />
         </CardFooter>
       </Card>
+      <input name="avatar" type="hidden" value={avatar.name} />
     </form>
   )
 }
