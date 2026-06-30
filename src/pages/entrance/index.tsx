@@ -50,11 +50,13 @@ export default function EntrancePage() {
 
   const handleFormFourAction = async (formData: FormData) => {
     const elo = formData.get("elo") as string
+    const statusCode = await register(info.username, info.password, info.avatar, +elo)
 
-    if (await register(info.username, info.password, info.avatar, +elo)) {
+    if (statusCode === 201) {
       setPage(1)
       toast.success("Account created successfully", { description: "You can now log in with your credentials." })
-    } else toast.error("Registration failed", { description: "Please try again in a moment." })
+    } else if (statusCode === 409) toast.error("Registration failed", { description: "Username already exists." })
+    else toast.error("Registration failed", { description: "An error occurred during registration. Please try again." })
   }
 
   if (page === 1) return <EntranceLogInForm handleAction={handleFormOneAction} setPage={setPage} />
