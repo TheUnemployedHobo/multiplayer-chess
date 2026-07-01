@@ -61,6 +61,6 @@ export default function EntrancePage() {
 
   if (page === 1) return <EntranceLogInForm handleAction={handleFirstFormAction} setPage={setPage} />
   if (page === 2) return <EntranceRegisterForm handleAction={handleSecondFormAction} setPage={setPage} />
-  if (page === 3) return <EntranceAvatarForm handleAction={handleThirdFormAction} />
-  if (page === 4) return <EntranceEloRatingForm handleAction={handleFourthFormAction} />
+  if (page === 3) return <EntranceAvatarForm handleAction={handleThirdFormAction} setPage={setPage} />
+  if (page === 4) return <EntranceEloRatingForm handleAction={handleFourthFormAction} setPage={setPage} />
 }
