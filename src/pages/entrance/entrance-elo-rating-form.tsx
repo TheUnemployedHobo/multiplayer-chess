@@ -68,7 +68,7 @@ export default function EntranceEloRatingForm({ handleAction, setPage }: Entranc
           </ToggleGroup>
         </CardContent>
         <CardFooter className="gap-x-2">
-          <Button className="grow" onClick={() => setPage(3)} size="lg">
+          <Button className="grow" onClick={() => setPage(3)} size="lg" type="button">
             <ArrowLeftIcon />
             <span>Go back</span>
           </Button>
