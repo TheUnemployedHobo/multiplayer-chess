@@ -1,15 +1,17 @@
 import { SquareMousePointerIcon } from "lucide-react"
 import { useState } from "react"
 
-import avatars, { type AvatarType, findAvatarByName } from "@/lib/avatars"
+import avatars, { type AvatarNameType, findAvatarByName } from "@/lib/avatars"
 
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 
-export default function AvatarPopover() {
-  const [avatar, setAvatar] = useState(avatars.at(0)!)
+type PropsType = { defaultAvatarName?: AvatarNameType }
+
+export default function AvatarPopover({ defaultAvatarName }: PropsType) {
+  const [avatar, setAvatar] = useState(defaultAvatarName ? findAvatarByName(defaultAvatarName)! : avatars.at(0)!)
 
   return (
     <>
@@ -26,7 +28,7 @@ export default function AvatarPopover() {
         <PopoverContent>
           <ToggleGroup
             className="flex flex-wrap justify-between"
-            onValueChange={(value: AvatarType["name"]) => value && setAvatar(findAvatarByName(value)!)}
+            onValueChange={(value: AvatarNameType) => value && setAvatar(findAvatarByName(value)!)}
             type="single"
             value={avatar.name}
             variant="outline"
