@@ -58,7 +58,7 @@ export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFo
           </Popover>
         </CardContent>
         <CardFooter className="gap-x-2">
-          <Button className="grow" onClick={() => setPage(2)} size="lg">
+          <Button className="grow" onClick={() => setPage(2)} size="lg" type="button">
             <ArrowLeftIcon />
             <span>Go back</span>
           </Button>
