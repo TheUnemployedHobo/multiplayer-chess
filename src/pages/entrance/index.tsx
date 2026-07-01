@@ -24,12 +24,15 @@ export default function EntrancePage() {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
 
-    const token = await logIn(username, password)
-    if (token) {
-      setLocation("/dashboard")
+    const response = await logIn(username, password)
+
+    if (response.status === 200) {
+      const token = await response.text()
       Cookie.set("jwt", token, { expires: 30 })
+      setLocation("/dashboard")
       toast.success("Login successful", { description: "Welcome back!" })
-    } else toast.error("Login failed", { description: "Please check your username and password and try again." })
+    } else if (response.status === 401) toast.error("Login failed", { description: "Invalid username or password." })
+    else toast.error("Login failed", { description: "An error occurred during login. Please try again." })
   }
 
   const handleSecondFormAction = (formData: FormData) => {
@@ -50,12 +53,12 @@ export default function EntrancePage() {
 
   const handleFourthFormAction = async (formData: FormData) => {
     const elo = formData.get("elo") as string
-    const statusCode = await register(info.username, info.password, info.avatar, +elo)
+    const response = await register(info.username, info.password, info.avatar, +elo)
 
-    if (statusCode === 201) {
+    if (response.status === 201) {
       setPage(1)
       toast.success("Account created successfully", { description: "You can now log in with your credentials." })
-    } else if (statusCode === 409) toast.error("Registration failed", { description: "Username already exists." })
+    } else if (response.status === 409) toast.error("Registration failed", { description: "Username already exists." })
     else toast.error("Registration failed", { description: "An error occurred during registration. Please try again." })
   }
 
