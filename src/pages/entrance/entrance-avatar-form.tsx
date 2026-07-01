@@ -1,9 +1,10 @@
-import { SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
+import { ArrowLeftIcon, SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
 import { useState } from "react"
 
 import SubmitButton from "@/components/submit-button"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
@@ -11,7 +12,7 @@ import avatars from "@/lib/avatars"
 
 import type { EntranceFormPropsType } from "."
 
-export default function EntranceAvatarForm({ handleAction }: Omit<EntranceFormPropsType, "setPage">) {
+export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFormPropsType) {
   const [avatar, setAvatar] = useState(avatars.at(0)!)
 
   return (
@@ -56,7 +57,11 @@ export default function EntranceAvatarForm({ handleAction }: Omit<EntranceFormPr
             </PopoverContent>
           </Popover>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="gap-x-2">
+          <Button className="grow" onClick={() => setPage(2)} size="lg">
+            <ArrowLeftIcon />
+            <span>Go back</span>
+          </Button>
           <SubmitButton icon={<StepForwardIcon />} text="Continue" />
         </CardFooter>
       </Card>
