@@ -1,8 +1,9 @@
-import { FormIcon, UserRoundPlusIcon } from "lucide-react"
+import { ArrowLeftIcon, FormIcon, UserRoundPlusIcon } from "lucide-react"
 import { useState } from "react"
 
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -31,7 +32,7 @@ const eloTiers = [
   },
 ]
 
-export default function EntranceEloRatingForm({ handleAction }: Omit<EntranceFormPropsType, "setPage">) {
+export default function EntranceEloRatingForm({ handleAction, setPage }: EntranceFormPropsType) {
   const [elo, setElo] = useState(eloTiers.at(0)!.elo)
 
   return (
@@ -66,7 +67,11 @@ export default function EntranceEloRatingForm({ handleAction }: Omit<EntranceFor
             ))}
           </ToggleGroup>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="gap-x-2">
+          <Button className="grow" onClick={() => setPage(3)} size="lg">
+            <ArrowLeftIcon />
+            <span>Go back</span>
+          </Button>
           <SubmitButton icon={<UserRoundPlusIcon />} text="Register" />
         </CardFooter>
       </Card>
