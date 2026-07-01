@@ -22,7 +22,7 @@ export default function EntranceRegisterForm({ handleAction, setPage }: Entrance
           </CardTitle>
           <CardDescription>Fill in the form below to get started</CardDescription>
           <CardAction>
-            <Button onClick={() => setPage(1)} variant="ghost">
+            <Button onClick={() => setPage(1)} type="button" variant="ghost">
               Log In
             </Button>
           </CardAction>
