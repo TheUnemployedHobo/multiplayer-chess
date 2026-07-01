@@ -22,7 +22,7 @@ export default function EntranceLogInForm({ handleAction, setPage }: EntranceFor
           </CardTitle>
           <CardDescription>Enter your credentials to access your account</CardDescription>
           <CardAction>
-            <Button onClick={() => setPage(2)} variant="ghost">
+            <Button onClick={() => setPage(2)} type="button" variant="ghost">
               Register
             </Button>
           </CardAction>
