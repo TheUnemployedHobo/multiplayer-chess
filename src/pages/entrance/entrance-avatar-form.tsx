@@ -1,20 +1,14 @@
 import { ArrowLeftIcon, SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
-import { useState } from "react"
 
+import AvatarPopover from "@/components/avatar-popover"
 import SubmitButton from "@/components/submit-button"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import avatars from "@/lib/avatars"
 
 import type { EntranceFormPropsType } from "."
 
 export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFormPropsType) {
-  const [avatar, setAvatar] = useState(avatars.at(0)!)
-
   return (
     <form action={handleAction} className="flex h-dvh items-center justify-center">
       <Card className="z-10 mx-5 w-96">
@@ -28,34 +22,7 @@ export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFo
           <CardDescription>Choose an avatar as your profile picture</CardDescription>
         </CardHeader>
         <CardContent className="flex items-center justify-center">
-          <Popover>
-            <PopoverTrigger>
-              <Avatar className="ring-secondary relative size-24 cursor-pointer ring-4">
-                <AvatarImage alt="@shadcn" className="size-full" src={avatar.svgSrc} />
-                <Badge className="absolute -right-3 -bottom-1" variant="secondary">
-                  <SquareMousePointerIcon />
-                  <span>Pick</span>
-                </Badge>
-              </Avatar>
-            </PopoverTrigger>
-            <PopoverContent>
-              <ToggleGroup
-                className="flex flex-wrap justify-between"
-                onValueChange={(value) => value && setAvatar(avatars.find(({ name }) => name === value)!)}
-                type="single"
-                value={avatar.name}
-                variant="outline"
-              >
-                {avatars.map((each) => (
-                  <ToggleGroupItem className="size-14 rounded-full p-0" key={each.name} value={each.name}>
-                    <Avatar size="lg">
-                      <AvatarImage alt={each.name} src={each.svgSrc} />
-                    </Avatar>
-                  </ToggleGroupItem>
-                ))}
-              </ToggleGroup>
-            </PopoverContent>
-          </Popover>
+          <AvatarPopover />
         </CardContent>
         <CardFooter className="gap-x-2">
           <Button className="grow" onClick={() => setPage(2)} size="lg" type="button">
@@ -65,7 +32,6 @@ export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFo
           <SubmitButton icon={<StepForwardIcon />} text="Continue" />
         </CardFooter>
       </Card>
-      <input name="avatar" type="hidden" value={avatar.name} />
     </form>
   )
 }
