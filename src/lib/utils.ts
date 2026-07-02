@@ -2,6 +2,7 @@ import type { CSSProperties } from "react"
 
 import { type Chess, SQUARES } from "chess.js"
 import { type ClassValue, clsx } from "clsx"
+import Cookies from "js-cookie"
 import { twMerge } from "tailwind-merge"
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
@@ -19,3 +20,5 @@ export const getCheckStyle = (chess: Chess): Record<string, CSSProperties> => {
 
   return { [kingSquare]: { background: "rgba(255, 0, 0, 0.5)" } }
 }
+
+export const isAuthenticated = () => Boolean(Cookies.get("jwt"))
