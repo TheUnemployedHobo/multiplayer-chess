@@ -1,9 +1,9 @@
-import Cookies from "js-cookie"
 import { type Dispatch, type SetStateAction, useState } from "react"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
 
 import { logIn, register } from "@/lib/services"
+import { jwtCookie } from "@/lib/utils"
 
 import EntranceAvatarForm from "./entrance-avatar-form"
 import EntranceEloRatingForm from "./entrance-elo-rating-form"
@@ -28,7 +28,7 @@ export default function EntrancePage() {
 
     if (response.status === 200) {
       const token = await response.text()
-      Cookies.set("jwt", token, { expires: 30 })
+      jwtCookie.set(token)
       setLocation("/dashboard")
       toast.success("Login successful", { description: "Welcome back!" })
     } else if (response.status === 401) toast.error("Login failed", { description: "Invalid username or password." })
