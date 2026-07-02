@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import useBreakPoint from "@/hooks/use-break-point"
 
 export default function ProfileEditPopover() {
+  const { md } = useBreakPoint()
+
   const handleAction = async (formData: FormData) => {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
@@ -25,9 +28,9 @@ export default function ProfileEditPopover() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="secondary">
+        <Button size={md ? "default" : "icon-lg"} variant="secondary">
           <UserRoundPenIcon />
-          <span>Edit profile</span>
+          {md && <span>Edit profile</span>}
         </Button>
       </DialogTrigger>
       <DialogContent>
