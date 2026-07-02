@@ -1,4 +1,4 @@
-import { Activity, type ComponentPropsWithRef, type ReactNode } from "react"
+import { type ComponentPropsWithRef, type ReactNode } from "react"
 import { useFormStatus } from "react-dom"
 
 import { cn } from "@/lib/utils"
@@ -18,9 +18,7 @@ export default function SubmitButton({ icon, text, ...props }: PropsType) {
     <Button className={cn("grow", props.className)} disabled={pending} size="lg" type="submit" {...props}>
       {icon}
       <span>{text}</span>
-      <Activity mode={pending ? "visible" : "hidden"}>
-        <Spinner />
-      </Activity>
+      {pending && <Spinner />}
     </Button>
   )
 }
