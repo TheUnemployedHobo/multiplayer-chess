@@ -9,7 +9,7 @@ import App from "./app"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ErrorBoundary fallback={<p>Shit happens bro...</p>}>
+    <ErrorBoundary>
       <App />
     </ErrorBoundary>
   </StrictMode>,
