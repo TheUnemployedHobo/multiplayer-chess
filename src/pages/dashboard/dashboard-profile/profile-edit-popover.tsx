@@ -41,11 +41,11 @@ export default function ProfileEditPopover() {
           <AvatarPopover />
           <div className="w-full space-y-2">
             <Label htmlFor="un">Username</Label>
-            <Input id="un" name="username" placeholder="e.g. admin" type="text" />
+            <Input autoComplete="username" id="un" name="username" placeholder="e.g. admin" type="text" />
           </div>
           <div className="w-full space-y-2">
             <Label htmlFor="pw">Password</Label>
-            <Input id="pw" name="password" placeholder="e.g. 1234" type="password" />
+            <Input autoComplete="new-password" id="pw" name="password" placeholder="e.g. 1234" type="password" />
           </div>
           <Button className="w-full" size="lg" type="button" variant="destructive">
             <Trash2Icon />
