@@ -21,4 +21,10 @@ export const getCheckStyle = (chess: Chess): Record<string, CSSProperties> => {
   return { [kingSquare]: { background: "rgba(255, 0, 0, 0.5)" } }
 }
 
-export const isAuthenticated = () => Boolean(Cookies.get("jwt"))
+export const jwtCookie = {
+  get: () => Cookies.get("jwt") ?? null,
+  remove: () => Cookies.remove("jwt"),
+  set: (token: string) => Cookies.set("jwt", token, { expires: 30 }),
+}
+
+export const isAuthenticated = () => Boolean(jwtCookie.get())
