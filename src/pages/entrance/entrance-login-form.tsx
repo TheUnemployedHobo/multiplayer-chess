@@ -30,11 +30,18 @@ export default function EntranceLogInForm({ handleAction, setPage }: EntranceFor
         <CardContent className="space-y-5">
           <div className="space-y-2">
             <Label htmlFor="un">Username</Label>
-            <Input id="un" name="username" placeholder="e.g. admin" required type="text" />
+            <Input autoComplete="username" id="un" name="username" placeholder="e.g. admin" required type="text" />
           </div>
           <div className="space-y-2">
             <Label htmlFor="pw">Password</Label>
-            <Input id="pw" name="password" placeholder="e.g. 1234" required type="password" />
+            <Input
+              autoComplete="current-password"
+              id="pw"
+              name="password"
+              placeholder="e.g. 1234"
+              required
+              type="password"
+            />
           </div>
         </CardContent>
         <CardFooter>
