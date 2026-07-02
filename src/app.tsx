@@ -1,28 +1,36 @@
-import { Redirect, Route, Switch } from "wouter"
+import { Route, Switch } from "wouter"
 
 import { ThemeProvider } from "@/components/theme-provider"
 
-import { ProtectedRoute, PublicOnlyRoute } from "./components/route-protection"
+import { DefaultPage, ProtectedPage, PublicOnlyPage } from "./components/page-protection"
+import ScreenSpinner from "./components/screen-spinner"
 import { Toaster } from "./components/ui/sonner"
-import { isAuthenticated } from "./lib/utils"
+import useFetchFn from "./hooks/use-fetch-fn"
+import { getCurrentUser } from "./lib/services"
 import DashboardPage from "./pages/dashboard"
 import EntrancePage from "./pages/entrance"
 
-const routes = [
-  { component: () => <PublicOnlyRoute component={EntrancePage} />, path: "/entrance" },
-  { component: () => <ProtectedRoute component={DashboardPage} />, path: "/dashboard" },
-]
-
 export default function App() {
-  const loggedIn = isAuthenticated()
+  const { data, isLoading } = useFetchFn(getCurrentUser)
+
+  if (isLoading) return <ScreenSpinner />
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Switch>
-        {routes.map((route) => (
-          <Route key={route.path} {...route} />
-        ))}
-        <Route component={() => <Redirect replace to={loggedIn ? "/dashboard" : "/entrance"} />} />
+        <Route path="/entrance">
+          <PublicOnlyPage isAuthenticated={Boolean(data)}>
+            <EntrancePage />
+          </PublicOnlyPage>
+        </Route>
+        <Route path="/dashboard">
+          <ProtectedPage isAuthenticated={Boolean(data)}>
+            <DashboardPage />
+          </ProtectedPage>
+        </Route>
+        <Route>
+          <DefaultPage isAuthenticated={Boolean(data)} />
+        </Route>
       </Switch>
       <Toaster position="bottom-right" />
     </ThemeProvider>
