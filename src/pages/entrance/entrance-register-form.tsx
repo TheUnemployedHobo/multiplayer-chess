@@ -31,6 +31,7 @@ export default function EntranceRegisterForm({ handleAction, setPage }: Entrance
           <div className="space-y-2">
             <Label htmlFor="un">Username</Label>
             <Input
+              autoComplete="username"
               id="un"
               name="username"
               pattern="^[a-z]{3,20}$"
@@ -43,6 +44,7 @@ export default function EntranceRegisterForm({ handleAction, setPage }: Entrance
           <div className="space-y-2">
             <Label htmlFor="pw">Password</Label>
             <Input
+              autoComplete="current-password"
               id="pw"
               minLength={3}
               name="password"
@@ -54,7 +56,14 @@ export default function EntranceRegisterForm({ handleAction, setPage }: Entrance
           </div>
           <div className="space-y-2">
             <Label htmlFor="re-pw">Repeat password</Label>
-            <Input id="re-pw" name="re-pass" placeholder="e.g. 1234" required type="password" />
+            <Input
+              autoComplete="current-password"
+              id="re-pw"
+              name="re-pass"
+              placeholder="e.g. 1234"
+              required
+              type="password"
+            />
           </div>
         </CardContent>
         <CardFooter>
