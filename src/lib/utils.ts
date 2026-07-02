@@ -26,3 +26,32 @@ export const jwtCookie = {
   remove: () => Cookies.remove("jwt"),
   set: (token: string) => Cookies.set("jwt", token, { expires: 30 }),
 }
+
+export const nativeRedirect = (path: string) => {
+  history.pushState(null, "", path)
+  dispatchEvent(new PopStateEvent("popstate"))
+}
+
+export const authFetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+  const jwt = jwtCookie.get()
+  if (!jwt) {
+    nativeRedirect("/entrance")
+    return null
+  }
+
+  const response = await fetch(input, {
+    ...init,
+    headers: {
+      ...init?.headers,
+      authorization: jwt,
+    },
+  })
+
+  if (response.status === 401) {
+    jwtCookie.remove()
+    nativeRedirect("/entrance")
+    return null
+  }
+
+  return response
+}
