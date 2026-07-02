@@ -26,5 +26,3 @@ export const jwtCookie = {
   remove: () => Cookies.remove("jwt"),
   set: (token: string) => Cookies.set("jwt", token, { expires: 30 }),
 }
-
-export const isAuthenticated = () => Boolean(jwtCookie.get())
