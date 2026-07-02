@@ -1,6 +1,6 @@
 import type { AvatarNameType } from "./avatars"
 
-import { jwtCookie } from "./utils"
+import { authFetch } from "./utils"
 
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
@@ -19,14 +19,8 @@ export const logIn = (username: string, password: string) =>
   })
 
 export const getCurrentUser = async () => {
-  const jwt = jwtCookie.get()
-  if (!jwt) return null
-
-  const response = await fetch(`${BASE_URL}/users`, { headers: { authorization: jwt } })
-  if (response.status === 401) {
-    jwtCookie.remove()
-    return null
-  }
+  const response = await authFetch(`${BASE_URL}/users`)
+  if (!response) return null
 
   return response.json() as Promise<{
     avatar: AvatarNameType
