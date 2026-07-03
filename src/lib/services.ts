@@ -2,6 +2,14 @@ import type { AvatarNameType } from "./avatars"
 
 import { authFetch } from "./utils"
 
+export type UserType = {
+  avatar: AvatarNameType
+  jwt: string | undefined
+  signup_date: string
+  stats: { elo: number; games: number; losses: number; wins: number }
+  username: string
+}
+
 const BASE_URL = import.meta.env.VITE_BASE_URL
 
 export const register = (username: string, password: string, avatar: string, elo: number) =>
@@ -22,10 +30,5 @@ export const getCurrentUser = async () => {
   const response = await authFetch(`${BASE_URL}/users`)
   if (!response) return null
 
-  return response.json() as Promise<{
-    avatar: AvatarNameType
-    signup_date: string
-    stats: { elo: number; games: number; losses: number; wins: number }
-    username: string
-  }>
+  return response.json() as Promise<UserType>
 }
