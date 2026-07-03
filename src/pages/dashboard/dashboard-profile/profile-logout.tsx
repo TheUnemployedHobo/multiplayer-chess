@@ -13,15 +13,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import useAuthStore from "@/hooks/use-auth-store"
 import useBreakPoint from "@/hooks/use-break-point"
-import { jwtCookie } from "@/lib/utils"
 
 export default function ProfileLogout() {
+  const { clear } = useAuthStore()
   const [, setLocation] = useLocation()
   const { md } = useBreakPoint()
 
   const handleLogout = () => {
-    jwtCookie.remove()
+    clear("noDirection")
     setLocation("/entrance")
   }
 
