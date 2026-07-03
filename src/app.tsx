@@ -10,6 +10,11 @@ import useAuthStore from "./hooks/use-auth-store"
 import DashboardPage from "./pages/dashboard"
 import EntrancePage from "./pages/entrance"
 
+const routes = [
+  { component: () => <PublicOnlyPage page={<EntrancePage />} />, path: "/entrance" },
+  { component: () => <ProtectedPage page={<DashboardPage />} />, path: "/dashboard" },
+]
+
 export default function App() {
   const { hydrate, status } = useAuthStore()
 
@@ -22,19 +27,10 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Switch>
-        <Route path="/entrance">
-          <PublicOnlyPage isAuthenticated={status === "authenticated"}>
-            <EntrancePage />
-          </PublicOnlyPage>
-        </Route>
-        <Route path="/dashboard">
-          <ProtectedPage isAuthenticated={status === "authenticated"}>
-            <DashboardPage />
-          </ProtectedPage>
-        </Route>
-        <Route>
-          <DefaultPage isAuthenticated={status === "authenticated"} />
-        </Route>
+        {routes.map((route) => (
+          <Route key={route.path} {...route} />
+        ))}
+        <Route component={() => <DefaultPage />} />
       </Switch>
       <Toaster position="bottom-right" />
     </ThemeProvider>
