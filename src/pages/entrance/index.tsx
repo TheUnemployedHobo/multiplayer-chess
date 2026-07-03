@@ -2,8 +2,8 @@ import { type Dispatch, type SetStateAction, useState } from "react"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
 
-import { logIn, register } from "@/lib/services"
-import { jwtCookie } from "@/lib/utils"
+import useAuthStore from "@/hooks/use-auth-store"
+import { logIn, register, type UserType } from "@/lib/services"
 
 import EntranceAvatarForm from "./entrance-avatar-form"
 import EntranceEloRatingForm from "./entrance-elo-rating-form"
@@ -18,6 +18,7 @@ export type EntranceFormPropsType = {
 export default function EntrancePage() {
   const [info, setInfo] = useState({ avatar: "", password: "", username: "" })
   const [page, setPage] = useState<1 | 2 | 3 | 4>(1)
+  const { authenticate } = useAuthStore()
   const [, setLocation] = useLocation()
 
   const handleFirstFormAction = async (formData: FormData) => {
@@ -27,8 +28,8 @@ export default function EntrancePage() {
     const response = await logIn(username, password)
 
     if (response.status === 200) {
-      const token = await response.text()
-      jwtCookie.set(token)
+      const user: UserType = await response.json()
+      authenticate(user)
       setLocation("/dashboard")
       toast.success("Login successful", { description: "Welcome back!" })
     } else if (response.status === 401) toast.error("Login failed", { description: "Invalid username or password." })
