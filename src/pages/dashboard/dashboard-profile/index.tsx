@@ -4,7 +4,7 @@ import useAuthStore from "@/hooks/use-auth-store"
 import { findAvatarByName } from "@/lib/avatars"
 
 import ProfileEditPopover from "./profile-edit-popover"
-import ProfileLogout from "./profile-logout"
+import ProfileLogoutButton from "./profile-logout-button"
 
 export default function DashboardProfile() {
   const { user } = useAuthStore()
@@ -30,7 +30,7 @@ export default function DashboardProfile() {
       </ItemContent>
       <ItemActions>
         <ProfileEditPopover />
-        <ProfileLogout />
+        <ProfileLogoutButton />
       </ItemActions>
     </Item>
   )
