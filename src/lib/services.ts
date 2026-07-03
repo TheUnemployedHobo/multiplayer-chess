@@ -26,6 +26,15 @@ export const logIn = (username: string, password: string) =>
     method: "POST",
   })
 
+export const updateUserInfo = (username: string, password: string, avatar: AvatarNameType) =>
+  authFetch(`${BASE_URL}/users`, {
+    body: JSON.stringify({ avatar, password, username }),
+    headers: { "Content-Type": "application/json" },
+    method: "PUT",
+  })
+
+export const deleteUser = () => authFetch(`${BASE_URL}/users`, { method: "DELETE" })
+
 export const getCurrentUser = async () => {
   const response = await authFetch(`${BASE_URL}/users`)
   if (!response) return null
