@@ -1,4 +1,8 @@
-import { PencilIcon, Trash2Icon, UserRoundPenIcon } from "lucide-react"
+import { PencilIcon, UserRoundPenIcon } from "lucide-react"
+import { toast } from "sonner"
+import { useLocation } from "wouter"
+
+import type { AvatarNameType } from "@/lib/avatars"
 
 import AvatarPopover from "@/components/avatar-popover"
 import SubmitButton from "@/components/submit-button"
@@ -13,16 +17,34 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import useAuthStore from "@/hooks/use-auth-store"
 import useBreakPoint from "@/hooks/use-break-point"
+import { updateUserInfo } from "@/lib/services"
+
+import ProfileDeleteButton from "./profile-delete-button"
 
 export default function ProfileEditPopover() {
+  const { clear, user } = useAuthStore()
+  const [, setLocation] = useLocation()
   const { md } = useBreakPoint()
 
-  const handleAction = async (formData: FormData) => {
+  const handleUpdate = async (formData: FormData) => {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
-    const avatar = formData.get("avatar") as string
-    console.log(username, password, avatar)
+    const avatar = formData.get("avatar") as AvatarNameType
+
+    const response = await updateUserInfo(username, password, avatar)
+
+    if (!response) {
+      toast.error("Update failed", { description: "Unable to update your profile. Please try again later." })
+      return
+    }
+
+    if (response.status === 200) {
+      toast.success("Profile updated", { description: "Your username, password, and avatar changes have been saved." })
+      clear("noDirection")
+      setLocation("/entrance")
+    }
   }
 
   return (
@@ -40,20 +62,24 @@ export default function ProfileEditPopover() {
             Change your username, password, or avatar. Click “Save changes” to apply the updates to your account.
           </DialogDescription>
         </DialogHeader>
-        <form action={handleAction} className="flex flex-col items-center gap-y-5">
-          <AvatarPopover />
+        <form action={handleUpdate} className="flex flex-col items-center gap-y-5">
+          <AvatarPopover defaultAvatarName={user?.avatar} />
           <div className="w-full space-y-2">
             <Label htmlFor="un">Username</Label>
-            <Input autoComplete="username" id="un" name="username" placeholder="e.g. admin" type="text" />
+            <Input
+              autoComplete="username"
+              defaultValue={user?.username}
+              id="un"
+              name="username"
+              placeholder="e.g. admin"
+              type="text"
+            />
           </div>
           <div className="w-full space-y-2">
             <Label htmlFor="pw">Password</Label>
             <Input autoComplete="new-password" id="pw" name="password" placeholder="e.g. 1234" type="password" />
           </div>
-          <Button className="w-full" size="lg" type="button" variant="destructive">
-            <Trash2Icon />
-            <span>Delete account</span>
-          </Button>
+          <ProfileDeleteButton />
           <SubmitButton className="w-full" icon={<PencilIcon />} text="Save changes" />
         </form>
       </DialogContent>
