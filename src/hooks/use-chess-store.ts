@@ -3,8 +3,6 @@ import type { CSSProperties } from "react"
 import { Chess, type Square } from "chess.js"
 import { create } from "zustand/react"
 
-import { getCheckStyle } from "@/lib/utils"
-
 const chess = new Chess()
 
 export type ChessStoreType = {
@@ -20,13 +18,13 @@ export type ChessStoreType = {
 }
 
 const useChessStore = create<ChessStoreType>()((set) => ({
-  clearSelection: () => set({ selectedSquare: null, squareStyles: getCheckStyle(chess) }),
+  clearSelection: () => set({ selectedSquare: null, squareStyles: {} }),
   getFen: () => chess.fen(),
   getLegalMoves: (square) => chess.moves({ square, verbose: true }).map((move) => move.to as Square),
   makeMove: (from, to) => {
     try {
       chess.move({ from, promotion: "q", to })
-      set({ position: chess.fen(), selectedSquare: null, squareStyles: getCheckStyle(chess) })
+      set({ position: chess.fen(), selectedSquare: null, squareStyles: {} })
 
       return true
     } catch {
