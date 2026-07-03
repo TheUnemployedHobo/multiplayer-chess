@@ -1,17 +1,25 @@
-import type { PropsWithChildren } from "react"
+import type { ReactNode } from "react"
 
 import { Redirect } from "wouter"
 
-type PropsType = PropsWithChildren & { isAuthenticated: boolean }
+import useAuthStore from "@/hooks/use-auth-store"
 
-export function DefaultPage({ isAuthenticated }: Omit<PropsType, "children">) {
-  return <Redirect replace to={isAuthenticated ? "/dashboard" : "/entrance"} />
+type PropsType = { page: ReactNode }
+
+export function DefaultPage() {
+  const { status } = useAuthStore()
+
+  return <Redirect replace to={status === "authenticated" ? "/dashboard" : "/entrance"} />
 }
 
-export function ProtectedPage({ children, isAuthenticated }: PropsType) {
-  return isAuthenticated ? children : <Redirect replace to="/entrance" />
+export function ProtectedPage({ page }: PropsType) {
+  const { status } = useAuthStore()
+
+  return status === "authenticated" ? page : <Redirect replace to="/entrance" />
 }
 
-export function PublicOnlyPage({ children, isAuthenticated }: PropsType) {
-  return !isAuthenticated ? children : <Redirect replace to="/dashboard" />
+export function PublicOnlyPage({ page }: PropsType) {
+  const { status } = useAuthStore()
+
+  return status === "unauthenticated" ? page : <Redirect replace to="/dashboard" />
 }
