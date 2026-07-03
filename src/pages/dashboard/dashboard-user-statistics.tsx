@@ -3,12 +3,16 @@ import { ChartColumnIcon, ChessKingIcon, JoystickIcon, TrophyIcon } from "lucide
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
+import useAuthStore from "@/hooks/use-auth-store"
 
 export default function DashboardUserStatistics() {
+  const { user } = useAuthStore()
+
   const statistics = [
-    { content: "142", icon: <JoystickIcon />, title: "Games" },
-    { content: "68.9%", icon: <TrophyIcon />, title: "Win rate" },
-    { content: "1400", icon: <ChessKingIcon />, title: "ELO" },
+    { content: user?.stats.games, icon: <JoystickIcon />, title: "Games" },
+    { content: user?.stats.wins, icon: <TrophyIcon />, title: "Wins" },
+    { content: user?.stats.losses, icon: <TrophyIcon />, title: "Losses" },
+    { content: user?.stats.elo, icon: <ChessKingIcon />, title: "ELO" },
   ]
 
   return (
@@ -23,7 +27,7 @@ export default function DashboardUserStatistics() {
         <CardDescription>View your performance metrics and progress</CardDescription>
       </CardHeader>
       <CardContent>
-        <ItemGroup className="grid grid-cols-3">
+        <ItemGroup className="grid grid-cols-2 md:grid-cols-4">
           {statistics.map(({ content, icon, title }) => (
             <Item key={title} size="xs" variant="outline">
               <ItemMedia variant="icon">{icon}</ItemMedia>
