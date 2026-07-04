@@ -40,11 +40,9 @@ export default function ProfileEditPopover() {
       return
     }
 
-    if (response.status === 200) {
-      toast.success("Profile updated", { description: "Your username, password, and avatar changes have been saved." })
-      clear("noDirection")
-      setLocation("/entrance")
-    }
+    toast.success("Profile updated", { description: "Your username, password, and avatar changes have been saved." })
+    clear("noDirection")
+    setLocation("/entrance")
   }
 
   return (
