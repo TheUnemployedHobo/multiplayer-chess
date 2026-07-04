@@ -13,26 +13,30 @@ export const jwtCookie = {
 }
 
 export const authFetch = async (input: RequestInfo | URL, init?: RequestInit) => {
-  const { clear } = useAuthStore.getState()
-  const jwt = jwtCookie.get()
+  try {
+    const { clear } = useAuthStore.getState()
+    const jwt = jwtCookie.get()
 
-  if (!jwt) {
-    clear()
+    if (!jwt) {
+      clear()
+      return null
+    }
+
+    const response = await fetch(input, {
+      ...init,
+      headers: {
+        ...init?.headers,
+        authorization: jwt,
+      },
+    })
+
+    if (response.status === 401) {
+      clear()
+      return null
+    }
+
+    return response
+  } catch {
     return null
   }
-
-  const response = await fetch(input, {
-    ...init,
-    headers: {
-      ...init?.headers,
-      authorization: jwt,
-    },
-  })
-
-  if (response.status === 401) {
-    clear()
-    return null
-  }
-
-  return response
 }
