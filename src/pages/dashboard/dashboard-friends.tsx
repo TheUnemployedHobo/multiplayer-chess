@@ -4,8 +4,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
+import useFetchFn from "@/hooks/use-fetch-fn"
+import { findAvatarByName } from "@/lib/avatars"
+import { getFriends } from "@/lib/services"
 
 export default function DashboardFriends() {
+  const { data } = useFetchFn(getFriends)
+
   return (
     <Card className="md:col-start-3 md:row-span-3 md:row-start-2">
       <CardHeader>
@@ -22,30 +27,24 @@ export default function DashboardFriends() {
       </CardHeader>
       <CardContent>
         <ItemGroup>
-          <Item variant="outline">
-            <ItemMedia>
-              <Avatar size="lg">
-                <AvatarImage src="https://github.com/evilrabbit.png" />
-                <AvatarFallback>ER</AvatarFallback>
-              </Avatar>
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Evil Rabbit</ItemTitle>
-              <ItemDescription>Online</ItemDescription>
-            </ItemContent>
-          </Item>
-          <Item variant="outline">
-            <ItemMedia>
-              <Avatar size="lg">
-                <AvatarImage src="https://github.com/evilrabbit.png" />
-                <AvatarFallback>ER</AvatarFallback>
-              </Avatar>
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle>Evil Rabbit</ItemTitle>
-              <ItemDescription>Online</ItemDescription>
-            </ItemContent>
-          </Item>
+          {data?.length ? (
+            data.map(({ avatar, id, stats, username }) => (
+              <Item key={id} variant="outline">
+                <ItemMedia>
+                  <Avatar size="lg">
+                    <AvatarImage src={findAvatarByName(avatar)?.svgSrc} />
+                    <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </ItemMedia>
+                <ItemContent>
+                  <ItemTitle>{username}</ItemTitle>
+                  <ItemDescription>Online</ItemDescription>
+                </ItemContent>
+              </Item>
+            ))
+          ) : (
+            <p>No friends yet. Invite friends to start playing together.</p>
+          )}
         </ItemGroup>
       </CardContent>
     </Card>
