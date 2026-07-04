@@ -9,10 +9,12 @@ import { Toaster } from "./components/ui/sonner"
 import useAuthStore from "./hooks/use-auth-store"
 import DashboardPage from "./pages/dashboard"
 import EntrancePage from "./pages/entrance"
+import PlayBoardPage from "./pages/playboard"
 
 const routes = [
   { component: () => <PublicOnlyPage page={<EntrancePage />} />, path: "/entrance" },
   { component: () => <ProtectedPage page={<DashboardPage />} />, path: "/dashboard" },
+  { component: () => <ProtectedPage page={<PlayBoardPage />} />, path: "/play" },
 ]
 
 export default function App() {
