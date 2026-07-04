@@ -2,15 +2,19 @@ import type { AvatarNameType } from "./avatars"
 
 import { authFetch } from "./utils"
 
+export type FriendType = { avatar: AvatarNameType; id: string; stats: StatsType; username: string }
+
 export type UserType = {
   avatar: AvatarNameType
   jwt: string | undefined
   signup_date: string
-  stats: { elo: number; games: number; losses: number; wins: number }
+  stats: StatsType
   username: string
 }
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+type StatsType = { elo: number; games: number; losses: number; wins: number }
+
+const BASE_URL = import.meta.env["VITE_BASE_URL"]
 
 export const register = (username: string, password: string, avatar: string, elo: number) =>
   fetch(`${BASE_URL}/users/register`, {
@@ -40,4 +44,11 @@ export const getCurrentUser = async () => {
   if (!response) return null
 
   return response.json() as Promise<UserType>
+}
+
+export const getFriends = async () => {
+  const response = await authFetch(`${BASE_URL}/friends`)
+  if (!response) return null
+
+  return response.json() as Promise<FriendType[]>
 }
