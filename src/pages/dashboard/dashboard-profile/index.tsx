@@ -15,7 +15,7 @@ export default function DashboardProfile() {
     <Item className="md:col-span-3" variant="muted">
       <ItemMedia>
         <Avatar size="lg">
-          <AvatarImage src={findAvatarByName(user.avatar)?.svgSrc} />
+          <AvatarImage src={findAvatarByName(user.avatar).svgSrc} />
           <AvatarFallback>{user.username.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
       </ItemMedia>
