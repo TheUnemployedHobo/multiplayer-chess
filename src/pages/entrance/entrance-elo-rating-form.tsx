@@ -1,13 +1,14 @@
 import { ArrowLeftIcon, FormIcon, UserRoundPlusIcon } from "lucide-react"
 import { useState } from "react"
+import { toast } from "sonner"
 
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-
-import type { EntranceFormPropsType } from "."
+import useEntranceStore from "@/hooks/use-entrance-store"
+import { register } from "@/lib/services"
 
 const eloTiers = [
   {
@@ -32,8 +33,18 @@ const eloTiers = [
   },
 ]
 
-export default function EntranceEloRatingForm({ handleAction, setPage }: EntranceFormPropsType) {
+export default function EntranceEloRatingForm() {
   const [elo, setElo] = useState(eloTiers.at(0)!.elo)
+  const { info, setPage } = useEntranceStore()
+
+  const handleAction = async () => {
+    const response = await register(info.username, info.password, info.avatar!, +elo)
+    if (response.status === 201) {
+      setPage(1)
+      toast.success("Account created successfully", { description: "You can now log in with your credentials." })
+    } else if (response.status === 409) toast.error("Registration failed", { description: "Username already exists." })
+    else toast.error("Registration failed", { description: "An error occurred during registration. Please try again." })
+  }
 
   return (
     <form action={handleAction} className="flex h-dvh items-center justify-center">
@@ -75,7 +86,6 @@ export default function EntranceEloRatingForm({ handleAction, setPage }: Entranc
           <SubmitButton icon={<UserRoundPlusIcon />} text="Register" />
         </CardFooter>
       </Card>
-      <input name="elo" type="hidden" value={elo} />
     </form>
   )
 }
