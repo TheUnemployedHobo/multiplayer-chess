@@ -11,7 +11,7 @@ import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 type PropsType = { defaultAvatarName?: AvatarNameType }
 
 export default function AvatarPopover({ defaultAvatarName }: PropsType) {
-  const [avatar, setAvatar] = useState(defaultAvatarName ? findAvatarByName(defaultAvatarName)! : avatars.at(0)!)
+  const [avatar, setAvatar] = useState(defaultAvatarName ? findAvatarByName(defaultAvatarName) : avatars.at(0)!)
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function AvatarPopover({ defaultAvatarName }: PropsType) {
         <PopoverContent>
           <ToggleGroup
             className="flex flex-wrap justify-between"
-            onValueChange={(value: AvatarNameType) => value && setAvatar(findAvatarByName(value)!)}
+            onValueChange={(value: AvatarNameType) => value && setAvatar(findAvatarByName(value))}
             type="single"
             value={avatar.name}
             variant="outline"
