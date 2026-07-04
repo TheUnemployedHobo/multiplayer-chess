@@ -1,4 +1,5 @@
 import { FormIcon, StepForwardIcon } from "lucide-react"
+import { toast } from "sonner"
 
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
@@ -6,10 +7,25 @@ import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import useEntranceStore from "@/hooks/use-entrance-store"
 
-import type { EntranceFormPropsType } from "."
+export default function EntranceRegisterForm() {
+  const { setInfo, setPage } = useEntranceStore()
 
-export default function EntranceRegisterForm({ handleAction, setPage }: EntranceFormPropsType) {
+  const handleAction = async (formData: FormData) => {
+    const username = formData.get("username") as string
+    const password = formData.get("password") as string
+    const repass = formData.get("re-pass") as string
+
+    if (password !== repass) {
+      toast.error("Passwords do not match", { description: "Please re-enter the same password in both fields." })
+      return
+    }
+
+    setInfo({ password, username })
+    setPage(3)
+  }
+
   return (
     <form action={handleAction} className="flex h-dvh items-center justify-center">
       <Card className="z-10 mx-5 w-96">
