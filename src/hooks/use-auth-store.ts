@@ -3,7 +3,7 @@ import { create } from "zustand/react"
 import { getCurrentUser, type UserType } from "@/lib/services"
 import { jwtCookie } from "@/lib/utils"
 
-type AuthStoreType = {
+type StoreType = {
   authenticate: (user: UserType) => void
   clear: (directMode?: "native" | "noDirection") => void
   hydrate: () => Promise<void>
@@ -11,7 +11,7 @@ type AuthStoreType = {
   user: null | UserType
 }
 
-const useAuthStore = create<AuthStoreType>((set) => ({
+const useAuthStore = create<StoreType>((set) => ({
   authenticate: (user) => {
     jwtCookie.set(user.jwt!)
     set({ status: "authenticated", user })
