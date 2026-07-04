@@ -1,14 +1,24 @@
 import { ArrowLeftIcon, SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
 
+import type { AvatarNameType } from "@/lib/avatars"
+
 import AvatarPopover from "@/components/avatar-popover"
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import useEntranceStore from "@/hooks/use-entrance-store"
 
-import type { EntranceFormPropsType } from "."
+export default function EntranceAvatarForm() {
+  const { setInfo, setPage } = useEntranceStore()
 
-export default function EntranceAvatarForm({ handleAction, setPage }: EntranceFormPropsType) {
+  const handleAction = async (formData: FormData) => {
+    const avatar = formData.get("avatar") as AvatarNameType
+
+    setInfo({ avatar })
+    setPage(4)
+  }
+
   return (
     <form action={handleAction} className="flex h-dvh items-center justify-center">
       <Card className="z-10 mx-5 w-96">
