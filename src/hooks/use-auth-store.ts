@@ -1,6 +1,7 @@
 import { create } from "zustand/react"
 
 import { getCurrentUser, type UserType } from "@/lib/services"
+import { connectSocket, disconnectSocket } from "@/lib/socket"
 import { jwtCookie } from "@/lib/utils"
 
 type StoreType = {
@@ -14,10 +15,12 @@ type StoreType = {
 const useAuthStore = create<StoreType>((set) => ({
   authenticate: (user) => {
     jwtCookie.set(user.jwt!)
+    connectSocket()
     set({ status: "authenticated", user })
   },
   clear: (directMode = "native") => {
     jwtCookie.remove()
+    disconnectSocket()
     set({ status: "unauthenticated", user: null })
 
     if (directMode === "native") {
@@ -31,9 +34,11 @@ const useAuthStore = create<StoreType>((set) => ({
 
       if (!user) {
         set({ status: "unauthenticated", user: null })
+        disconnectSocket()
         return
       }
 
+      connectSocket()
       set({ status: "authenticated", user })
     } catch {
       jwtCookie.remove()
