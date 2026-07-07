@@ -4,13 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
-import useFetchFn from "@/hooks/use-fetch-fn"
 import { findAvatarByName } from "@/lib/avatars"
 import { getFriends } from "@/lib/services"
 
 export default function DashboardFriends() {
-  const { data } = useFetchFn(getFriends)
-
   return (
     <Card className="md:col-start-3 md:row-span-3 md:row-start-2">
       <CardHeader>
@@ -27,7 +24,7 @@ export default function DashboardFriends() {
       </CardHeader>
       <CardContent>
         <ItemGroup>
-          {data?.length ? (
+          {/* {data?.length ? (
             data.map(({ avatar, id, stats, username }) => (
               <Item key={id} variant="outline">
                 <ItemMedia>
@@ -44,7 +41,7 @@ export default function DashboardFriends() {
             ))
           ) : (
             <p>No friends yet. Invite friends to start playing together.</p>
-          )}
+          )} */}
         </ItemGroup>
       </CardContent>
     </Card>
