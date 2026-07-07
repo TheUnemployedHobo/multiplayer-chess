@@ -14,7 +14,7 @@ import PlayBoardPage from "./pages/playboard"
 const routes = [
   { component: () => <PublicOnlyPage page={<EntrancePage />} />, path: "/entrance" },
   { component: () => <ProtectedPage page={<DashboardPage />} />, path: "/dashboard" },
-  { component: () => <ProtectedPage page={<PlayBoardPage />} />, path: "/play" },
+  { component: () => <ProtectedPage page={<PlayBoardPage />} />, path: "/playboard" },
 ]
 
 export default function App() {
