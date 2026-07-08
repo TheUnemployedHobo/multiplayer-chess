@@ -1,7 +1,7 @@
 import { create } from "zustand/react"
 
 import { getCurrentUser, type UserType } from "@/lib/services"
-import { connectSocket, disconnectSocket } from "@/lib/socket"
+import { connectSocket, disconnectSocket } from "@/lib/sockets/socket"
 import { jwtCookie } from "@/lib/utils"
 
 type StoreType = {
