@@ -1,21 +1,12 @@
 import { Gamepad2Icon, SearchIcon } from "lucide-react"
-import { useEffect, useState } from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { socket } from "@/lib/socket"
+import { useOnlineUsers } from "@/lib/sockets/events"
 
 export default function DashboardMultiplayer() {
-  const [onlineCount, setOnlineCount] = useState(0)
-
-  useEffect(() => {
-    socket.on("users:online-count", setOnlineCount)
-
-    return () => {
-      socket.on("users:online-count", setOnlineCount)
-    }
-  }, [])
+  const onlineUsersCount = useOnlineUsers()
 
   return (
     <Card>
@@ -30,7 +21,7 @@ export default function DashboardMultiplayer() {
       </CardHeader>
       <CardContent>
         <dl>
-          <dt className="text-2xl font-semibold">{onlineCount} online</dt>
+          <dt className="text-2xl font-semibold">{onlineUsersCount} online</dt>
           <dd className="text-muted-foreground">Players available</dd>
         </dl>
       </CardContent>
