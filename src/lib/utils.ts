@@ -6,6 +6,13 @@ import useAuthStore from "@/hooks/use-auth-store"
 
 export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs))
 
+export const formatDate = (date: Date | string) =>
+  new Date(date).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+
 export const jwtCookie = {
   get: () => Cookies.get("jwt") ?? null,
   remove: () => Cookies.remove("jwt"),
