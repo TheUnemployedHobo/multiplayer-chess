@@ -2,6 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
 import useAuthStore from "@/hooks/use-auth-store"
 import { findAvatarByName } from "@/lib/avatars"
+import { formatDate } from "@/lib/utils"
 
 import ProfileEditPopover from "./profile-edit-popover"
 import ProfileLogoutButton from "./profile-logout-button"
@@ -21,12 +22,7 @@ export default function DashboardProfile() {
       </ItemMedia>
       <ItemContent>
         <ItemTitle>{user.username}</ItemTitle>
-        <ItemDescription>
-          <span>Member since </span>
-          <span>
-            {new Date(user.signup_date).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}
-          </span>
-        </ItemDescription>
+        <ItemDescription>Member since {formatDate(user.signup_date)}</ItemDescription>
       </ItemContent>
       <ItemActions>
         <ProfileEditPopover />
