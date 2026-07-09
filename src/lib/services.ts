@@ -2,8 +2,6 @@ import type { AvatarNameType } from "./avatars"
 
 import { authFetch } from "./utils"
 
-export type FriendType = { avatar: AvatarNameType; id: string; stats: StatsType; username: string }
-
 export type UserType = {
   avatar: AvatarNameType
   jwt: string | undefined
@@ -11,6 +9,10 @@ export type UserType = {
   stats: StatsType
   username: string
 }
+
+type AllUsersType = { avatar: AvatarNameType; id: string; signup_date: string; username: string }[]
+
+type FriendsType = { avatar: AvatarNameType; id: string; stats: StatsType; username: string }[]
 
 type StatsType = { elo: number; games: number; losses: number; wins: number }
 
@@ -40,15 +42,22 @@ export const updateUserInfo = (username: string, password: string, avatar: Avata
 export const deleteUser = () => authFetch(`${SERVER_URL}/users`, { method: "DELETE" })
 
 export const getCurrentUser = async () => {
-  const response = await authFetch(`${SERVER_URL}/users`)
+  const response = await authFetch(`${SERVER_URL}/users/me`)
   if (!response) return null
 
   return response.json() as Promise<UserType>
+}
+
+export const getAllUsers = async () => {
+  const response = await authFetch(`${SERVER_URL}/users/all`)
+  if (!response) return null
+
+  return response.json() as Promise<AllUsersType>
 }
 
 export const getFriends = async () => {
   const response = await authFetch(`${SERVER_URL}/friends`)
   if (!response) return null
 
-  return response.json() as Promise<FriendType[]>
+  return response.json() as Promise<FriendsType>
 }
