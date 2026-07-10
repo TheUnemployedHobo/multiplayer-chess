@@ -4,21 +4,13 @@ import { toast } from "sonner"
 import useSWR from "swr"
 
 import { ItemPlaceholder } from "@/components/placeholders"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
+import { ItemGroup } from "@/components/ui/item"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { UserItem } from "@/components/user-item"
 import { useIncomingFriendRequest, useSendFriendRequest } from "@/hooks/use-socket-events"
-import { findAvatarByName } from "@/lib/avatars"
 import { getAllUsers } from "@/lib/services"
 import { formatDate } from "@/lib/utils"
 
@@ -30,26 +22,21 @@ export default function DashboardAddFriend() {
   useIncomingFriendRequest(({ avatar, userId, username }) =>
     toast.custom(
       (t) => (
-        <Item className="bg-muted">
-          <ItemMedia>
-            <Avatar size="lg">
-              <AvatarImage src={findAvatarByName(avatar).svgSrc} />
-              <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
-            </Avatar>
-          </ItemMedia>
-          <ItemContent>
-            <ItemTitle>{username}</ItemTitle>
-            <ItemDescription>Wants to be your friend</ItemDescription>
-          </ItemContent>
-          <ItemActions>
-            <Button onClick={() => toast.dismiss(t)} size="icon-lg" variant="destructive">
-              <XIcon />
-            </Button>
-            <Button size="icon-lg" variant="default">
-              <CheckIcon />
-            </Button>
-          </ItemActions>
-        </Item>
+        <UserItem
+          actions={
+            <>
+              <Button onClick={() => toast.dismiss(t)} size="icon-lg" variant="destructive">
+                <XIcon />
+              </Button>
+              <Button size="icon-lg" variant="default">
+                <CheckIcon />
+              </Button>
+            </>
+          }
+          avatar={avatar}
+          description="Wants to be your friend"
+          title={username}
+        />
       ),
       { duration: 20000 },
     ),
@@ -61,54 +48,48 @@ export default function DashboardAddFriend() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <ShadcnDialog
+      content={
+        <>
+          <Input
+            onInput={(e) => setSearch(e.currentTarget.value)}
+            placeholder="Search for friends"
+            type="search"
+            value={search}
+          />
+          <ScrollArea className="h-80">
+            <ItemGroup>
+              {isLoading || !data ? (
+                <ItemPlaceholder quantity={4} />
+              ) : (
+                data
+                  .filter(({ username }) => username.includes(search.toLowerCase()))
+                  .map(({ avatar, id, signup_date, username }) => (
+                    <UserItem
+                      actions={
+                        <Button onClick={() => handleClick(id, username)} size="icon-lg">
+                          <UserRoundPlusIcon />
+                        </Button>
+                      }
+                      avatar={avatar}
+                      description={`Member since ${formatDate(signup_date)}`}
+                      key={id}
+                      title={username}
+                    />
+                  ))
+              )}
+            </ItemGroup>
+          </ScrollArea>
+        </>
+      }
+      description="Search for your friend's username to send a request.</"
+      title="Add a new friend"
+      triggerButton={
         <Button className="w-full" variant="outline">
           <UserRoundPlusIcon />
           <span>Add friend</span>
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add a new friend</DialogTitle>
-          <DialogDescription>Search for your friend's username to send a request.</DialogDescription>
-        </DialogHeader>
-        <Input
-          onInput={(e) => setSearch(e.currentTarget.value)}
-          placeholder="Search for friends"
-          type="search"
-          value={search}
-        />
-        <ScrollArea className="h-80">
-          <ItemGroup>
-            {isLoading || !data ? (
-              <ItemPlaceholder quantity={4} />
-            ) : (
-              data
-                .filter(({ username }) => username.includes(search.toLowerCase()))
-                .map(({ avatar, id, signup_date, username }) => (
-                  <Item key={id} variant="outline">
-                    <ItemMedia>
-                      <Avatar size="lg">
-                        <AvatarImage src={findAvatarByName(avatar).svgSrc} />
-                        <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
-                      </Avatar>
-                    </ItemMedia>
-                    <ItemContent>
-                      <ItemTitle>{username}</ItemTitle>
-                      <ItemDescription>Member since {formatDate(signup_date)}</ItemDescription>
-                    </ItemContent>
-                    <ItemActions>
-                      <Button onClick={() => handleClick(id, username)} size="icon-lg">
-                        <UserRoundPlusIcon />
-                      </Button>
-                    </ItemActions>
-                  </Item>
-                ))
-            )}
-          </ItemGroup>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+      }
+    />
   )
 }
