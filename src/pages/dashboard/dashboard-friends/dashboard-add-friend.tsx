@@ -1,4 +1,4 @@
-import { UserRoundPlusIcon } from "lucide-react"
+import { CheckIcon, UserRoundPlusIcon, XIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import useSWR from "swr"
@@ -27,7 +27,33 @@ export default function DashboardAddFriend() {
   const { data, isLoading } = useSWR("users", getAllUsers)
   const sendReq = useSendFriendRequest()
 
-  useIncomingFriendRequest(() => {})
+  useIncomingFriendRequest(({ avatar, userId, username }) =>
+    toast.custom(
+      (t) => (
+        <Item className="bg-muted">
+          <ItemMedia>
+            <Avatar size="lg">
+              <AvatarImage src={findAvatarByName(avatar).svgSrc} />
+              <AvatarFallback>{username.slice(0, 2).toUpperCase()}</AvatarFallback>
+            </Avatar>
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>{username}</ItemTitle>
+            <ItemDescription>Wants to be your friend</ItemDescription>
+          </ItemContent>
+          <ItemActions>
+            <Button onClick={() => toast.dismiss(t)} size="icon-lg" variant="destructive">
+              <XIcon />
+            </Button>
+            <Button size="icon-lg" variant="default">
+              <CheckIcon />
+            </Button>
+          </ItemActions>
+        </Item>
+      ),
+      { duration: 20000 },
+    ),
+  )
 
   const handleClick = (id: string, username: string) => {
     sendReq(id)
