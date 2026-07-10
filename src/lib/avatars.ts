@@ -18,8 +18,6 @@ const avatars = [
   { name: "rbej1snt", svgSrc: new Avatar(style, { seed: "rbej1snt" }).toDataUri() },
 ] as const
 
-export type AvatarNameType = (typeof avatars)[number]["name"]
-
-export const findAvatarByName = (name: AvatarNameType) => avatars.find((avatar) => avatar.name === name)!
+export const findAvatarByName = (name: string) => avatars.find((avatar) => avatar.name === name)!
 
 export default avatars

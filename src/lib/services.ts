@@ -1,18 +1,16 @@
-import type { AvatarNameType } from "./avatars"
-
 import { authFetch } from "./utils"
 
 export type UserType = {
-  avatar: AvatarNameType
+  avatar: string
   jwt: string | undefined
   signup_date: string
   stats: StatsType
   username: string
 }
 
-type AllUsersType = { avatar: AvatarNameType; id: string; signup_date: string; username: string }[]
+type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }[]
 
-type FriendsType = { avatar: AvatarNameType; id: string; stats: StatsType; username: string }[]
+type FriendsType = { avatar: string; id: string; stats: StatsType; username: string }[]
 
 type StatsType = { elo: number; games: number; losses: number; wins: number }
 
@@ -32,7 +30,7 @@ export const logIn = (username: string, password: string) =>
     method: "POST",
   })
 
-export const updateUserInfo = (username: string, password: string, avatar: AvatarNameType) =>
+export const updateUserInfo = (username: string, password: string, avatar: string) =>
   authFetch(`${SERVER_URL}/users`, {
     body: JSON.stringify({ avatar, password, username }),
     headers: { "Content-Type": "application/json" },

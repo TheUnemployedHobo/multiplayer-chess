@@ -1,11 +1,9 @@
 import { useEffect, useEffectEvent, useState } from "react"
 
-import type { AvatarNameType } from "@/lib/avatars"
-
 import useAuthStore from "@/hooks/use-auth-store"
 import { socket } from "@/lib/socket"
 
-type UserInfoType = { avatar: AvatarNameType; elo: number; userId: string; username: string }
+type UserInfoType = { avatar: string; elo: number; userId: string; username: string }
 
 export const useOnlineUsers = () => {
   const [onlineCount, setOnlineCount] = useState(0)

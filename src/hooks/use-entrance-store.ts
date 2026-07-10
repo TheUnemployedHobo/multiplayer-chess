@@ -1,8 +1,6 @@
 import { create } from "zustand/react"
 
-import type { AvatarNameType } from "@/lib/avatars"
-
-type InfoType = { avatar: AvatarNameType | null; password: string; username: string }
+type InfoType = { avatar: null | string; password: string; username: string }
 
 type PageType = 1 | 2 | 3 | 4
 

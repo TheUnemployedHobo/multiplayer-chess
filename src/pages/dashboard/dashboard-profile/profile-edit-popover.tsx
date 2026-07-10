@@ -2,8 +2,6 @@ import { PencilIcon, UserRoundPenIcon } from "lucide-react"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
 
-import type { AvatarNameType } from "@/lib/avatars"
-
 import AvatarPopover from "@/components/avatar-popover"
 import SubmitButton from "@/components/submit-button"
 import { Button } from "@/components/ui/button"
@@ -31,7 +29,7 @@ export default function ProfileEditPopover() {
   const handleUpdate = async (formData: FormData) => {
     const username = formData.get("username") as string
     const password = formData.get("password") as string
-    const avatar = formData.get("avatar") as AvatarNameType
+    const avatar = formData.get("avatar") as string
 
     const response = await updateUserInfo(username, password, avatar)
 

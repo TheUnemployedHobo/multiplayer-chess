@@ -1,7 +1,5 @@
 import { ArrowLeftIcon, SquareMousePointerIcon, StepForwardIcon } from "lucide-react"
 
-import type { AvatarNameType } from "@/lib/avatars"
-
 import AvatarPopover from "@/components/avatar-popover"
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
@@ -13,7 +11,7 @@ export default function EntranceAvatarForm() {
   const { setInfo, setPage } = useEntranceStore()
 
   const handleAction = async (formData: FormData) => {
-    const avatar = formData.get("avatar") as AvatarNameType
+    const avatar = formData.get("avatar") as string
 
     setInfo({ avatar })
     setPage(4)
