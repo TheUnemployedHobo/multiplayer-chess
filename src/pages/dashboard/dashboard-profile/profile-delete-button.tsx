@@ -8,7 +8,7 @@ import useAuthStore from "@/hooks/use-auth-store"
 import { deleteUser } from "@/lib/services"
 
 export default function ProfileDeleteButton() {
-  const { clear } = useAuthStore()
+  const clear = useAuthStore((state) => state.clear)
   const [, setLocation] = useLocation()
 
   const handleDeleteAcc = async () => {
