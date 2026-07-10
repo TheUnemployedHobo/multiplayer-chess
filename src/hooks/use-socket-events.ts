@@ -20,8 +20,8 @@ export const useOnlineUsers = () => {
 }
 
 export const useFriendRequests = (fn: (userInfo: UserInfoType) => void) => {
+  const user = useAuthStore((state) => state.user)
   const listener = useEffectEvent(fn)
-  const { user } = useAuthStore()
 
   useEffect(() => {
     socket.on("friends:incoming-request", listener)
