@@ -7,7 +7,7 @@ import useAuthStore from "@/hooks/use-auth-store"
 import useBreakPoint from "@/hooks/use-break-point"
 
 export default function ProfileLogoutButton() {
-  const { clear } = useAuthStore()
+  const clear = useAuthStore((state) => state.clear)
   const [, setLocation] = useLocation()
   const { md } = useBreakPoint()
 
