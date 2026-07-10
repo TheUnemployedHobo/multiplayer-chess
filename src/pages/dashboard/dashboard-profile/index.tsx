@@ -6,7 +6,7 @@ import ProfileEditPopover from "./profile-edit-popover"
 import ProfileLogoutButton from "./profile-logout-button"
 
 export default function DashboardProfile() {
-  const { user } = useAuthStore()
+  const user = useAuthStore((state) => state.user)
 
   if (!user) return null
 
