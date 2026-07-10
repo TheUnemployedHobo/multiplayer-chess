@@ -13,8 +13,8 @@ import useEntranceStore from "@/hooks/use-entrance-store"
 import { logIn, type UserType } from "@/lib/services"
 
 export default function EntranceLogInForm() {
-  const { authenticate } = useAuthStore()
-  const { setPage } = useEntranceStore()
+  const authenticate = useAuthStore((state) => state.authenticate)
+  const setPage = useEntranceStore((state) => state.setPage)
   const [, setLocation] = useLocation()
 
   const handleAction = async (formData: FormData) => {
