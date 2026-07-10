@@ -2,17 +2,7 @@ import { Trash2Icon } from "lucide-react"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+import { ShadcnAlertDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import useAuthStore from "@/hooks/use-auth-store"
 import { deleteUser } from "@/lib/services"
@@ -21,7 +11,7 @@ export default function ProfileDeleteButton() {
   const { clear } = useAuthStore()
   const [, setLocation] = useLocation()
 
-  const handleDeletion = async () => {
+  const handleDeleteAcc = async () => {
     const response = await deleteUser()
 
     if (!response) {
@@ -35,27 +25,16 @@ export default function ProfileDeleteButton() {
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
+    <ShadcnAlertDialog
+      action={{ onClick: handleDeleteAcc, text: "Delete" }}
+      description="This action will permanently remove your account and all associated data. You cannot undo this."
+      title="Delete your account"
+      triggerButton={
         <Button className="w-full" size="lg" type="button" variant="destructive">
           <Trash2Icon />
           <span>Delete account</span>
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Delete your account</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action will permanently remove your account and all associated data. You cannot undo this.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDeletion} variant="destructive">
-            Delete
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      }
+    />
   )
 }
