@@ -1,7 +1,7 @@
 import { CheckIcon, UserRoundPlusIcon, XIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
-import useSWR from "swr"
+import useSWR, { mutate } from "swr"
 
 import { ItemPlaceholder } from "@/components/placeholders"
 import { ShadcnDialog } from "@/components/shadcn-dialogs"
@@ -10,14 +10,22 @@ import { Input } from "@/components/ui/input"
 import { ItemGroup } from "@/components/ui/item"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { UserItem } from "@/components/user-item"
+import useBreakPoint from "@/hooks/use-break-point"
 import { useAcceptFriendRequest, useFriendRequests } from "@/hooks/use-socket-events"
 import { getAllUsers } from "@/lib/services"
 import { formatDate } from "@/lib/utils"
 
 export default function DashboardAddFriend() {
   const [search, setSearch] = useState("")
-  const { data, isLoading } = useSWR("users", getAllUsers)
-  const acceptReq = useAcceptFriendRequest((message) => toast.success(message))
+  const { lg } = useBreakPoint()
+  const { data, mutate: mutateUsers } = useSWR("users", getAllUsers)
+
+  const acceptReq = useAcceptFriendRequest((message) => {
+    toast.success(message)
+    mutate("friends")
+    mutateUsers()
+  })
+
   const sendFriendReq = useFriendRequests(({ avatar, userId, username }) =>
     toast.custom(
       (t) => (
@@ -49,11 +57,6 @@ export default function DashboardAddFriend() {
     ),
   )
 
-  const handleClick = (id: string, username: string) => {
-    sendFriendReq(id)
-    toast.info(`Friend request sent to ${username}`)
-  }
-
   return (
     <ShadcnDialog
       content={
@@ -66,7 +69,7 @@ export default function DashboardAddFriend() {
           />
           <ScrollArea className="h-80">
             <ItemGroup>
-              {isLoading || !data ? (
+              {!data ? (
                 <ItemPlaceholder quantity={4} />
               ) : (
                 data
@@ -74,7 +77,13 @@ export default function DashboardAddFriend() {
                   .map(({ avatar, id, signup_date, username }) => (
                     <UserItem
                       actions={
-                        <Button onClick={() => handleClick(id, username)} size="icon-lg">
+                        <Button
+                          onClick={() => {
+                            sendFriendReq(id)
+                            toast.info(`Friend request sent to ${username}`)
+                          }}
+                          size="icon-lg"
+                        >
                           <UserRoundPlusIcon />
                         </Button>
                       }
@@ -93,9 +102,9 @@ export default function DashboardAddFriend() {
       description="Search for your friend's username to send a request."
       title="Add a new friend"
       triggerButton={
-        <Button className="w-full" variant="outline">
+        <Button size={lg ? "default" : "icon-lg"} variant="outline">
           <UserRoundPlusIcon />
-          <span>Add friend</span>
+          {lg && <span>Add friend</span>}
         </Button>
       }
     />
