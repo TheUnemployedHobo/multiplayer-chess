@@ -2,6 +2,7 @@ import { UsersRoundIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 import DashboardAddFriend from "./dashboard-add-friend"
 import DashboardFriendsList from "./dashboard-friends-list"
@@ -18,12 +19,13 @@ export default function DashboardFriends() {
         </CardTitle>
         <CardDescription>Play with friends online</CardDescription>
         <CardAction>
-          <Badge>4 online</Badge>
+          <DashboardAddFriend />
         </CardAction>
       </CardHeader>
-      <CardContent>
-        <DashboardAddFriend />
-        <DashboardFriendsList />
+      <CardContent className="h-full">
+        <ScrollArea className="h-full">
+          <DashboardFriendsList />
+        </ScrollArea>
       </CardContent>
     </Card>
   )
