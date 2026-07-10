@@ -3,16 +3,9 @@ import { toast } from "sonner"
 import { useLocation } from "wouter"
 
 import AvatarPopover from "@/components/avatar-popover"
+import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import SubmitButton from "@/components/submit-button"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useAuthStore from "@/hooks/use-auth-store"
@@ -44,20 +37,8 @@ export default function ProfileEditPopover() {
   }
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button size={md ? "default" : "icon-lg"} variant="secondary">
-          <UserRoundPenIcon />
-          {md && <span>Edit profile</span>}
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Update your profile</DialogTitle>
-          <DialogDescription>
-            Change your username, password, or avatar. Click “Save changes” to apply the updates to your account.
-          </DialogDescription>
-        </DialogHeader>
+    <ShadcnDialog
+      content={
         <form action={handleUpdate} className="flex flex-col items-center gap-y-5">
           <AvatarPopover defaultAvatarName={user?.avatar} />
           <div className="w-full space-y-2">
@@ -78,7 +59,15 @@ export default function ProfileEditPopover() {
           <ProfileDeleteButton />
           <SubmitButton className="w-full" icon={<PencilIcon />} text="Save changes" />
         </form>
-      </DialogContent>
-    </Dialog>
+      }
+      description="Change your username, password, or avatar. Click “Save changes” to apply the updates to your account."
+      title="Update your profile"
+      triggerButton={
+        <Button size={md ? "default" : "icon-lg"} variant="secondary">
+          <UserRoundPenIcon />
+          {md && <span>Edit profile</span>}
+        </Button>
+      }
+    />
   )
 }
