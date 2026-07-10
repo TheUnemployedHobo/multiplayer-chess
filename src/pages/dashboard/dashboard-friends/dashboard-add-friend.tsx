@@ -10,16 +10,15 @@ import { Input } from "@/components/ui/input"
 import { ItemGroup } from "@/components/ui/item"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { UserItem } from "@/components/user-item"
-import { useIncomingFriendRequest, useSendFriendRequest } from "@/hooks/use-socket-events"
+import { useAcceptFriendRequest, useFriendRequests } from "@/hooks/use-socket-events"
 import { getAllUsers } from "@/lib/services"
 import { formatDate } from "@/lib/utils"
 
 export default function DashboardAddFriend() {
   const [search, setSearch] = useState("")
   const { data, isLoading } = useSWR("users", getAllUsers)
-  const sendReq = useSendFriendRequest()
-
-  useIncomingFriendRequest(({ avatar, userId, username }) =>
+  const acceptReq = useAcceptFriendRequest((message) => toast.success(message))
+  const sendFriendReq = useFriendRequests(({ avatar, userId, username }) =>
     toast.custom(
       (t) => (
         <UserItem
@@ -28,7 +27,14 @@ export default function DashboardAddFriend() {
               <Button onClick={() => toast.dismiss(t)} size="icon-lg" variant="destructive">
                 <XIcon />
               </Button>
-              <Button size="icon-lg" variant="default">
+              <Button
+                onClick={() => {
+                  acceptReq(userId)
+                  toast.dismiss(t)
+                }}
+                size="icon-lg"
+                variant="default"
+              >
                 <CheckIcon />
               </Button>
             </>
@@ -44,7 +50,7 @@ export default function DashboardAddFriend() {
   )
 
   const handleClick = (id: string, username: string) => {
-    sendReq(id)
+    sendFriendReq(id)
     toast.info(`Friend request sent to ${username}`)
   }
 
@@ -84,7 +90,7 @@ export default function DashboardAddFriend() {
           </ScrollArea>
         </>
       }
-      description="Search for your friend's username to send a request.</"
+      description="Search for your friend's username to send a request."
       title="Add a new friend"
       triggerButton={
         <Button className="w-full" variant="outline">
