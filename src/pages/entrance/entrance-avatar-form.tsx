@@ -8,7 +8,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import useEntranceStore from "@/hooks/use-entrance-store"
 
 export default function EntranceAvatarForm() {
-  const { setInfo, setPage } = useEntranceStore()
+  const setInfo = useEntranceStore((state) => state.setInfo)
+  const setPage = useEntranceStore((state) => state.setPage)
 
   const handleAction = async (formData: FormData) => {
     const avatar = formData.get("avatar") as string
