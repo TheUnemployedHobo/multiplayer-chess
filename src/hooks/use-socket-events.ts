@@ -19,8 +19,17 @@ export const useOnlineUsers = () => {
   return onlineCount
 }
 
-export const useSendFriendRequest = () => {
+export const useFriendRequests = (fn: (userInfo: UserInfoType) => void) => {
+  const listener = useEffectEvent(fn)
   const { user } = useAuthStore()
+
+  useEffect(() => {
+    socket.on("friends:incoming-request", listener)
+
+    return () => {
+      socket.off("friends:incoming-request", listener)
+    }
+  }, [])
 
   return (friendId: string) => {
     if (!user) return
@@ -33,24 +42,16 @@ export const useSendFriendRequest = () => {
   }
 }
 
-export const useIncomingFriendRequest = (fn: (userInfo: UserInfoType) => void) => {
+export const useAcceptFriendRequest = (fn: (message: string) => void) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("friends:incoming-request", listener)
+    socket.on("friends:accept-request", listener)
 
     return () => {
-      socket.off("friends:incoming-request", listener)
+      socket.off("friends:accept-request", listener)
     }
   }, [])
+
+  return (friendId: string) => socket.emit("friends:accept-request", friendId)
 }
-
-// export const useAcceptFriendRequest = (listener: () => void) => {
-//   useEffect(() => {
-//     socket.on("friends:accept-request", listener)
-
-//     return () => {
-//       socket.off("friends:accept-request", listener)
-//     }
-//   }, [])
-// }
