@@ -34,7 +34,7 @@ export default function App() {
         ))}
         <Route component={() => <DefaultPage />} />
       </Switch>
-      <Toaster position="bottom-right" />
+      <Toaster expand position="bottom-right" visibleToasts={6} />
     </ThemeProvider>
   )
 }
