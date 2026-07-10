@@ -6,7 +6,7 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } f
 import useAuthStore from "@/hooks/use-auth-store"
 
 export default function DashboardUserStatistics() {
-  const { user } = useAuthStore()
+  const user = useAuthStore((state) => state.user)
 
   const statistics = [
     { content: user?.stats.games, icon: <JoystickIcon />, title: "Games" },
