@@ -34,6 +34,7 @@ export default function DashboardAddFriend() {
             </>
           }
           avatar={avatar}
+          className="bg-muted"
           description="Wants to be your friend"
           title={username}
         />
@@ -75,6 +76,7 @@ export default function DashboardAddFriend() {
                       description={`Member since ${formatDate(signup_date)}`}
                       key={id}
                       title={username}
+                      variant="muted"
                     />
                   ))
               )}
