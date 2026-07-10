@@ -35,7 +35,8 @@ const eloTiers = [
 
 export default function EntranceEloRatingForm() {
   const [elo, setElo] = useState(eloTiers.at(0)!.elo)
-  const { info, setPage } = useEntranceStore()
+  const info = useEntranceStore((state) => state.info)
+  const setPage = useEntranceStore((state) => state.setPage)
 
   const handleAction = async () => {
     const response = await register(info.username, info.password, info.avatar!, +elo)
