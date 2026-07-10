@@ -1,8 +1,6 @@
 import { useEffect } from "react"
 import { Route, Switch } from "wouter"
 
-import { ThemeProvider } from "@/components/theme-provider"
-
 import { DefaultPage, ProtectedPage, PublicOnlyPage } from "./components/page-protection"
 import ScreenSpinner from "./components/screen-spinner"
 import { Toaster } from "./components/ui/sonner"
@@ -18,7 +16,8 @@ const routes = [
 ]
 
 export default function App() {
-  const { hydrate, status } = useAuthStore()
+  const status = useAuthStore((state) => state.status)
+  const hydrate = useAuthStore((state) => state.hydrate)
 
   useEffect(() => {
     hydrate()
@@ -27,7 +26,7 @@ export default function App() {
   if (status === "loading") return <ScreenSpinner />
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <>
       <Switch>
         {routes.map((route) => (
           <Route key={route.path} {...route} />
@@ -35,6 +34,6 @@ export default function App() {
         <Route component={() => <DefaultPage />} />
       </Switch>
       <Toaster expand position="bottom-right" visibleToasts={6} />
-    </ThemeProvider>
+    </>
   )
 }
