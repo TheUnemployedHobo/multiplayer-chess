@@ -10,7 +10,7 @@ export type UserType = {
 
 type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }[]
 
-type FriendsType = { avatar: string; id: string; stats: StatsType; username: string }[]
+type FriendsType = { friend: { avatar: string; id: string; signup_date: string; stats: StatsType; username: string } }[]
 
 type StatsType = { elo: number; games: number; losses: number; wins: number }
 
