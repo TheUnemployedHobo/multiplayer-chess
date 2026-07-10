@@ -15,7 +15,8 @@ import { updateUserInfo } from "@/lib/services"
 import ProfileDeleteButton from "./profile-delete-button"
 
 export default function ProfileEditPopover() {
-  const { clear, user } = useAuthStore()
+  const user = useAuthStore((state) => state.user)
+  const clear = useAuthStore((state) => state.clear)
   const [, setLocation] = useLocation()
   const { md } = useBreakPoint()
 
