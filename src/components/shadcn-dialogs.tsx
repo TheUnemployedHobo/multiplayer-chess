@@ -1,5 +1,7 @@
 import type { ReactNode } from "react"
 
+import { cn } from "@/lib/utils"
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,7 +22,7 @@ type AlertDialogPropsType = {
   triggerButton: ReactNode
 }
 
-type DialogPropsType = { content: ReactNode; description: string; title: string; triggerButton: ReactNode }
+type DialogPropsType = { content: ReactNode; description?: string; title?: string; triggerButton: ReactNode }
 
 export function ShadcnAlertDialog({ action, description, title, triggerButton }: AlertDialogPropsType) {
   return (
@@ -47,7 +49,7 @@ export function ShadcnDialog({ content, description, title, triggerButton }: Dia
     <Dialog>
       <DialogTrigger asChild>{triggerButton}</DialogTrigger>
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className={cn(!title && !description && "sr-only")}>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
