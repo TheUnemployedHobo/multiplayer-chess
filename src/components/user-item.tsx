@@ -1,19 +1,19 @@
-import type { ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
 import { findAvatarByName } from "@/lib/avatars"
 
-type PropsType = {
+type PropsType = ComponentProps<typeof Item> & {
   actions: ReactNode | undefined
   avatar: string
   description: string
   title: string
 }
 
-export function UserItem({ actions, avatar, description, title }: PropsType) {
+export function UserItem({ actions, avatar, description, title, ...props }: PropsType) {
   return (
-    <Item variant="outline">
+    <Item {...props}>
       <ItemMedia>
         <Avatar size="lg">
           <AvatarImage src={findAvatarByName(avatar).svgSrc} />
