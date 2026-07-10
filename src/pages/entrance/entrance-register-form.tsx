@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label"
 import useEntranceStore from "@/hooks/use-entrance-store"
 
 export default function EntranceRegisterForm() {
-  const { setInfo, setPage } = useEntranceStore()
+  const setInfo = useEntranceStore((state) => state.setInfo)
+  const setPage = useEntranceStore((state) => state.setPage)
 
   const handleAction = async (formData: FormData) => {
     const username = formData.get("username") as string
