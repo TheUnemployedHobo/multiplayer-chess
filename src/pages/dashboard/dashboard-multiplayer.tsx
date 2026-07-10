@@ -3,7 +3,7 @@ import { Gamepad2Icon, SearchIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { useOnlineUsers } from "@/lib/sockets/events"
+import { useOnlineUsers } from "@/hooks/use-socket-events"
 
 export default function DashboardMultiplayer() {
   const onlineUsersCount = useOnlineUsers()
