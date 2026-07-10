@@ -1,9 +1,11 @@
 import { useEffect, useEffectEvent, useState } from "react"
 
+import type { AvatarNameType } from "@/lib/avatars"
+
 import useAuthStore from "@/hooks/use-auth-store"
 import { socket } from "@/lib/socket"
 
-type UserInfoType = { avatar: string; elo: number; userId: string; username: string }
+type UserInfoType = { avatar: AvatarNameType; elo: number; userId: string; username: string }
 
 export const useOnlineUsers = () => {
   const [onlineCount, setOnlineCount] = useState(0)
@@ -27,15 +29,14 @@ export const useSendFriendRequest = () => {
 
     socket.emit("friends:incoming-request", {
       avatar: user.avatar,
-      elo: user.stats.elo,
       friendId,
       username: user.username,
     })
   }
 }
 
-export const useIncomingFriendRequest = (cb: (userInfo: UserInfoType) => void) => {
-  const listener = useEffectEvent(cb)
+export const useIncomingFriendRequest = (fn: (userInfo: UserInfoType) => void) => {
+  const listener = useEffectEvent(fn)
 
   useEffect(() => {
     socket.on("friends:incoming-request", listener)
