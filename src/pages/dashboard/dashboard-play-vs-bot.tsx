@@ -10,7 +10,7 @@ const difficulties = ["beginner", "intermediate", "advanced", "expert", "master"
 
 export default function DashboardPlayVsBot() {
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
