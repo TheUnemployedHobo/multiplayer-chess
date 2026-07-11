@@ -16,7 +16,7 @@ export default function DashboardUserStatistics() {
   ]
 
   return (
-    <Card className="md:col-span-2">
+    <Card className="h-min">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
@@ -29,7 +29,7 @@ export default function DashboardUserStatistics() {
       <CardContent>
         <ItemGroup className="grid grid-cols-2 md:grid-cols-4">
           {statistics.map(({ content, icon, title }) => (
-            <Item key={title} size="xs" variant="outline">
+            <Item key={title} size="default" variant="outline">
               <ItemMedia variant="icon">{icon}</ItemMedia>
               <ItemContent>
                 <ItemTitle>{title}</ItemTitle>
