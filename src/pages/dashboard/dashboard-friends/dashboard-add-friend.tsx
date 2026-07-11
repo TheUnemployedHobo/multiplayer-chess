@@ -71,6 +71,8 @@ export default function DashboardAddFriend() {
             <ItemGroup>
               {!data ? (
                 <ItemPlaceholder quantity={4} />
+              ) : !data.length ? (
+                <p>No users found!</p>
               ) : (
                 data
                   .filter(({ username }) => username.includes(search.toLowerCase()))
