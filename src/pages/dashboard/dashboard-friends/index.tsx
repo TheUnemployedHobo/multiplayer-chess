@@ -9,7 +9,7 @@ import DashboardFriendsList from "./dashboard-friends-list"
 
 export default function DashboardFriends() {
   return (
-    <Card className="md:col-start-3 md:row-span-3 md:row-start-2">
+    <Card className="h-96 max-h-226.5 shrink-0 lg:h-full lg:w-96">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
@@ -22,7 +22,7 @@ export default function DashboardFriends() {
           <DashboardAddFriend />
         </CardAction>
       </CardHeader>
-      <CardContent className="h-full">
+      <CardContent className="min-h-0 flex-1">
         <ScrollArea className="h-full">
           <DashboardFriendsList />
         </ScrollArea>
