@@ -7,15 +7,17 @@ import DashboardUserStatistics from "./dashboard-user-statistics"
 
 export default function DashboardPage() {
   return (
-    <section className="z-10 container mx-auto h-dvh p-3 md:flex md:items-center md:justify-center md:p-0">
-      <div className="grid w-full auto-rows-min grid-cols-1 gap-3 md:grid-cols-3">
+    <section className="mx-auto flex h-dvh max-w-7xl flex-col gap-3 p-3 lg:flex-row">
+      <main className="w-full min-w-0 space-y-3">
         <DashboardProfile />
-        <DashboardMultiplayer />
-        <DashboardPlayVsBot />
-        <DashboardFriends />
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <DashboardMultiplayer />
+          <DashboardPlayVsBot />
+        </div>
         <DashboardMatchHistory />
         <DashboardUserStatistics />
-      </div>
+      </main>
+      <DashboardFriends />
     </section>
   )
 }
