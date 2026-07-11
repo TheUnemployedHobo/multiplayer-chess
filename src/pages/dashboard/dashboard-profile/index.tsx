@@ -19,7 +19,6 @@ export default function DashboardProfile() {
         </>
       }
       avatar={user.avatar}
-      className="md:col-span-3"
       description={`Member since ${formatDate(user.signup_date)}`}
       title={user.username}
       variant="muted"
