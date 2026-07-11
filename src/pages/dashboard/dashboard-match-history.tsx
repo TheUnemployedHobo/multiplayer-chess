@@ -8,7 +8,7 @@ import { Item, ItemActions, ItemContent, ItemDescription, ItemGroup, ItemMedia, 
 
 export default function DashboardMatchHistory() {
   return (
-    <Card className="md:col-span-2">
+    <Card className="h-min">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
