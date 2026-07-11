@@ -9,7 +9,7 @@ export default function DashboardMultiplayer() {
   const onlineUsersCount = useOnlineUsers()
 
   return (
-    <Card>
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
