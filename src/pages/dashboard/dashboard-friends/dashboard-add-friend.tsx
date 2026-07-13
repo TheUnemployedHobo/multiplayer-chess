@@ -26,7 +26,7 @@ export default function DashboardAddFriend() {
     mutateUsers()
   })
 
-  const sendFriendReq = useFriendRequests(({ avatar, userId, username }) =>
+  const sendFriendReq = useFriendRequests(({ avatar, userId, username }) => {
     toast.custom(
       (t) => (
         <UserItem
@@ -54,8 +54,8 @@ export default function DashboardAddFriend() {
         />
       ),
       { duration: 20000 },
-    ),
-  )
+    )
+  })
 
   return (
     <ShadcnDialog
@@ -63,7 +63,7 @@ export default function DashboardAddFriend() {
         <>
           <Input
             onInput={(e) => setSearch(e.currentTarget.value)}
-            placeholder="Search for friends"
+            placeholder="Search for users"
             type="search"
             value={search}
           />
@@ -101,7 +101,7 @@ export default function DashboardAddFriend() {
           </ScrollArea>
         </>
       }
-      description="Search for your friend's username to send a request."
+      description="Search for a username to send a request."
       title="Add a new friend"
       triggerButton={
         <Button size={lg ? "default" : "icon-lg"} variant="outline">
