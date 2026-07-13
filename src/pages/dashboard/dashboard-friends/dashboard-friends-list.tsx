@@ -6,11 +6,23 @@ import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "@/components/ui/item"
 import { UserItem } from "@/components/user-item"
+import { useFriendPresence } from "@/hooks/use-socket-events"
 import { getFriends } from "@/lib/services"
 import { formatDate } from "@/lib/utils"
 
 export default function DashboardFriendsList() {
-  const { data } = useSWR("friends", getFriends)
+  const { data, mutate } = useSWR("friends", getFriends)
+
+  useFriendPresence((friend) => {
+    const order = { online: 0, playing: 1 } as const
+    mutate(
+      (friends) =>
+        friends
+          ?.map((each) => (friend.userId === each.id ? { ...each, status: friend.status } : each))
+          .sort((a, b) => (order[a.status as keyof typeof order] ?? 2) - (order[b.status as keyof typeof order] ?? 2)),
+      false,
+    )
+  })
 
   return (
     <ItemGroup>
@@ -19,7 +31,7 @@ export default function DashboardFriendsList() {
       ) : !data.length ? (
         <p>No friends yet. Invite friends to start playing together.</p>
       ) : (
-        data.map(({ friend: { avatar, id, signup_date, stats, username } }) => {
+        data.map(({ avatar, id, signup_date, stats, status, username }) => {
           const statistics = [
             { content: stats.games, title: "Games" },
             { content: stats.wins, title: "Wins" },
@@ -34,7 +46,7 @@ export default function DashboardFriendsList() {
                   <UserItem
                     avatar={avatar}
                     description={`Member since ${formatDate(signup_date)}`}
-                    status="online"
+                    status={status}
                     title={username}
                   />
                   <ItemGroup className="grid grid-cols-2 md:grid-cols-4">
@@ -62,7 +74,13 @@ export default function DashboardFriendsList() {
               key={id}
               triggerButton={
                 <Button className="h-max w-full p-0" variant="ghost">
-                  <UserItem avatar={avatar} description="Online" status="online" title={username} variant="muted" />
+                  <UserItem
+                    avatar={avatar}
+                    description={status ? status : "Offline"}
+                    status={status}
+                    title={username}
+                    variant="muted"
+                  />
                 </Button>
               }
             />
