@@ -1,5 +1,14 @@
 import { authFetch } from "./utils"
 
+export type FriendType = {
+  avatar: string
+  id: string
+  signup_date: string
+  stats: StatsType
+  status: "online" | "playing" | undefined
+  username: string
+}
+
 export type UserType = {
   avatar: string
   jwt: string | undefined
@@ -8,16 +17,7 @@ export type UserType = {
   username: string
 }
 
-type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }[]
-
-type FriendsType = {
-  avatar: string
-  id: string
-  signup_date: string
-  stats: StatsType
-  status: "online" | "playing" | undefined
-  username: string
-}[]
+type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }
 
 type StatsType = { elo: number; games: number; losses: number; wins: number }
 
@@ -57,12 +57,12 @@ export const getAllUsers = async () => {
   const response = await authFetch(`${SERVER_URL}/users/all`)
   if (!response) return null
 
-  return response.json() as Promise<AllUsersType>
+  return response.json() as Promise<AllUsersType[]>
 }
 
 export const getFriends = async () => {
   const response = await authFetch(`${SERVER_URL}/friends`)
   if (!response) return null
 
-  return response.json() as Promise<FriendsType>
+  return response.json() as Promise<FriendType[]>
 }
