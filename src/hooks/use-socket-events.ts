@@ -3,6 +3,8 @@ import { useEffect, useEffectEvent, useState } from "react"
 import useAuthStore from "@/hooks/use-auth-store"
 import { socket } from "@/lib/socket"
 
+type FnType<T> = (data: T) => Promise<void> | void
+
 type UserInfoType = { avatar: string; elo: number; userId: string; username: string }
 
 export const useOnlineUsers = () => {
@@ -19,7 +21,7 @@ export const useOnlineUsers = () => {
   return onlineCount
 }
 
-export const useFriendRequests = (fn: (userInfo: UserInfoType) => void) => {
+export const useFriendRequests = (fn: FnType<UserInfoType>) => {
   const user = useAuthStore((state) => state.user)
   const listener = useEffectEvent(fn)
 
@@ -42,7 +44,7 @@ export const useFriendRequests = (fn: (userInfo: UserInfoType) => void) => {
   }
 }
 
-export const useAcceptFriendRequest = (fn: (message: string) => void) => {
+export const useAcceptFriendRequest = (fn: FnType<string>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -54,4 +56,16 @@ export const useAcceptFriendRequest = (fn: (message: string) => void) => {
   }, [])
 
   return (friendId: string) => socket.emit("friends:accept-request", friendId)
+}
+
+export const useFriendPresence = (fn: FnType<{ status: "online" | "playing" | undefined; userId: string }>) => {
+  const listener = useEffectEvent(fn)
+
+  useEffect(() => {
+    socket.on("friends:status", listener)
+
+    return () => {
+      socket.off("friends:status", listener)
+    }
+  }, [])
 }
