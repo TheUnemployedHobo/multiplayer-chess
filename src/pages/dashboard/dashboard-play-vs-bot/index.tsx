@@ -17,7 +17,7 @@ const difficulties = [
 ] as const
 
 export default function DashboardPlayVsBot() {
-  const [skill, setSkill] = useState(1)
+  const [skill, setSkill] = useState(2)
 
   return (
     <Card className="flex-1">
