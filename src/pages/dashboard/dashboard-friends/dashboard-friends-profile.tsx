@@ -3,8 +3,8 @@ import { SwordsIcon, UserRoundMinusIcon } from "lucide-react"
 import type { FriendType } from "@/lib/services"
 
 import { Button } from "@/components/ui/button"
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "@/components/ui/item"
 import { UserItem } from "@/components/user-item"
+import UserStatistics from "@/components/user-statistics"
 import { formatDate } from "@/lib/utils"
 
 type PropsType = FriendType & {
@@ -21,13 +21,6 @@ export default function DashboardFriendsProfile({
   status,
   username,
 }: PropsType) {
-  const statistics = [
-    { content: stats.games, title: "Games" },
-    { content: stats.wins, title: "Wins" },
-    { content: stats.losses, title: "Losses" },
-    { content: stats.elo, title: "ELO" },
-  ] as const
-
   return (
     <>
       <UserItem
@@ -36,16 +29,7 @@ export default function DashboardFriendsProfile({
         status={status}
         title={username}
       />
-      <ItemGroup className="grid grid-cols-2 md:grid-cols-4">
-        {statistics.map(({ content, title }) => (
-          <Item key={title} size="xs" variant="outline">
-            <ItemContent>
-              <ItemTitle>{title}</ItemTitle>
-              <ItemDescription className="text-xl">{content}</ItemDescription>
-            </ItemContent>
-          </Item>
-        ))}
-      </ItemGroup>
+      <UserStatistics {...stats} size="xs" />
       <div className="flex gap-x-3">
         <Button className="grow" onClick={handleUnfriend} variant="destructive">
           <UserRoundMinusIcon />
