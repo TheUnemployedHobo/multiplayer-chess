@@ -7,7 +7,7 @@ import DashboardUserStatistics from "./dashboard-user-statistics"
 
 export default function DashboardPage() {
   return (
-    <section className="mx-auto flex h-dvh max-w-7xl flex-col gap-3 p-3 lg:flex-row">
+    <section className="mx-auto flex h-dvh max-w-7xl flex-col gap-3 p-3 lg:flex-row lg:items-center">
       <main className="w-full min-w-0 space-y-3">
         <DashboardProfile />
         <div className="flex flex-col gap-3 sm:flex-row">
