@@ -1,60 +1,11 @@
-import type { CSSProperties } from "react"
-
-import { Chess, type Square } from "chess.js"
+import { Chess } from "chess.js"
 import { create } from "zustand/react"
 
-const chess = new Chess()
-
-export type ChessStoreType = {
-  clearSelection: () => void
-  getFen: () => string
-  getLegalMoves: (square: Square) => Square[]
-  makeMove: (from: Square, to: Square) => boolean
-  position: string
-  reset: () => void
-  selectedSquare: null | Square
-  selectSquare: (square: Square) => void
-  squareStyles: Record<string, CSSProperties>
+type StoreType = {
+  chess: Chess
+  position: { id: number; position: string }
 }
 
-const useChessStore = create<ChessStoreType>()((set) => ({
-  clearSelection: () => set({ selectedSquare: null, squareStyles: {} }),
-  getFen: () => chess.fen(),
-  getLegalMoves: (square) => chess.moves({ square, verbose: true }).map((move) => move.to as Square),
-  makeMove: (from, to) => {
-    try {
-      chess.move({ from, promotion: "q", to })
-      set({ position: chess.fen(), selectedSquare: null, squareStyles: {} })
-
-      return true
-    } catch {
-      return false
-    }
-  },
-  position: chess.fen(),
-  reset: () => {
-    chess.reset()
-    set({ position: chess.fen(), selectedSquare: null, squareStyles: {} })
-  },
-  selectedSquare: null,
-  selectSquare: (square) => {
-    const moves = chess.moves({ square, verbose: true })
-
-    const styles: Record<string, CSSProperties> = {}
-
-    moves.forEach(
-      ({ to }) =>
-        (styles[to] = {
-          background: "radial-gradient(circle, rgba(0,0,0,0.2) 16%, transparent 16%)",
-          ...(chess.get(to) && { border: "4px solid rgba(255,0,0,0.5)", boxSizing: "border-box" }),
-        }),
-    )
-
-    styles[square] = { border: "4px solid rgba(0,0,0,0.2)", boxSizing: "border-box" }
-
-    set({ selectedSquare: square, squareStyles: styles })
-  },
-  squareStyles: {},
-}))
+const useChessStore = create<StoreType>()(() => ({}))
 
 export default useChessStore
