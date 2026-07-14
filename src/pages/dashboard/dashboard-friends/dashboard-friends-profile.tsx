@@ -7,9 +7,20 @@ import { Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from "@/comp
 import { UserItem } from "@/components/user-item"
 import { formatDate } from "@/lib/utils"
 
-type PropsType = FriendType
+type PropsType = FriendType & {
+  handleInvite: () => void
+  handleUnfriend: () => void
+}
 
-export default function DashboardFriendsProfile({ avatar, signup_date, stats, status, username }: PropsType) {
+export default function DashboardFriendsProfile({
+  avatar,
+  handleInvite,
+  handleUnfriend,
+  signup_date,
+  stats,
+  status,
+  username,
+}: PropsType) {
   const statistics = [
     { content: stats.games, title: "Games" },
     { content: stats.wins, title: "Wins" },
@@ -36,11 +47,11 @@ export default function DashboardFriendsProfile({ avatar, signup_date, stats, st
         ))}
       </ItemGroup>
       <div className="flex gap-x-3">
-        <Button className="grow" variant="destructive">
+        <Button className="grow" onClick={handleUnfriend} variant="destructive">
           <UserRoundMinusIcon />
           <span>Unfriend</span>
         </Button>
-        <Button className="grow" variant="secondary">
+        <Button className="grow" onClick={handleInvite} variant="secondary">
           <SwordsIcon />
           <span>Invite to play</span>
         </Button>
