@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const difficulties = ["beginner", "intermediate", "advanced", "expert", "master"]
+const difficulties = ["beginner", "intermediate", "advanced", "expert", "master"] as const
 
 export default function DashboardPlayVsBot() {
   return (
@@ -21,9 +21,9 @@ export default function DashboardPlayVsBot() {
         <CardDescription>Select difficulty and start playing</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        <Label htmlFor="difficulty">Choose a difficulty</Label>
+        <Label>Choose a difficulty</Label>
         <Select defaultValue="beginner">
-          <SelectTrigger className="w-full capitalize" id="difficulty">
+          <SelectTrigger className="w-full capitalize">
             <SelectValue placeholder="e.g. Beginner" />
           </SelectTrigger>
           <SelectContent>
@@ -40,7 +40,7 @@ export default function DashboardPlayVsBot() {
       <CardFooter>
         <Button className="w-full" disabled size="lg">
           <PlayIcon />
-          Start the game
+          <span>Start the game</span>
         </Button>
       </CardFooter>
     </Card>
