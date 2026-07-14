@@ -9,6 +9,8 @@ export type FriendType = {
   username: string
 }
 
+export type StatsType = { elo: number; games: number; losses: number; wins: number }
+
 export type UserType = {
   avatar: string
   jwt: string | undefined
@@ -18,8 +20,6 @@ export type UserType = {
 }
 
 type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }
-
-type StatsType = { elo: number; games: number; losses: number; wins: number }
 
 const SERVER_URL = import.meta.env["VITE_SERVER_URL"]
 
