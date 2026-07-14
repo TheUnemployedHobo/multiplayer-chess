@@ -69,3 +69,17 @@ export const useFriendPresence = (fn: FnType<{ status: "online" | "playing" | un
     }
   }, [])
 }
+
+export const useFriendRemoval = (fn: FnType<undefined>) => {
+  const listener = useEffectEvent(fn)
+
+  useEffect(() => {
+    socket.on("friends:unfriend", listener)
+
+    return () => {
+      socket.off("friends:unfriend", listener)
+    }
+  }, [])
+
+  return (friendId: string) => socket.emit("friends:unfriend", friendId)
+}
