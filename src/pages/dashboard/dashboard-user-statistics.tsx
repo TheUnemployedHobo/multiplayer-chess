@@ -1,19 +1,13 @@
-import { ChartColumnIcon, ChessKingIcon, JoystickIcon, TrophyIcon } from "lucide-react"
+import { ChartColumnIcon } from "lucide-react"
 
+import { StatItemPlaceholder } from "@/components/placeholders"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "@/components/ui/item"
+import UserStatistics from "@/components/user-statistics"
 import useAuthStore from "@/hooks/use-auth-store"
 
 export default function DashboardUserStatistics() {
   const user = useAuthStore((state) => state.user)
-
-  const statistics = [
-    { content: user?.stats.games, icon: <JoystickIcon />, title: "Games" },
-    { content: user?.stats.wins, icon: <TrophyIcon />, title: "Wins" },
-    { content: user?.stats.losses, icon: <TrophyIcon />, title: "Losses" },
-    { content: user?.stats.elo, icon: <ChessKingIcon />, title: "ELO" },
-  ]
 
   return (
     <Card className="h-min">
@@ -27,17 +21,7 @@ export default function DashboardUserStatistics() {
         <CardDescription>View your performance metrics and progress</CardDescription>
       </CardHeader>
       <CardContent>
-        <ItemGroup className="grid grid-cols-2 md:grid-cols-4">
-          {statistics.map(({ content, icon, title }) => (
-            <Item key={title} size="default" variant="outline">
-              <ItemMedia variant="icon">{icon}</ItemMedia>
-              <ItemContent>
-                <ItemTitle>{title}</ItemTitle>
-                <ItemDescription className="text-xl">{content}</ItemDescription>
-              </ItemContent>
-            </Item>
-          ))}
-        </ItemGroup>
+        {!user ? <StatItemPlaceholder quantity={4} /> : <UserStatistics withIcons {...user.stats} />}
       </CardContent>
     </Card>
   )
