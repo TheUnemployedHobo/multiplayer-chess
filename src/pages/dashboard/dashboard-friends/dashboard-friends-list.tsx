@@ -1,7 +1,7 @@
 import { toast } from "sonner"
 import useSWR, { mutate } from "swr"
 
-import { ItemPlaceholder } from "@/components/placeholders"
+import { UserItemPlaceholder } from "@/components/placeholders"
 import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { ItemGroup } from "@/components/ui/item"
@@ -33,7 +33,7 @@ export default function DashboardFriendsList() {
   return (
     <ItemGroup>
       {!data ? (
-        <ItemPlaceholder quantity={5} />
+        <UserItemPlaceholder quantity={5} />
       ) : !data.length ? (
         <p>No friends yet. Invite friends to start playing together.</p>
       ) : (
