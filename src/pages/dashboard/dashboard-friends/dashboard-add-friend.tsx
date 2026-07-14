@@ -3,7 +3,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import useSWR, { mutate } from "swr"
 
-import { ItemPlaceholder } from "@/components/placeholders"
+import { UserItemPlaceholder } from "@/components/placeholders"
 import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -70,7 +70,7 @@ export default function DashboardAddFriend() {
           <ScrollArea className="h-80">
             <ItemGroup>
               {!data ? (
-                <ItemPlaceholder quantity={4} />
+                <UserItemPlaceholder quantity={4} />
               ) : !data.length ? (
                 <p>No users found!</p>
               ) : (
