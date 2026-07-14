@@ -7,7 +7,7 @@ export default function PlayBoardNotation() {
         <CardTitle>Moves</CardTitle>
         <CardDescription>No moves yet.</CardDescription>
       </CardHeader>
-      <CardContent>Nigga moved to africa</CardContent>
+      <CardContent>Nothing</CardContent>
     </Card>
   )
 }
