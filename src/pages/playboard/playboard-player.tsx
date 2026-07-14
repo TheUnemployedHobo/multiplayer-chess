@@ -1,3 +1,5 @@
+import { TimerIcon } from "lucide-react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
@@ -16,8 +18,9 @@ export default function PlayBoardPlayer() {
         <ItemDescription>Elo 2420</ItemDescription>
       </ItemContent>
       <ItemActions>
-        <Badge className="py-3 text-lg font-bold" variant="outline">
-          10:00
+        <Badge className="py-3" variant="outline">
+          <TimerIcon />
+          <span className="text-base font-bold">10:00</span>
         </Badge>
       </ItemActions>
     </Item>
