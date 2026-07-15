@@ -11,8 +11,8 @@ import { ItemGroup } from "@/components/ui/item"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { UserItem } from "@/components/user-item"
 import useBreakPoint from "@/hooks/use-break-point"
-import { useAcceptFriendRequest, useFriendRequests } from "@/hooks/use-socket-events"
 import { getAllUsers } from "@/lib/services"
+import { useAcceptFriendRequest, useFriendRequests } from "@/lib/socket/event-hooks/use-friend-events"
 import { formatDate } from "@/lib/utils"
 
 export default function DashboardAddFriend() {
