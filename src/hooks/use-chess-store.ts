@@ -1,10 +1,10 @@
-import { Chess, type Move, type Square } from "chess.js"
+import { Chess, type PieceSymbol, type Square } from "chess.js"
 import { create } from "zustand/react"
 
 type StoreType = {
   chess: Chess
-  history: Move[]
-  move: (from: Square, to: Square) => boolean
+  history: string[]
+  move: (from: Square, to: Square, promotion?: PieceSymbol) => boolean
   position: { id: number; position: string }
   reset: () => void
 }
@@ -14,17 +14,14 @@ const chess = new Chess()
 const useChessStore = create<StoreType>()((set) => ({
   chess,
   history: [],
-  move: (from, to) => {
-    const result = chess.move({ from, to })
+  move: (from, to, promotion) => {
+    const result = chess.move({ from, promotion, to })
 
     if (!result) return false
 
     set((state) => ({
-      history: [...state.history, result],
-      position: {
-        id: state.position.id + 1,
-        position: chess.fen(),
-      },
+      history: chess.history(),
+      position: { id: state.position.id + 1, position: chess.fen() },
     }))
 
     return true
@@ -34,10 +31,7 @@ const useChessStore = create<StoreType>()((set) => ({
     chess.reset()
     set((state) => ({
       history: [],
-      position: {
-        id: state.position.id + 1,
-        position: chess.fen(),
-      },
+      position: { id: state.position.id + 1, position: chess.fen() },
     }))
   },
 }))
