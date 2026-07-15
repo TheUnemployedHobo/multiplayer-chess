@@ -16,8 +16,8 @@ export default function PlayBoardNotation() {
               <li className="whitespace-nowrap" key={i}>
                 <span>{Math.floor(i / 2) + 1}. </span>
                 <span>
-                  {history.at(i)?.san}
-                  {history.at(i + 1) ? ` ${history.at(i + 1)?.san}` : ""}
+                  {history.at(i)}
+                  {history.at(i + 1) ? ` ${history.at(i + 1)}` : ""}
                 </span>
               </li>
             ),
