@@ -3,14 +3,20 @@ import { FlagIcon, HandshakeIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import useChessStore from "@/hooks/use-chess-store"
 
 export default function PlayBoardOptions() {
+  const turn = useChessStore((state) => state.turn)
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Game</CardTitle>
         <CardAction>
-          <Badge>White to move</Badge>
+          <Badge>
+            <span className="capitalize">{turn}</span>
+            <span>to move</span>
+          </Badge>
         </CardAction>
       </CardHeader>
       <CardContent className="flex gap-x-3">
