@@ -6,8 +6,8 @@ import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { ItemGroup } from "@/components/ui/item"
 import { UserItem } from "@/components/user-item"
-import { useFriendPresence, useFriendRemoval } from "@/hooks/use-socket-events"
 import { getFriends } from "@/lib/services"
+import { useFriendPresence, useFriendRemoval } from "@/lib/socket/event-hooks/use-friend-events"
 
 import DashboardFriendsProfile from "./dashboard-friends-profile"
 
