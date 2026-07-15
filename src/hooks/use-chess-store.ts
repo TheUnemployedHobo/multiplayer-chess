@@ -5,15 +5,15 @@ import { create } from "zustand/react"
 
 type StoreType = {
   chess: Chess
+  gameMode: "bot" | "multiplayer" | null
   history: string[]
-  isPlaying: boolean
   move: (from: Square, to: Square, promotion?: PieceSymbol) => boolean
   orientation: ColorInput
   position: { id: number; position: string }
   reset: () => void
   result: "checkmate" | "fifty-move" | "insufficient-material" | "stalemate" | "threefold-repetition" | null
+  setGameMode: (mode: "bot" | "multiplayer" | null) => void
   setOrientation: (color: ColorInput) => void
-  setPlaying: (playing: boolean) => void
   turn: "black" | "white"
 }
 
@@ -21,8 +21,8 @@ const chess = new Chess()
 
 const useChessStore = create<StoreType>()((set) => ({
   chess,
+  gameMode: null,
   history: [],
-  isPlaying: false,
   move: (from, to, promotion) => {
     const isMoveLegal = chess.move({ from, promotion, to })
 
@@ -50,16 +50,16 @@ const useChessStore = create<StoreType>()((set) => ({
   reset: () => {
     chess.reset()
     set((state) => ({
+      gameMode: null,
       history: [],
-      isPlaying: false,
       position: { id: state.position.id + 1, position: chess.fen() },
       result: null,
       turn: "white",
     }))
   },
   result: null,
+  setGameMode: (mode) => set({ gameMode: mode }),
   setOrientation: (orientation) => set({ orientation }),
-  setPlaying: (playing: boolean) => set({ isPlaying: playing }),
   turn: "white",
 }))
 
