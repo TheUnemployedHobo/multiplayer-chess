@@ -18,6 +18,18 @@ const avatars = [
   { name: "rbej1snt", svgSrc: new Avatar(style, { seed: "rbej1snt" }).toDataUri() },
 ] as const
 
-export const findAvatarByName = (name: string) => avatars.find((avatar) => avatar.name === name)!
+const botAvatar = {
+  name: "bot",
+  svgSrc: new Avatar(style, {
+    backgroundColor: "f2d3b1",
+    eyebrowsVariant: [],
+    eyesVariant: "variant08",
+    mouthVariant: "variant11",
+    seed: "bot",
+  }).toDataUri(),
+}
+
+export const findAvatarByName = (name: string) =>
+  name === "bot" ? botAvatar : avatars.find((avatar) => avatar.name === name)!
 
 export default avatars
