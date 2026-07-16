@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Route, Switch } from "wouter"
 
-import { DefaultPage, ProtectedPage, PublicOnlyPage } from "./components/page-protection"
+import { DefaultPage, ProtectedPage, PublicOnlyPage, SuperProtectedPage } from "./components/page-protection"
 import ScreenSpinner from "./components/screen-spinner"
 import { Toaster } from "./components/ui/sonner"
 import useAuthStore from "./hooks/use-auth-store"
@@ -12,7 +12,7 @@ import PlayBoardPage from "./pages/playboard"
 const routes = [
   { component: () => <PublicOnlyPage page={<EntrancePage />} />, path: "/entrance" },
   { component: () => <ProtectedPage page={<DashboardPage />} />, path: "/dashboard" },
-  { component: () => <ProtectedPage page={<PlayBoardPage />} />, path: "/playboard" },
+  { component: () => <SuperProtectedPage page={<PlayBoardPage />} />, path: "/playboard" },
 ]
 
 export default function App() {
