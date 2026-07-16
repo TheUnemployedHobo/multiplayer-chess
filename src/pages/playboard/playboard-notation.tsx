@@ -5,24 +5,28 @@ export default function PlayBoardNotation() {
   const history = useChessStore((state) => state.history)
 
   return (
-    <Card className="grow">
+    <Card className="flex-1">
       <CardHeader>
         <CardTitle>Moves</CardTitle>
       </CardHeader>
       <CardContent>
-        <ol className="flex flex-wrap gap-3">
-          {history.map((_, i) =>
-            i % 2 !== 0 ? null : (
-              <li className="whitespace-nowrap" key={i}>
-                <span>{Math.floor(i / 2) + 1}. </span>
-                <span>
-                  {history.at(i)}
-                  {history.at(i + 1) ? ` ${history.at(i + 1)}` : ""}
-                </span>
-              </li>
-            ),
-          )}
-        </ol>
+        {history.length ? (
+          <ol className="flex flex-wrap gap-3">
+            {history.map((_, i) =>
+              i % 2 !== 0 ? null : (
+                <li className="whitespace-nowrap" key={i}>
+                  <span>{Math.floor(i / 2) + 1}. </span>
+                  <span>
+                    {history.at(i)}
+                    {history.at(i + 1) ? ` ${history.at(i + 1)}` : ""}
+                  </span>
+                </li>
+              ),
+            )}
+          </ol>
+        ) : (
+          <p className="text-muted-foreground">No moves yet.</p>
+        )}
       </CardContent>
     </Card>
   )
