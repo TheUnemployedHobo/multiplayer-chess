@@ -9,15 +9,15 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import DashboardPlayVsBotButton from "./dashboard-play-button"
 
 const difficulties = [
-  { label: "Beginner", skill: 2 },
-  { label: "Intermediate", skill: 5 },
-  { label: "Advanced", skill: 10 },
-  { label: "Expert", skill: 15 },
-  { label: "Master", skill: 20 },
+  { label: "Beginner", skill: 1 },
+  { label: "Intermediate", skill: 2 },
+  { label: "Advanced", skill: 3 },
+  { label: "Expert", skill: 4 },
+  { label: "Master", skill: 5 },
 ] as const
 
 export default function DashboardPlayVsBot() {
-  const [skill, setSkill] = useState(2)
+  const [difficulty, setDifficulty] = useState(difficulties.at(0)!)
 
   return (
     <Card className="flex-1">
@@ -32,7 +32,10 @@ export default function DashboardPlayVsBot() {
       </CardHeader>
       <CardContent className="space-y-2">
         <Label>Choose a difficulty</Label>
-        <Select onValueChange={(value) => setSkill(+value)} value={skill.toString()}>
+        <Select
+          onValueChange={(value) => setDifficulty(difficulties.at(+value - 1)!)}
+          value={difficulty.skill.toString()}
+        >
           <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>
@@ -48,7 +51,7 @@ export default function DashboardPlayVsBot() {
         </Select>
       </CardContent>
       <CardFooter>
-        <DashboardPlayVsBotButton skill={skill} />
+        <DashboardPlayVsBotButton difficulty={difficulty} />
       </CardFooter>
     </Card>
   )
