@@ -35,7 +35,7 @@ export default function DashboardFriendsList() {
       {!data ? (
         <UserItemPlaceholder quantity={5} />
       ) : !data.length ? (
-        <p>No friends yet. Invite friends to start playing together.</p>
+        <p className="text-muted-foreground">No friends yet. Invite friends to start playing together.</p>
       ) : (
         data.map((props) => (
           <ShadcnDialog
