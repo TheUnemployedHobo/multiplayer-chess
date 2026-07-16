@@ -7,6 +7,7 @@ import useChessStore from "@/hooks/use-chess-store"
 
 export default function PlayBoardOptions() {
   const turn = useChessStore((state) => state.turn)
+  const gameMode = useChessStore((state) => state.gameMode)
 
   return (
     <Card>
@@ -24,10 +25,12 @@ export default function PlayBoardOptions() {
           <FlagIcon />
           <span>Resign</span>
         </Button>
-        <Button className="grow" size="lg" variant="secondary">
-          <HandshakeIcon />
-          <span>Offer draw</span>
-        </Button>
+        {gameMode === "multiplayer" && (
+          <Button className="grow" size="lg" variant="secondary">
+            <HandshakeIcon />
+            <span>Offer draw</span>
+          </Button>
+        )}
       </CardContent>
     </Card>
   )
