@@ -4,7 +4,14 @@ import { Badge } from "@/components/ui/badge"
 import { UserItem } from "@/components/user-item"
 import useChessStore from "@/hooks/use-chess-store"
 
-export default function PlayBoardPlayer() {
+type PropsType = {
+  avatar: string
+  description: string
+  timer?: number
+  title: string
+}
+
+export default function PlayBoardPlayer({ timer, ...props }: PropsType) {
   const gameMode = useChessStore((state) => state.gameMode)
 
   return (
@@ -13,14 +20,12 @@ export default function PlayBoardPlayer() {
         gameMode === "multiplayer" && (
           <Badge className="py-3" variant="outline">
             <TimerIcon />
-            <span className="text-base font-bold">10:00</span>
+            <span className="text-base font-bold">{timer}</span>
           </Badge>
         )
       }
-      avatar="e8wq4inw"
-      description="ELO: 1200"
-      title="Evil Rabbit"
       variant="muted"
+      {...props}
     />
   )
 }
