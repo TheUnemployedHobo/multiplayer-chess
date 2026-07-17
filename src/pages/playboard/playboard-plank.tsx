@@ -1,14 +1,18 @@
-import type { Square } from "chess.js"
-
 import { Chessboard } from "@mirasen/react-chessboard"
 import { toBoardMoveDestinations, toGameMove } from "@mirasen/react-chessboard/adapters/chessjs"
 
 import useChessStore from "@/hooks/use-chess-store"
+import { useBotMove } from "@/lib/socket/event-hooks/use-bot-events"
 
 export default function PlayBoardPlank() {
   const chess = useChessStore((state) => state.chess)
   const position = useChessStore((state) => state.position)
-  const move = useChessStore((state) => state.move)
+  const tryMove = useChessStore((state) => state.tryMove)
+  const forceMove = useChessStore((state) => state.forceMove)
+
+  const moveBotPieces = useBotMove(({ from, to }) => {
+    forceMove(from, to)
+  })
 
   return (
     <Chessboard
@@ -19,7 +23,10 @@ export default function PlayBoardPlank() {
       }}
       onUIMove={(uiMove) => {
         const gameMove = toGameMove(uiMove)
-        move(gameMove.from as Square, gameMove.to as Square)
+
+        if (!tryMove(gameMove.from, gameMove.to, gameMove.promotion)) return
+
+        moveBotPieces({ from: gameMove.from, to: gameMove.to })
       }}
       position={position}
     />
