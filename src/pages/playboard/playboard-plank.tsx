@@ -23,10 +23,9 @@ export default function PlayBoardPlank() {
       }}
       onUIMove={(uiMove) => {
         const gameMove = toGameMove(uiMove)
-
-        if (!tryMove(gameMove.from, gameMove.to, gameMove.promotion)) return
-
-        moveBotPieces({ from: gameMove.from, to: gameMove.to })
+        if (tryMove(gameMove.from, gameMove.to, gameMove.promotion)) {
+          moveBotPieces({ from: gameMove.from, to: gameMove.to })
+        }
       }}
       position={position}
     />
