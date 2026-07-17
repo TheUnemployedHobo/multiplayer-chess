@@ -21,6 +21,7 @@ type StoreType = {
   setOrientation: (color: ColorInput) => void
   tryMove: (from: string, to: string, promotion?: string) => boolean
   turn: Color
+  undo: () => void
 }
 
 const sync = (set: StoreApi<StoreType>["setState"]) => {
@@ -76,6 +77,11 @@ const useChessStore = create<StoreType>()((set, get) => ({
     return true
   },
   turn: chess.turn(),
+  undo: () => {
+    chess.undo()
+    chess.undo()
+    sync(set)
+  },
 }))
 
 export default useChessStore
