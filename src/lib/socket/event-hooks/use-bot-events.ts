@@ -57,3 +57,17 @@ export const useBotResign = (fn: FnType<undefined>) => {
 
   return () => socket.emit("bot:resign", undefined)
 }
+
+export const useBotUndo = (fn: FnType<undefined>) => {
+  const listener = useEffectEvent(fn)
+
+  useEffect(() => {
+    socket.on("bot:undo", listener)
+
+    return () => {
+      socket.off("bot:undo", listener)
+    }
+  }, [])
+
+  return () => socket.emit("bot:undo", undefined)
+}
