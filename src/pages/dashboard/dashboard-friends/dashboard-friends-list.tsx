@@ -1,11 +1,10 @@
 import { toast } from "sonner"
 import useSWR, { mutate } from "swr"
 
-import { UserItemPlaceholder } from "@/components/placeholders"
 import { ShadcnDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { ItemGroup } from "@/components/ui/item"
-import { UserItem } from "@/components/user-item"
+import { UserItem, UserItemPlaceholder } from "@/components/user-item"
 import { getFriends } from "@/lib/services"
 import { useFriendPresence, useFriendRemoval } from "@/lib/socket/event-hooks/use-friend-events"
 
