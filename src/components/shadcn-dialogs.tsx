@@ -24,6 +24,8 @@ type AlertDialogPropsType = {
 
 type DialogPropsType = { content: ReactNode; description?: string; title?: string; triggerButton: ReactNode }
 
+type ModalPropsType = { content: ReactNode; isOpen: boolean; onClose: () => void }
+
 export function ShadcnAlertDialog({ action, description, title, triggerButton }: AlertDialogPropsType) {
   return (
     <AlertDialog>
@@ -52,6 +54,20 @@ export function ShadcnDialog({ content, description, title, triggerButton }: Dia
         <DialogHeader className={cn(!title && !description && "sr-only")}>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
+        {content}
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+export function ShadcnModal({ content, isOpen, onClose }: ModalPropsType) {
+  return (
+    <Dialog onOpenChange={(open) => !open && onClose()} open={isOpen}>
+      <DialogContent>
+        <DialogHeader className="sr-only">
+          <DialogTitle />
+          <DialogDescription />
         </DialogHeader>
         {content}
       </DialogContent>
