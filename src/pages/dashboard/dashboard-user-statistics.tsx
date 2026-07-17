@@ -1,13 +1,12 @@
 import { ChartColumnIcon } from "lucide-react"
 
-import { StatItemPlaceholder } from "@/components/placeholders"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import UserStatistics from "@/components/user-statistics"
 import useAuthStore from "@/hooks/use-auth-store"
 
 export default function DashboardUserStatistics() {
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user)!
 
   return (
     <Card className="h-min">
@@ -21,7 +20,7 @@ export default function DashboardUserStatistics() {
         <CardDescription>View your performance metrics and progress</CardDescription>
       </CardHeader>
       <CardContent>
-        {!user ? <StatItemPlaceholder quantity={4} /> : <UserStatistics withIcons {...user.stats} />}
+        <UserStatistics withIcons {...user.stats} />
       </CardContent>
     </Card>
   )
