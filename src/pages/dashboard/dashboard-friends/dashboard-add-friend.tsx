@@ -49,7 +49,7 @@ export default function DashboardAddFriend() {
               {!data ? (
                 <UserItemPlaceholder quantity={4} />
               ) : !data.length ? (
-                <p className="bg-muted-foreground">No users found!</p>
+                <p className="text-muted-foreground">No users found!</p>
               ) : (
                 data
                   .filter(({ username }) => username.includes(search.toLowerCase()))
