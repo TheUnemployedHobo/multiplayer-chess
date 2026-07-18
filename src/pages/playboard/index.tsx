@@ -22,16 +22,18 @@ export default function PlayBoardPage() {
   })
 
   return (
-    <section className="mx-auto grid min-h-dvh max-w-5xl content-center gap-3 md:grid-cols-[1fr_300px]">
-      <div className="space-y-3">
+    <section className="container mx-auto flex min-h-dvh flex-col gap-3 p-3 md:h-dvh md:flex-row">
+      <div className="flex min-h-0 flex-1 flex-col gap-3">
         {gameMode === "bot" && <PlayBoardPlayer avatar="bot" description={botDifficulty} title="Engine" />}
         <PlayBoardPlank />
         <PlayBoardPlayer avatar={avatar} description={`ELO: ${stats.elo}`} title={username} />
       </div>
-      <div className="flex flex-col gap-y-3">
+      <div className="flex min-h-0 flex-col gap-y-3 md:w-75">
         <PlayBoardOptions />
         <PlayBoardNotation />
-        {gameMode === "multiplayer" && <PlayBoardChat />}
+
+        {/* {gameMode === "multiplayer" && <PlayBoardChat />} */}
+        <PlayBoardChat />
       </div>
       <PlayBoardModal />
     </section>
