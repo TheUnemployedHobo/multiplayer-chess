@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function PlayBoardChat() {
   return (
-    <Card className="flex-1">
+    <Card className="h-80 md:h-auto md:flex-1">
       <CardHeader>
         <CardTitle>Chat</CardTitle>
       </CardHeader>
@@ -16,7 +16,7 @@ export default function PlayBoardChat() {
         <ScrollArea className="h-full">
           <div className="space-y-3">
             <Bubble variant="tinted">
-              <BubbleContent>Hey there! what&apos;s up?</BubbleContent>
+              <BubbleContent>Hey there! What&apos;s up?</BubbleContent>
             </Bubble>
             <Bubble variant="muted">
               <BubbleContent>Not much.</BubbleContent>
