@@ -1,4 +1,4 @@
-import { CheckIcon, UserRoundPlusIcon, XIcon } from "lucide-react"
+import { UserRoundPlusIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import useSWR, { mutate } from "swr"
@@ -14,6 +14,8 @@ import { getAllUsers } from "@/lib/services"
 import { useAcceptFriendRequest, useFriendRequests } from "@/lib/socket/event-hooks/use-friend-events"
 import { formatDate } from "@/lib/utils"
 
+import DashboardFriendToaster from "./dashboard-friend-toaster"
+
 export default function DashboardAddFriend() {
   const [search, setSearch] = useState("")
   const { lg } = useBreakPoint()
@@ -27,31 +29,7 @@ export default function DashboardAddFriend() {
 
   const sendFriendReq = useFriendRequests(({ avatar, userId, username }) => {
     toast.custom(
-      (t) => (
-        <UserItem
-          actions={
-            <>
-              <Button onClick={() => toast.dismiss(t)} size="icon-lg" variant="destructive">
-                <XIcon />
-              </Button>
-              <Button
-                onClick={() => {
-                  acceptReq(userId)
-                  toast.dismiss(t)
-                }}
-                size="icon-lg"
-                variant="default"
-              >
-                <CheckIcon />
-              </Button>
-            </>
-          }
-          avatar={avatar}
-          className="bg-muted"
-          description="Wants to be your friend"
-          title={username}
-        />
-      ),
+      (id) => <DashboardFriendToaster avatar={avatar} id={id} onAccept={() => acceptReq(userId)} username={username} />,
       { duration: 20000 },
     )
   })
