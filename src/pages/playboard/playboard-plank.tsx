@@ -1,6 +1,7 @@
 import { Chessboard } from "@mirasen/react-chessboard"
 import { toBoardMoveDestinations, toGameMove } from "@mirasen/react-chessboard/adapters/chessjs"
 
+import { Card } from "@/components/ui/card"
 import useChessStore from "@/hooks/use-chess-store"
 import { useBotMove } from "@/lib/socket/event-hooks/use-bot-events"
 
@@ -15,19 +16,21 @@ export default function PlayBoardPlank() {
   })
 
   return (
-    <Chessboard
-      className="aspect-square overflow-hidden rounded-2xl"
-      movability={{
-        destinations: (source) => toBoardMoveDestinations(chess.moves({ square: source, verbose: true })),
-        mode: "strict",
-      }}
-      onUIMove={(uiMove) => {
-        const gameMove = toGameMove(uiMove)
-        if (tryMove(gameMove.from, gameMove.to, gameMove.promotion)) {
-          moveBotPieces({ from: gameMove.from, to: gameMove.to })
-        }
-      }}
-      position={position}
-    />
+    <Card className="size-full justify-center p-3">
+      <Chessboard
+        className="aspect-square size-full"
+        movability={{
+          destinations: (source) => toBoardMoveDestinations(chess.moves({ square: source, verbose: true })),
+          mode: "strict",
+        }}
+        onUIMove={(uiMove) => {
+          const gameMove = toGameMove(uiMove)
+          if (tryMove(gameMove.from, gameMove.to, gameMove.promotion)) {
+            moveBotPieces({ from: gameMove.from, to: gameMove.to })
+          }
+        }}
+        position={position}
+      />
+    </Card>
   )
 }
