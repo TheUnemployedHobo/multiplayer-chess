@@ -8,6 +8,8 @@ export const useOnlineUsers = () => {
   useEffect(() => {
     socket.on("users:online-count", setOnlineCount)
 
+    socket.emit("users:online-count", undefined)
+
     return () => {
       socket.off("users:online-count", setOnlineCount)
     }
