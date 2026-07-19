@@ -6,16 +6,16 @@ import { Button } from "@/components/ui/button"
 import useChessStore from "@/hooks/use-chess-store"
 import { useBotResign } from "@/lib/socket/event-hooks/use-bot-events"
 
-import { usePlayBoardModalSetIsOpen } from "./playboard-modal"
+import { usePlayBoardModalStore } from "./playboard-modal"
 
 export function BackToDashboardButton() {
+  const setters = usePlayBoardModalStore((state) => state.setters)
   const reset = useChessStore((state) => state.reset)
-  const setIsOpen = usePlayBoardModalSetIsOpen()
   const [, setLocation] = useLocation()
 
   const handleClick = () => {
     reset()
-    setIsOpen(false)
+    setters.setIsOpen(false)
     setLocation("/dashboard")
   }
 
@@ -30,11 +30,13 @@ export function BackToDashboardButton() {
 export function ResignButton() {
   const gameMode = useChessStore((state) => state.gameMode)
   const setIsPlaying = useChessStore((state) => state.setIsPlaying)
-  const setIsOpen = usePlayBoardModalSetIsOpen()
+  const setters = usePlayBoardModalStore((state) => state.setters)
 
   const botResign = useBotResign(() => {
     setIsPlaying(false)
-    setIsOpen(true)
+    setters.setIsOpen(true)
+    setters.setTitle("Black wins")
+    setters.setDescription("You resigned")
   })
 
   return (
