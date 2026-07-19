@@ -32,7 +32,7 @@ export const useBotMove = (fn: FnType<MovePayload>) => {
   return (movement: MovePayload) => socket.emit("bot:move", movement)
 }
 
-export const useOnBotFinished = (fn: FnType<undefined>) => {
+export const useOnBotFinished = (fn: FnType<{ result: string; winner: "Black" | "White" | null }>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
