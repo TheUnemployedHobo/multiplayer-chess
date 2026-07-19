@@ -18,7 +18,6 @@ export default function PlayBoardPlank() {
   return (
     <Card className="size-full justify-center p-3">
       <Chessboard
-        autoPromoteToQueen
         className="aspect-square size-full"
         movability={{
           destinations: (source) => toBoardMoveDestinations(chess.moves({ square: source, verbose: true })),
@@ -26,8 +25,8 @@ export default function PlayBoardPlank() {
         }}
         onUIMove={(uiMove) => {
           const gameMove = toGameMove(uiMove)
-          if (tryMove(gameMove.from, gameMove.to)) {
-            moveBotPieces({ from: gameMove.from, to: gameMove.to })
+          if (tryMove(gameMove.from, gameMove.to, gameMove.promotion)) {
+            moveBotPieces({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
           }
         }}
         position={position}
