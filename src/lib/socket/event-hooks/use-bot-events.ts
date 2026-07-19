@@ -2,7 +2,7 @@ import { useEffect, useEffectEvent } from "react"
 
 import { type FnType, socket } from ".."
 
-type MovePayload = { from: string; to: string }
+type MovePayload = { from: string; promotion?: string; to: string }
 
 export const useBotStart = (fn: FnType<undefined>) => {
   const listener = useEffectEvent(fn)
