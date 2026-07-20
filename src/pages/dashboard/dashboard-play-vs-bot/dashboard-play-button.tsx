@@ -10,12 +10,10 @@ type PropsType = { difficulty: { label: string; skill: number } }
 export default function DashboardPlayVsBotButton({ difficulty: { label, skill } }: PropsType) {
   const setGameMode = useChessStore((state) => state.setGameMode)
   const setBotDifficulty = useChessStore((state) => state.setBotDifficulty)
-  const reset = useChessStore((state) => state.reset)
   const setIsPlaying = useChessStore((state) => state.setIsPlaying)
   const [, setLocation] = useLocation()
 
   const startBotGame = useBotStart(() => {
-    reset()
     setIsPlaying(true)
     setGameMode("bot")
     setBotDifficulty(label)
