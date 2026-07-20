@@ -8,6 +8,7 @@ import { useBotMove } from "@/lib/socket/event-hooks/use-bot-events"
 export default function PlayBoardPlank() {
   const chess = useChessStore((state) => state.chess)
   const position = useChessStore((state) => state.position)
+  const orientation = useChessStore((state) => state.orientation)
   const tryMove = useChessStore((state) => state.tryMove)
   const forceMove = useChessStore((state) => state.forceMove)
 
@@ -29,6 +30,7 @@ export default function PlayBoardPlank() {
             moveBotPieces({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
           }
         }}
+        orientation={orientation}
         position={position}
       />
     </Card>
