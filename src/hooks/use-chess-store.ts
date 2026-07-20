@@ -4,6 +4,8 @@ import type { StoreApi } from "zustand"
 import { Chess, type Color } from "chess.js"
 import { create } from "zustand/react"
 
+export type OpponentInfoType = { avatar: string; color: "black" | "white"; elo: number; username: string }
+
 type StoreType = {
   botDifficulty: string
   chess: Chess
@@ -11,12 +13,14 @@ type StoreType = {
   gameMode: "bot" | "multiplayer" | null
   history: string[]
   isPlaying: boolean
+  opponentInfo: null | OpponentInfoType
   orientation: ColorInput
   position: { id: number; position: string }
   reset: () => void
   setBotDifficulty: (botDifficulty: string) => void
   setGameMode: (mode: "bot" | "multiplayer" | null) => void
   setIsPlaying: (isPlaying: boolean) => void
+  setOpponentInfo: (opponentInfo: null | OpponentInfoType) => void
   setOrientation: (color: ColorInput) => void
   tryMove: (from: string, to: string, promotion?: string) => boolean
   turn: Color
@@ -42,6 +46,7 @@ const useChessStore = create<StoreType>()((set, get) => ({
   gameMode: null,
   history: chess.history(),
   isPlaying: false,
+  opponentInfo: null,
   orientation: "white",
   position: { id: 0, position: chess.fen() },
   reset: () => {
@@ -55,6 +60,7 @@ const useChessStore = create<StoreType>()((set, get) => ({
   setBotDifficulty: (botDifficulty) => set({ botDifficulty }),
   setGameMode: (gameMode) => set({ gameMode }),
   setIsPlaying: (isPlaying) => set({ isPlaying }),
+  setOpponentInfo: (opponentInfo) => set({ opponentInfo }),
   setOrientation: (orientation) => set({ orientation }),
   tryMove: (from, to, promotion = "q") => {
     if (!chess.move({ from, promotion, to })) return false
