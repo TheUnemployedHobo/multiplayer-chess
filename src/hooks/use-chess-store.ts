@@ -39,7 +39,7 @@ const chess = new Chess()
 const useChessStore = create<StoreType>()((set, get) => ({
   botDifficulty: "",
   chess,
-  forceMove: (from, to, promotion = "q") => {
+  forceMove: (from, to, promotion) => {
     chess.move({ from, promotion, to })
     sync(set)
   },
@@ -62,7 +62,7 @@ const useChessStore = create<StoreType>()((set, get) => ({
   setIsPlaying: (isPlaying) => set({ isPlaying }),
   setOpponentInfo: (opponentInfo) => set({ opponentInfo }),
   setOrientation: (orientation) => set({ orientation }),
-  tryMove: (from, to, promotion = "q") => {
+  tryMove: (from, to, promotion) => {
     if (!chess.move({ from, promotion, to })) return false
     sync(set)
     return true
