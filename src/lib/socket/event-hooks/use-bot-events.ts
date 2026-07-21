@@ -2,6 +2,7 @@ import { useEffect, useEffectEvent } from "react"
 
 import { type FnType, socket } from ".."
 
+type GameFinishedPayload = { result: string; winner: "Black" | "White" | null }
 type MovePayload = { from: string; promotion?: string; to: string }
 
 export const useBotStart = (fn: FnType<undefined>) => {
@@ -32,7 +33,7 @@ export const useBotMove = (fn: FnType<MovePayload>) => {
   return (movement: MovePayload) => socket.emit("bot:move", movement)
 }
 
-export const useOnBotFinished = (fn: FnType<{ result: string; winner: "Black" | "White" | null }>) => {
+export const useOnBotFinished = (fn: FnType<GameFinishedPayload>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export const useOnBotFinished = (fn: FnType<{ result: string; winner: "Black" | 
   }, [])
 }
 
-export const useBotResign = (fn: FnType<undefined>) => {
+export const useBotResign = (fn: FnType<GameFinishedPayload>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
