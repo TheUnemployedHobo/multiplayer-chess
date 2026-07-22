@@ -11,17 +11,17 @@ export const useFriendRequests = (fn: FnType<UserInfoType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("friends:incoming-request", listener)
+    socket.on("friend:incoming-request", listener)
 
     return () => {
-      socket.off("friends:incoming-request", listener)
+      socket.off("friend:incoming-request", listener)
     }
   }, [])
 
   return (friendId: string) => {
     if (!user) return
 
-    socket.emit("friends:incoming-request", {
+    socket.emit("friend:incoming-request", {
       avatar: user.avatar,
       friendId,
       username: user.username,
@@ -33,24 +33,24 @@ export const useAcceptFriendRequest = (fn: FnType<string>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("friends:accept-request", listener)
+    socket.on("friend:accept-request", listener)
 
     return () => {
-      socket.off("friends:accept-request", listener)
+      socket.off("friend:accept-request", listener)
     }
   }, [])
 
-  return (friendId: string) => socket.emit("friends:accept-request", friendId)
+  return (friendId: string) => socket.emit("friend:accept-request", friendId)
 }
 
 export const useFriendPresence = (fn: FnType<{ status: "online" | "playing" | undefined; userId: string }>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("friends:status", listener)
+    socket.on("friend:status", listener)
 
     return () => {
-      socket.off("friends:status", listener)
+      socket.off("friend:status", listener)
     }
   }, [])
 }
@@ -59,12 +59,32 @@ export const useFriendRemoval = (fn: FnType<undefined>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("friends:unfriend", listener)
+    socket.on("friend:unfriend", listener)
 
     return () => {
-      socket.off("friends:unfriend", listener)
+      socket.off("friend:unfriend", listener)
     }
   }, [])
 
-  return (friendId: string) => socket.emit("friends:unfriend", friendId)
+  return (friendId: string) => socket.emit("friend:unfriend", friendId)
+}
+
+export const useFriendInviteToGame = (
+  fn: FnType<
+    | { payload: string; role: "inviter" }
+    | { payload: { avatar: string; description: string; id: string; username: string }; role: "invitee" }
+  >,
+) => {
+  const listener = useEffectEvent(fn)
+
+  useEffect(() => {
+    socket.on("friend:invite-to-game", listener)
+
+    return () => {
+      socket.off("friend:invite-to-game", listener)
+    }
+  }, [])
+
+  return (payload: { invitee: { id: string; username: string }; inviter: { avatar: string; username: string } }) =>
+    socket.emit("friend:invite-to-game", payload)
 }
