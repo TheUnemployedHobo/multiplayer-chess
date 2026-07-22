@@ -29,7 +29,15 @@ export default function DashboardAddFriend() {
 
   const sendFriendReq = useFriendRequests(({ avatar, userId, username }) => {
     toast.custom(
-      (id) => <DashboardFriendToaster avatar={avatar} id={id} onAccept={() => acceptReq(userId)} username={username} />,
+      (id) => (
+        <DashboardFriendToaster
+          avatar={avatar}
+          description="Wants to be your friend"
+          id={id}
+          onAccept={() => acceptReq(userId)}
+          title={username}
+        />
+      ),
       { duration: 20000 },
     )
   })
