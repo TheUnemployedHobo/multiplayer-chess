@@ -35,7 +35,7 @@ export default function DashboardFriendsProfile({
           <UserRoundMinusIcon />
           <span>Unfriend</span>
         </Button>
-        <Button className="grow" onClick={handleInvite} variant="secondary">
+        <Button className="grow" disabled={status !== "online"} onClick={handleInvite} variant="secondary">
           <SwordsIcon />
           <span>Invite to play</span>
         </Button>
