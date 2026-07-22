@@ -86,3 +86,17 @@ export const useGameDrawOfferAccept = (fn: FnType<undefined>) => {
 
   return () => socket.emit("game:draw-offer:accept", undefined)
 }
+
+export const useGameChat = (fn: FnType<{ color: "black" | "white"; message: string }>) => {
+  const listener = useEffectEvent(fn)
+
+  useEffect(() => {
+    socket.on("game:chat", listener)
+
+    return () => {
+      socket.off("game:chat", listener)
+    }
+  }, [])
+
+  return (message: string) => socket.emit("game:chat", message)
+}
