@@ -4,32 +4,30 @@ import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { UserItem } from "@/components/user-item"
 
-type PropsType = { avatar: string; id: number | string; onAccept: () => void; username: string }
+type PropsType = { avatar: string; description: string; id: number | string; onAccept: () => void; title: string }
 
-export default function DashboardFriendToaster({ avatar, id, onAccept, username }: PropsType) {
+export default function DashboardFriendToaster({ id, onAccept, ...props }: PropsType) {
+  const handleDecline = () => toast.dismiss(id)
+
+  const handleAccept = () => {
+    onAccept()
+    toast.dismiss(id)
+  }
+
   return (
     <UserItem
       actions={
         <>
-          <Button onClick={() => toast.dismiss(id)} size="icon-lg" variant="destructive">
+          <Button onClick={handleDecline} size="icon-lg" variant="destructive">
             <XIcon />
           </Button>
-          <Button
-            onClick={() => {
-              onAccept()
-              toast.dismiss(id)
-            }}
-            size="icon-lg"
-            variant="default"
-          >
+          <Button onClick={handleAccept} size="icon-lg" variant="default">
             <CheckIcon />
           </Button>
         </>
       }
-      avatar={avatar}
       className="bg-muted"
-      description="Wants to be your friend"
-      title={username}
+      {...props}
     />
   )
 }
