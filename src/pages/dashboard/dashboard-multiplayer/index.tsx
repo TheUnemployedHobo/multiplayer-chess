@@ -2,7 +2,7 @@ import { Gamepad2Icon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { useOnlineUsers } from "@/lib/socket/event-hooks/use-user-events"
+import { useOnlineUsers } from "@/lib/socket/use-user-events"
 
 import MultiplayerModal from "./multiplayer-modal"
 import MultiplayerPlayButton from "./multiplayer-play-button"
