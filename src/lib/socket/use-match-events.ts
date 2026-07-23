@@ -1,8 +1,6 @@
 import { useEffect, useEffectEvent } from "react"
 
-import type { OpponentInfoType } from "@/hooks/use-chess-store"
-
-import type { FnType } from "../common-types"
+import type { FnType, OpponentInfoType } from "../common-types"
 
 import { socket } from "."
 
