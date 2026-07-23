@@ -5,8 +5,9 @@ import { create } from "zustand/react"
 import { ShadcnModal } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import { Spinner } from "@/components/ui/spinner"
-import { useMatchLeave } from "@/lib/socket/event-hooks/use-match-events"
+import { useMatchLeave } from "@/lib/socket/use-match-events"
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useMultiplayerModalStore = create(
   combine({ isOpen: false }, (set) => ({
     setIsOpen: (isOpen: boolean) => set({ isOpen }),
