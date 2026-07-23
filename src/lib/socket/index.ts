@@ -4,8 +4,6 @@ import useAuthStore from "@/hooks/use-auth-store"
 
 import { jwtCookie } from "../utils"
 
-export type FnType<T> = (data: T) => Promise<void> | void
-
 export const socket = io(import.meta.env["VITE_SERVER_URL"], {
   autoConnect: false,
   transports: ["websocket"],
