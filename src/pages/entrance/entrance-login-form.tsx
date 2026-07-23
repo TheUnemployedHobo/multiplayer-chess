@@ -2,6 +2,8 @@ import { FormIcon, LogInIcon } from "lucide-react"
 import { toast } from "sonner"
 import { useLocation } from "wouter"
 
+import type { UserMeType } from "@/lib/common-types"
+
 import SubmitButton from "@/components/submit-button"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -10,7 +12,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import useAuthStore from "@/hooks/use-auth-store"
 import useEntranceStore from "@/hooks/use-entrance-store"
-import { logIn, type UserType } from "@/lib/services"
+import { logIn } from "@/lib/services"
 
 export default function EntranceLogInForm() {
   const authenticate = useAuthStore((state) => state.authenticate)
@@ -24,7 +26,7 @@ export default function EntranceLogInForm() {
     const response = await logIn(username, password)
 
     if (response.status === 200) {
-      const user: UserType = await response.json()
+      const user: UserMeType = await response.json()
       authenticate(user)
       setLocation("/dashboard")
       toast.success("Login successful", { description: "Welcome back!" })
