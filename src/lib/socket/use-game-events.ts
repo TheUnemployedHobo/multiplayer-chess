@@ -1,10 +1,10 @@
 import { useEffect, useEffectEvent } from "react"
 
-import type { FnType, GameFinishedPayload, MovePayload } from "../common-types"
+import type { FnType, GameFinishedPayloadType, MovePayloadType } from "../common-types"
 
 import { socket } from "."
 
-export const useGameMove = (fn: FnType<MovePayload>) => {
+export const useGameMove = (fn: FnType<MovePayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -15,10 +15,10 @@ export const useGameMove = (fn: FnType<MovePayload>) => {
     }
   }, [])
 
-  return (movement: MovePayload) => socket.emit("game:move", movement)
+  return (movement: MovePayloadType) => socket.emit("game:move", movement)
 }
 
-export const useOnGameFinish = (fn: FnType<GameFinishedPayload>) => {
+export const useOnGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const useOnGameFinish = (fn: FnType<GameFinishedPayload>) => {
   }, [])
 }
 
-export const useGameResign = (fn: FnType<GameFinishedPayload>) => {
+export const useGameResign = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
