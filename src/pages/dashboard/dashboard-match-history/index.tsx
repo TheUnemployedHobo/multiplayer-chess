@@ -5,7 +5,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { ItemGroup } from "@/components/ui/item"
 import { UserItem } from "@/components/user-item"
 
-import DashboardFullHistory from "./dashboard-full-history"
+import MatchFullHistory from "./match-full-history"
 
 export default function DashboardMatchHistory() {
   return (
@@ -19,7 +19,7 @@ export default function DashboardMatchHistory() {
         </CardTitle>
         <CardDescription>View your recent match history</CardDescription>
         <CardAction>
-          <DashboardFullHistory />
+          <MatchFullHistory />
         </CardAction>
       </CardHeader>
       <CardContent>
