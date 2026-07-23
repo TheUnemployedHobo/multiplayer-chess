@@ -1,25 +1,6 @@
+import type { FriendType, UserAllType, UserMeType } from "./common-types"
+
 import { authFetch } from "./utils"
-
-export type FriendType = {
-  avatar: string
-  id: string
-  signup_date: string
-  stats: StatsType
-  status: "online" | "playing" | undefined
-  username: string
-}
-
-export type StatsType = { elo: number; games: number; losses: number; wins: number }
-
-export type UserType = {
-  avatar: string
-  jwt: string | undefined
-  signup_date: string
-  stats: StatsType
-  username: string
-}
-
-type AllUsersType = { avatar: string; id: string; signup_date: string; username: string }
 
 const SERVER_URL = import.meta.env["VITE_SERVER_URL"]
 
@@ -50,14 +31,14 @@ export const getCurrentUser = async () => {
   const response = await authFetch(`${SERVER_URL}/users/me`)
   if (!response) return null
 
-  return response.json() as Promise<UserType>
+  return response.json() as Promise<UserMeType>
 }
 
 export const getAllUsers = async () => {
   const response = await authFetch(`${SERVER_URL}/users/all`)
   if (!response) return null
 
-  return response.json() as Promise<AllUsersType[]>
+  return response.json() as Promise<UserAllType[]>
 }
 
 export const getFriends = async () => {
