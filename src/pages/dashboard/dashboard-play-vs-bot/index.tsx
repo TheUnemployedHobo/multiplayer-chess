@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-import DashboardPlayVsBotButton from "./dashboard-play-button"
+import DashboardPlayVsBotButton from "./play-vs-bot-button"
 
 const difficulties = [
   { label: "Beginner", skill: 1 },
