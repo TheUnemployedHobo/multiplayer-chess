@@ -1,15 +1,17 @@
 import { create } from "zustand/react"
 
-import { getCurrentUser, type UserType } from "@/lib/services"
+import type { UserMeType } from "@/lib/common-types"
+
+import { getCurrentUser } from "@/lib/services"
 import { connectSocket, disconnectSocket } from "@/lib/socket"
 import { jwtCookie } from "@/lib/utils"
 
 type StoreType = {
-  authenticate: (user: UserType) => void
+  authenticate: (user: UserMeType) => void
   clear: (directMode?: "native" | "noDirection") => void
   hydrate: () => Promise<void>
   status: "authenticated" | "loading" | "unauthenticated"
-  user: null | UserType
+  user: null | UserMeType
 }
 
 const useAuthStore = create<StoreType>((set) => ({
