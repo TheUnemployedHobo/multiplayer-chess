@@ -1,8 +1,8 @@
 import { UserItem } from "@/components/user-item"
 import useAuthStore from "@/hooks/use-auth-store"
 import useChessStore from "@/hooks/use-chess-store"
-import { useOnBotFinished } from "@/lib/socket/event-hooks/use-bot-events"
-import { useOnGameFinish } from "@/lib/socket/event-hooks/use-game-events"
+import { useOnBotSessionFinish } from "@/lib/socket/use-bot-events"
+import { useOnGameFinish } from "@/lib/socket/use-game-events"
 
 import PlayBoardChat from "./playboard-chat"
 import PlayBoardModal, { usePlayBoardModalStore } from "./playboard-modal"
@@ -18,14 +18,14 @@ export default function PlayBoardPage() {
   const user = useAuthStore((state) => state.user)!
   const setters = usePlayBoardModalStore((state) => state.setters)
 
-  const handleGameFinish = (result: string, winner: "Black" | "White" | null) => {
+  const handleGameFinish = (result: string, winner: "black" | "white" | null) => {
     setIsPlaying(false)
     setters.setTitle(winner ? `${winner} wins` : "Draw")
     setters.setDescription(result)
     setters.setIsOpen(true)
   }
 
-  useOnBotFinished(({ result, winner }) => handleGameFinish(result, winner))
+  useOnBotSessionFinish(({ result, winner }) => handleGameFinish(result, winner))
   useOnGameFinish(({ result, winner }) => handleGameFinish(result, winner))
 
   return (
