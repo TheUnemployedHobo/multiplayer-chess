@@ -6,13 +6,8 @@ import { useLocation } from "wouter"
 import { ShadcnAlertDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import useChessStore from "@/hooks/use-chess-store"
-import { useBotResign, useBotUndo } from "@/lib/socket/event-hooks/use-bot-events"
-import {
-  useGameDrawOffer,
-  useGameDrawOfferAccept,
-  useGameDrawOfferDecline,
-  useGameResign,
-} from "@/lib/socket/event-hooks/use-game-events"
+import { resignBotSession, useBotSessionUndo } from "@/lib/socket/use-bot-events"
+import { useGameDrawOffer, useGameDrawOfferAccept, useGameDrawOfferDecline } from "@/lib/socket/use-game-events"
 
 import { usePlayBoardModalStore } from "./playboard-modal"
 
@@ -91,25 +86,16 @@ export function DrawOfferButton() {
 
 export function ResignButton() {
   const gameMode = useChessStore((state) => state.gameMode)
-  const setIsPlaying = useChessStore((state) => state.setIsPlaying)
-  const setters = usePlayBoardModalStore((state) => state.setters)
 
-  const handleResign = (result: string, winner: "Black" | "White") => {
-    setIsPlaying(false)
-    setters.setIsOpen(true)
-    setters.setTitle(`${winner} wins`)
-    setters.setDescription(result)
-  }
-
-  const botResign = useBotResign(({ result, winner }) => handleResign(result, winner!))
-  const gameResign = useGameResign(({ result, winner }) => handleResign(result, winner!))
+  // const botResign = useBotResign(({ result, winner }) => handleResign(result, winner!))
+  // const gameResign = useGameResign(({ result, winner }) => handleResign(result, winner!))
 
   return (
     <ShadcnAlertDialog
       action={{
         onClick: () => {
-          if (gameMode === "bot") botResign()
-          if (gameMode === "multiplayer") gameResign()
+          if (gameMode === "bot") resignBotSession()
+          if (gameMode === "multiplayer") alert("Resigned")
         },
         text: "Resign",
       }}
@@ -128,7 +114,7 @@ export function ResignButton() {
 export function UndoButton() {
   const undo = useChessStore((state) => state.undo)
 
-  const undoMove = useBotUndo(() => undo())
+  const undoMove = useBotSessionUndo(() => undo())
 
   return (
     <Button className="grow" onClick={undoMove} size="lg" variant="secondary">
