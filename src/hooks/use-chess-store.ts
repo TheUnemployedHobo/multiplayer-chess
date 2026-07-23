@@ -4,7 +4,7 @@ import type { StoreApi } from "zustand"
 import { Chess, type Color } from "chess.js"
 import { create } from "zustand/react"
 
-export type OpponentInfoType = { avatar: string; color: "black" | "white"; elo: number; username: string }
+import type { OpponentInfoType } from "@/lib/common-types"
 
 type StoreType = {
   botDifficulty: string
