@@ -37,8 +37,8 @@ export const authFetch = async (input: RequestInfo | URL, init?: RequestInit) =>
       },
     })
 
-    if (response.status === 401) {
-      clear()
+    if (!response.ok) {
+      if (response.status === 401) clear()
       return null
     }
 
