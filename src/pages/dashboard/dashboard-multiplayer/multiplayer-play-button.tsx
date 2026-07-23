@@ -3,7 +3,7 @@ import { useLocation } from "wouter"
 
 import { Button } from "@/components/ui/button"
 import useChessStore from "@/hooks/use-chess-store"
-import { useMatchJoin } from "@/lib/socket/event-hooks/use-match-events"
+import { useMatchJoin } from "@/lib/socket/use-match-events"
 
 import { useMultiplayerModalStore } from "./multiplayer-modal"
 
