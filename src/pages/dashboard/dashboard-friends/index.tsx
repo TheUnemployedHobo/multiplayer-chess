@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-import DashboardAddFriend from "./dashboard-add-friend"
-import DashboardFriendsList from "./dashboard-friends-list"
+import FriendsAddButton from "./friends-add-button"
+import FriendsListPanel from "./friends-list-panel"
 
 export default function DashboardFriends() {
   return (
@@ -19,12 +19,12 @@ export default function DashboardFriends() {
         </CardTitle>
         <CardDescription>Play with friends online</CardDescription>
         <CardAction>
-          <DashboardAddFriend />
+          <FriendsAddButton />
         </CardAction>
       </CardHeader>
       <CardContent className="min-h-0 flex-1">
         <ScrollArea className="h-full">
-          <DashboardFriendsList />
+          <FriendsListPanel />
         </ScrollArea>
       </CardContent>
     </Card>
