@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent } from "react"
 
-import type { FnType, GameFinishedPayload, MovePayload } from "../common-types"
+import type { FnType, GameFinishedPayloadType, MovePayloadType } from "../common-types"
 
 import { socket } from "."
 
@@ -18,7 +18,7 @@ export const useBotStart = (fn: FnType<undefined>) => {
   return (skill: number) => socket.emit("bot:start", skill)
 }
 
-export const useBotMove = (fn: FnType<MovePayload>) => {
+export const useBotMove = (fn: FnType<MovePayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -29,10 +29,10 @@ export const useBotMove = (fn: FnType<MovePayload>) => {
     }
   }, [])
 
-  return (movement: MovePayload) => socket.emit("bot:move", movement)
+  return (movement: MovePayloadType) => socket.emit("bot:move", movement)
 }
 
-export const useOnBotFinished = (fn: FnType<GameFinishedPayload>) => {
+export const useOnBotFinished = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const useOnBotFinished = (fn: FnType<GameFinishedPayload>) => {
   }, [])
 }
 
-export const useBotResign = (fn: FnType<GameFinishedPayload>) => {
+export const useBotResign = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
