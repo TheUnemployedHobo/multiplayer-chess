@@ -3,8 +3,8 @@ import { toBoardMoveDestinations, toGameMove } from "@mirasen/react-chessboard/a
 
 import { Card } from "@/components/ui/card"
 import useChessStore from "@/hooks/use-chess-store"
-import { useBotMove } from "@/lib/socket/event-hooks/use-bot-events"
-import { useGameMove } from "@/lib/socket/event-hooks/use-game-events"
+import { useBotSessionMove } from "@/lib/socket/use-bot-events"
+import { useGameMove } from "@/lib/socket/use-game-events"
 
 export default function PlayBoardPlank() {
   const chess = useChessStore((state) => state.chess)
@@ -15,7 +15,7 @@ export default function PlayBoardPlank() {
   const tryMove = useChessStore((state) => state.tryMove)
   const forceMove = useChessStore((state) => state.forceMove)
 
-  const sendBotMove = useBotMove(({ from, to }) => forceMove(from, to))
+  const sendBotMove = useBotSessionMove(({ from, to }) => forceMove(from, to))
   const sendOpponentMove = useGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
 
   return (
