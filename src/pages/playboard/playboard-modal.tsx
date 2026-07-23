@@ -6,6 +6,7 @@ import { ShadcnModal } from "@/components/shadcn-dialogs"
 
 import { BackToDashboardButton } from "./playboard-buttons"
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const usePlayBoardModalStore = create(
   combine({ description: "", isOpen: false, title: "" }, (set) => ({
     setters: {
