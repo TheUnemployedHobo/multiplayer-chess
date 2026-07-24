@@ -26,7 +26,7 @@ export default function App() {
   if (status === "loading") return <ScreenSpinner />
 
   return (
-    <>
+    <div className="container mx-auto min-h-dvh md:h-dvh">
       <Switch>
         {routes.map((route) => (
           <Route key={route.path} {...route} />
@@ -34,6 +34,6 @@ export default function App() {
         <Route component={() => <DefaultPage />} />
       </Switch>
       <Toaster expand position="bottom-right" visibleToasts={6} />
-    </>
+    </div>
   )
 }
