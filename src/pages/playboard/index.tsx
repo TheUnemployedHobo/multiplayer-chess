@@ -29,7 +29,7 @@ export default function PlayBoardPage() {
   useOnMpGameFinish(({ result, winner }) => handleGameFinish(result, winner))
 
   return (
-    <section className="container mx-auto flex min-h-dvh flex-col gap-3 p-3 md:h-dvh md:flex-row">
+    <section className="flex h-full flex-col gap-3 p-3 md:flex-row">
       <div className="flex min-h-0 flex-1 flex-col gap-3">
         {gameMode === "multiplayer" && (
           <UserItem
