@@ -1,8 +1,8 @@
 import { UserItem } from "@/components/user-item"
 import useAuthStore from "@/hooks/use-auth-store"
 import useChessStore from "@/hooks/use-chess-store"
-import { useOnBotSessionFinish } from "@/lib/socket/use-bot-events"
-import { useOnGameFinish } from "@/lib/socket/use-game-events"
+import { useOnBotGameFinish } from "@/lib/socket/use-bot-events"
+import { useOnMpGameFinish } from "@/lib/socket/use-game-events"
 
 import PlayBoardChat from "./playboard-chat"
 import PlayBoardModal, { usePlayBoardModalStore } from "./playboard-modal"
@@ -11,12 +11,12 @@ import PlayBoardOptions from "./playboard-options"
 import PlayBoardPlank from "./playboard-plank"
 
 export default function PlayBoardPage() {
-  const gameMode = useChessStore((state) => state.gameMode)
-  const botDifficulty = useChessStore((state) => state.botDifficulty)
-  const setIsPlaying = useChessStore((state) => state.setIsPlaying)
-  const opponent = useChessStore((state) => state.opponentInfo)!
-  const user = useAuthStore((state) => state.user)!
-  const setters = usePlayBoardModalStore((state) => state.setters)
+  const user = useAuthStore((s) => s.user)!
+  const gameMode = useChessStore((s) => s.gameMode)
+  const botDifficulty = useChessStore((s) => s.botDifficulty)
+  const setIsPlaying = useChessStore((s) => s.setIsPlaying)
+  const opponent = useChessStore((s) => s.opponentInfo)!
+  const setters = usePlayBoardModalStore((s) => s.setters)
 
   const handleGameFinish = (result: string, winner: "black" | "white" | null) => {
     setIsPlaying(false)
@@ -25,8 +25,8 @@ export default function PlayBoardPage() {
     setters.setIsOpen(true)
   }
 
-  useOnBotSessionFinish(({ result, winner }) => handleGameFinish(result, winner))
-  useOnGameFinish(({ result, winner }) => handleGameFinish(result, winner))
+  useOnBotGameFinish(({ result, winner }) => handleGameFinish(result, winner))
+  useOnMpGameFinish(({ result, winner }) => handleGameFinish(result, winner))
 
   return (
     <section className="container mx-auto flex min-h-dvh flex-col gap-3 p-3 md:h-dvh md:flex-row">
