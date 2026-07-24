@@ -9,7 +9,7 @@ import FriendsListPanel from "./friends-list-panel"
 
 export default function DashboardFriends() {
   return (
-    <Card className="h-96 max-h-226.5 shrink-0 lg:h-full lg:w-96">
+    <Card className="h-96 shrink-0 lg:h-full lg:w-96">
       <CardHeader>
         <CardTitle>
           <Badge className="size-8 rounded-full p-0" variant="secondary">
