@@ -15,7 +15,7 @@ import { updateUserInfo } from "@/lib/services"
 import ProfileDeleteButton from "./profile-delete-button"
 
 export default function ProfileEditPopover() {
-  const user = useAuthStore((state) => state.user)
+  const user = useAuthStore((state) => state.user)!
   const clear = useAuthStore((state) => state.clear)
   const [, setLocation] = useLocation()
   const { md } = useBreakPoint()
@@ -41,21 +41,30 @@ export default function ProfileEditPopover() {
     <ShadcnDialog
       content={
         <form action={handleUpdate} className="flex flex-col items-center gap-y-5">
-          <AvatarPopover defaultAvatarName={user?.avatar} />
+          <AvatarPopover defaultAvatarName={user.avatar} />
           <div className="w-full space-y-2">
             <Label htmlFor="un">Username</Label>
             <Input
               autoComplete="username"
-              defaultValue={user?.username}
+              defaultValue={user.username}
               id="un"
               name="username"
+              pattern="^[a-z]{3,20}$"
               placeholder="e.g. admin"
+              title="Lowercase letters only (3-20 chars)"
               type="text"
             />
           </div>
           <div className="w-full space-y-2">
             <Label htmlFor="pw">Password</Label>
-            <Input autoComplete="new-password" id="pw" name="password" placeholder="e.g. 1234" type="password" />
+            <Input
+              autoComplete="new-password"
+              id="pw"
+              minLength={3}
+              name="password"
+              placeholder="e.g. 1234"
+              type="password"
+            />
           </div>
           <ProfileDeleteButton />
           <SubmitButton className="w-full" icon={<PencilIcon />} text="Save changes" />
