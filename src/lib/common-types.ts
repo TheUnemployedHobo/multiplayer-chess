@@ -1,6 +1,11 @@
 export type FnType<T> = (data: T) => Promise<void> | void
 export type FriendType = StatusType & UserType
 export type GameFinishedPayloadType = { result: string; winner: ColorType | null }
+export type MatchHistoryType = {
+  opponent: { avatar: string; username: string }
+  playedAt: string
+  result: "draw" | "loss" | "win"
+}
 export type MovePayloadType = { from: string; promotion?: string; to: string }
 export type OpponentInfoType = Pick<UserType, "avatar" | "username"> & { color: ColorType; elo: number }
 export type StatusType = { status: "online" | "playing" | undefined }
