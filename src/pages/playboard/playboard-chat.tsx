@@ -23,11 +23,15 @@ export default function PlayBoardChat() {
       <CardContent className="min-h-0">
         <ScrollArea className="h-full">
           <div className="space-y-3">
-            {messages.map(({ color, message }, i) => (
-              <Bubble key={i} variant={orientation === color ? "tinted" : "secondary"}>
-                <BubbleContent>{message}</BubbleContent>
-              </Bubble>
-            ))}
+            {!messages.length ? (
+              <p className="text-muted-foreground">No messages yet.</p>
+            ) : (
+              messages.map(({ color, message }, i) => (
+                <Bubble key={i} variant={orientation === color ? "tinted" : "secondary"}>
+                  <BubbleContent>{message}</BubbleContent>
+                </Bubble>
+              ))
+            )}
           </div>
         </ScrollArea>
       </CardContent>
