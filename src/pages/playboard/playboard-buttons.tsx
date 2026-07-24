@@ -5,6 +5,7 @@ import { useLocation } from "wouter"
 
 import { ShadcnAlertDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
+import useAuthStore from "@/hooks/use-auth-store"
 import useChessStore from "@/hooks/use-chess-store"
 import { resignBotGame, useBotGameUndo } from "@/lib/socket/use-bot-events"
 import {
@@ -17,12 +18,14 @@ import {
 import { usePlayBoardModalStore } from "./playboard-modal"
 
 export function BackToDashboardButton() {
+  const hydrate = useAuthStore((state) => state.hydrate)
   const setters = usePlayBoardModalStore((state) => state.setters)
   const reset = useChessStore((state) => state.reset)
   const [, setLocation] = useLocation()
 
   const handleClick = () => {
     reset()
+    hydrate()
     setters.setIsOpen(false)
     setLocation("/dashboard")
   }
@@ -43,11 +46,11 @@ export function DrawOfferButton() {
     setIsDisabled(false)
   })
 
-  const sendDrawOffer = useMpGameDrawOffer(({ message, offerRole }) => {
+  const sendDrawOffer = useMpGameDrawOffer(({ message, role }) => {
     setIsDisabled(true)
 
-    if (offerRole === "offeror") toast.info(message)
-    else if (offerRole === "offeree") {
+    if (role === "offeror") toast.info(message)
+    else if (role === "offeree") {
       const id = toast(message, {
         action: (
           <Button
@@ -62,7 +65,15 @@ export function DrawOfferButton() {
           </Button>
         ),
         cancel: (
-          <Button className="ml-auto" onClick={declineDrawOffer} size="icon-lg" variant="destructive">
+          <Button
+            className="ml-auto"
+            onClick={() => {
+              declineDrawOffer()
+              toast.dismiss(id)
+            }}
+            size="icon-lg"
+            variant="destructive"
+          >
             <XIcon />
           </Button>
         ),
