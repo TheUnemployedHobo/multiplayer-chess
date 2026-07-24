@@ -4,7 +4,7 @@ import type { FnType, GameFinishedPayloadType, MovePayloadType } from "../common
 
 import { socket } from "."
 
-export const useGameMove = (fn: FnType<MovePayloadType>) => {
+export const useMpGameMove = (fn: FnType<MovePayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const useGameMove = (fn: FnType<MovePayloadType>) => {
   return (movement: MovePayloadType) => socket.emit("game:move", movement)
 }
 
-export const useOnGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
+export const useOnMpGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -30,21 +30,7 @@ export const useOnGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
   }, [])
 }
 
-export const useGameResign = (fn: FnType<GameFinishedPayloadType>) => {
-  const listener = useEffectEvent(fn)
-
-  useEffect(() => {
-    socket.on("game:resign", listener)
-
-    return () => {
-      socket.off("game:resign", listener)
-    }
-  }, [])
-
-  return () => socket.emit("game:resign", undefined)
-}
-
-export const useGameDrawOffer = (fn: FnType<{ message: string; offerRole: "offeree" | "offeror" }>) => {
+export const useMpGameDrawOffer = (fn: FnType<{ message: string; offerRole: "offeree" | "offeror" }>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -58,7 +44,7 @@ export const useGameDrawOffer = (fn: FnType<{ message: string; offerRole: "offer
   return () => socket.emit("game:draw-offer", undefined)
 }
 
-export const useGameDrawOfferDecline = (fn: FnType<string>) => {
+export const useMpGameDrawOfferDecline = (fn: FnType<string>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -72,21 +58,7 @@ export const useGameDrawOfferDecline = (fn: FnType<string>) => {
   return () => socket.emit("game:draw-offer:decline", undefined)
 }
 
-export const useGameDrawOfferAccept = (fn: FnType<undefined>) => {
-  const listener = useEffectEvent(fn)
-
-  useEffect(() => {
-    socket.on("game:draw-offer:accept", listener)
-
-    return () => {
-      socket.off("game:draw-offer:accept", listener)
-    }
-  }, [])
-
-  return () => socket.emit("game:draw-offer:accept", undefined)
-}
-
-export const useGameChat = (fn: FnType<{ color: "black" | "white"; message: string }>) => {
+export const useMpGameChat = (fn: FnType<{ color: "black" | "white"; message: string }>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -99,3 +71,6 @@ export const useGameChat = (fn: FnType<{ color: "black" | "white"; message: stri
 
   return (message: string) => socket.emit("game:chat", message)
 }
+
+export const resignMpGame = () => socket.emit("game:resign", undefined)
+export const acceptDrawOffer = () => socket.emit("game:draw-offer:accept", undefined)
