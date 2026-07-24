@@ -31,7 +31,7 @@ export default function PlayBoardModal() {
             <TrophyIcon />
           </div>
           <h2 className="text-2xl font-semibold capitalize">{title}</h2>
-          <p className="text-muted-foreground">{description}</p>
+          <p className="text-muted-foreground capitalize">{description}</p>
           <BackToDashboardButton />
         </section>
       }
