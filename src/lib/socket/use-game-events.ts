@@ -22,15 +22,15 @@ export const useOnMpGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
-    socket.on("game:finished", listener)
+    socket.on("game:finish", listener)
 
     return () => {
-      socket.off("game:finished", listener)
+      socket.off("game:finish", listener)
     }
   }, [])
 }
 
-export const useMpGameDrawOffer = (fn: FnType<{ message: string; offerRole: "offeree" | "offeror" }>) => {
+export const useMpGameDrawOffer = (fn: FnType<{ message: string; role: "offeree" | "offeror" }>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
