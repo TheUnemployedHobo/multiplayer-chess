@@ -36,23 +36,17 @@ src/
   components/            # Reusable UI and route guard components
 ```
 
-## Prerequisites
+## App Flow
 
-- Node.js 18+
-- npm
-- A running backend service for the API and WebSocket server
-
-This frontend expects a backend service to be running and reachable through the environment variable below.
-
-## Environment Setup
-
-Create a local environment file:
-
-```env
-VITE_SERVER_URL=http://localhost:3000
-```
-
-The `VITE_SERVER_URL` value should point to the API and Socket.IO server base URL.
+1. Users access the entrance page to register or log in.
+2. The client hydrates the current session on startup.
+3. Authenticated users are routed to the dashboard.
+4. From the dashboard, players can:
+   - join multiplayer matchmaking
+   - invite or manage friends
+   - play against the bot
+   - review profile data and match history
+5. Active games render on the playboard page and receive move/chat updates through the Socket.IO layer.
 
 ## Installation
 
@@ -88,24 +82,3 @@ npm run preview
 ```bash
 npm run lint
 ```
-
-## App Flow
-
-1. Users access the entrance page to register or log in.
-2. The client hydrates the current session on startup.
-3. Authenticated users are routed to the dashboard.
-4. From the dashboard, players can:
-   - join multiplayer matchmaking
-   - invite or manage friends
-   - play against the bot
-   - review profile data and match history
-5. Active games render on the playboard page and receive move/chat updates through the Socket.IO layer.
-
-## Notes
-
-- The frontend is designed to work alongside a separate backend repository.
-- Authenticated socket connections are created from the JWT stored in cookies after session hydration.
-
-## License
-
-This repository does not currently declare a license. Add an appropriate open-source license if you intend to distribute the project publicly.
