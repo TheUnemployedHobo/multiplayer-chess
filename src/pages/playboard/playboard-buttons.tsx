@@ -6,8 +6,13 @@ import { useLocation } from "wouter"
 import { ShadcnAlertDialog } from "@/components/shadcn-dialogs"
 import { Button } from "@/components/ui/button"
 import useChessStore from "@/hooks/use-chess-store"
-import { resignBotSession, useBotSessionUndo } from "@/lib/socket/use-bot-events"
-import { useGameDrawOffer, useGameDrawOfferAccept, useGameDrawOfferDecline } from "@/lib/socket/use-game-events"
+import { resignBotGame, useBotGameUndo } from "@/lib/socket/use-bot-events"
+import {
+  acceptDrawOffer,
+  resignMpGame,
+  useMpGameDrawOffer,
+  useMpGameDrawOfferDecline,
+} from "@/lib/socket/use-game-events"
 
 import { usePlayBoardModalStore } from "./playboard-modal"
 
@@ -32,23 +37,13 @@ export function BackToDashboardButton() {
 
 export function DrawOfferButton() {
   const [isDisabled, setIsDisabled] = useState(false)
-  const setIsPlaying = useChessStore((state) => state.setIsPlaying)
-  const setters = usePlayBoardModalStore((state) => state.setters)
 
-  const acceptDrawOffer = useGameDrawOfferAccept(() => {
-    setIsDisabled(false)
-    setIsPlaying(false)
-    setters.setIsOpen(true)
-    setters.setTitle("Draw")
-    setters.setDescription("Both players agreed to a draw")
-  })
-
-  const declineDrawOffer = useGameDrawOfferDecline((message) => {
+  const declineDrawOffer = useMpGameDrawOfferDecline((message) => {
     toast.info(message)
     setIsDisabled(false)
   })
 
-  const sendDrawOffer = useGameDrawOffer(({ message, offerRole }) => {
+  const sendDrawOffer = useMpGameDrawOffer(({ message, offerRole }) => {
     setIsDisabled(true)
 
     if (offerRole === "offeror") toast.info(message)
@@ -87,15 +82,12 @@ export function DrawOfferButton() {
 export function ResignButton() {
   const gameMode = useChessStore((state) => state.gameMode)
 
-  // const botResign = useBotResign(({ result, winner }) => handleResign(result, winner!))
-  // const gameResign = useGameResign(({ result, winner }) => handleResign(result, winner!))
-
   return (
     <ShadcnAlertDialog
       action={{
         onClick: () => {
-          if (gameMode === "bot") resignBotSession()
-          if (gameMode === "multiplayer") alert("Resigned")
+          if (gameMode === "bot") resignBotGame()
+          if (gameMode === "multiplayer") resignMpGame()
         },
         text: "Resign",
       }}
@@ -113,8 +105,7 @@ export function ResignButton() {
 
 export function UndoButton() {
   const undo = useChessStore((state) => state.undo)
-
-  const undoMove = useBotSessionUndo(() => undo())
+  const undoMove = useBotGameUndo(() => undo())
 
   return (
     <Button className="grow" onClick={undoMove} size="lg" variant="secondary">
