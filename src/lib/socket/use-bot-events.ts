@@ -4,7 +4,7 @@ import type { FnType, GameFinishedPayloadType, MovePayloadType } from "../common
 
 import { socket } from "."
 
-export const useBotSessionStart = (fn: FnType<undefined>) => {
+export const useBotGameStart = (fn: FnType<undefined>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export const useBotSessionStart = (fn: FnType<undefined>) => {
   return (skill: number) => socket.emit("bot:start", skill)
 }
 
-export const useBotSessionMove = (fn: FnType<MovePayloadType>) => {
+export const useBotGameMove = (fn: FnType<MovePayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const useBotSessionMove = (fn: FnType<MovePayloadType>) => {
   return (movement: MovePayloadType) => socket.emit("bot:move", movement)
 }
 
-export const useOnBotSessionFinish = (fn: FnType<GameFinishedPayloadType>) => {
+export const useOnBotGameFinish = (fn: FnType<GameFinishedPayloadType>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -44,7 +44,7 @@ export const useOnBotSessionFinish = (fn: FnType<GameFinishedPayloadType>) => {
   }, [])
 }
 
-export const useBotSessionUndo = (fn: FnType<undefined>) => {
+export const useBotGameUndo = (fn: FnType<undefined>) => {
   const listener = useEffectEvent(fn)
 
   useEffect(() => {
@@ -58,4 +58,4 @@ export const useBotSessionUndo = (fn: FnType<undefined>) => {
   return () => socket.emit("bot:undo", undefined)
 }
 
-export const resignBotSession = () => socket.emit("bot:resign", undefined)
+export const resignBotGame = () => socket.emit("bot:resign", undefined)
