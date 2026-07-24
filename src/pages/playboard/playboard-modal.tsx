@@ -30,7 +30,7 @@ export default function PlayBoardModal() {
           <div className="bg-secondary rounded-full border p-3">
             <TrophyIcon />
           </div>
-          <h2 className="text-2xl font-semibold">{title}</h2>
+          <h2 className="text-2xl font-semibold capitalize">{title}</h2>
           <p className="text-muted-foreground">{description}</p>
           <BackToDashboardButton />
         </section>
