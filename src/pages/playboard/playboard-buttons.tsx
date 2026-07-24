@@ -1,6 +1,7 @@
 import { CheckIcon, FlagIcon, HandshakeIcon, LayoutDashboardIcon, Undo2Icon, XIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
+import { mutate } from "swr"
 import { useLocation } from "wouter"
 
 import { ShadcnAlertDialog } from "@/components/shadcn-dialogs"
@@ -26,6 +27,7 @@ export function BackToDashboardButton() {
   const handleClick = () => {
     reset()
     hydrate()
+    mutate("matches")
     setters.setIsOpen(false)
     setLocation("/dashboard")
   }
