@@ -34,7 +34,7 @@ export default function ProfileEditPopover() {
 
     toast.success("Profile updated", { description: "Your username, password, and avatar changes have been saved." })
     clear("noDirection")
-    setLocation("/entrance")
+    setLocation("/entrance", { replace: true })
   }
 
   return (

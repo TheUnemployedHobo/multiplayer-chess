@@ -28,7 +28,7 @@ export default function EntranceLogInForm() {
     if (response.status === 200) {
       const user: UserMeType = await response.json()
       authenticate(user)
-      setLocation("/dashboard")
+      setLocation("/dashboard", { replace: true })
       toast.success("Login successful", { description: "Welcome back!" })
     } else if (response.status === 401) toast.error("Login failed", { description: "Invalid username or password." })
     else toast.error("Login failed", { description: "An error occurred during login. Please try again." })

@@ -13,7 +13,7 @@ export default function ProfileLogoutButton() {
 
   const handleLogout = () => {
     clear("noDirection")
-    setLocation("/entrance")
+    setLocation("/entrance", { replace: true })
   }
 
   return (

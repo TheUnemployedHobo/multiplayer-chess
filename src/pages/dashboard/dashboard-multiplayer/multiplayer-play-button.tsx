@@ -21,7 +21,7 @@ export default function MultiplayerPlayButton() {
     setGameMode("multiplayer")
     setOpponentInfo(opponentInfo)
     setOrientation(opponentInfo.color)
-    setLocation("/playboard")
+    setLocation("/playboard", { replace: true })
   })
 
   return (

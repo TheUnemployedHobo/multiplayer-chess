@@ -29,7 +29,7 @@ export function BackToDashboardButton() {
     hydrate()
     mutate("matches")
     setters.setIsOpen(false)
-    setLocation("/dashboard")
+    setLocation("/dashboard", { replace: true })
   }
 
   return (

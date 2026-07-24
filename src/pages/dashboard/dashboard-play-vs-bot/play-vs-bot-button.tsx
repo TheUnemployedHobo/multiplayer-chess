@@ -17,7 +17,7 @@ export default function DashboardPlayVsBotButton({ difficulty: { label, skill } 
     setIsPlaying(true)
     setGameMode("bot")
     setBotDifficulty(label)
-    setLocation("/playboard")
+    setLocation("/playboard", { replace: true })
   })
 
   return (

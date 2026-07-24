@@ -21,7 +21,7 @@ export default function ProfileDeleteButton() {
 
     toast.success("Account deleted", { description: "Your account has been removed successfully." })
     clear("noDirection")
-    setLocation("/entrance")
+    setLocation("/entrance", { replace: true })
   }
 
   return (
