@@ -3,8 +3,8 @@ import { toBoardMoveDestinations, toGameMove } from "@mirasen/react-chessboard/a
 
 import { Card } from "@/components/ui/card"
 import useChessStore from "@/hooks/use-chess-store"
-import { useBotSessionMove } from "@/lib/socket/use-bot-events"
-import { useGameMove } from "@/lib/socket/use-game-events"
+import { useBotGameMove } from "@/lib/socket/use-bot-events"
+import { useMpGameMove } from "@/lib/socket/use-game-events"
 
 export default function PlayBoardPlank() {
   const chess = useChessStore((state) => state.chess)
@@ -15,8 +15,8 @@ export default function PlayBoardPlank() {
   const tryMove = useChessStore((state) => state.tryMove)
   const forceMove = useChessStore((state) => state.forceMove)
 
-  const sendBotMove = useBotSessionMove(({ from, to }) => forceMove(from, to))
-  const sendOpponentMove = useGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
+  const sendMoveToBot = useBotGameMove(({ from, to }) => forceMove(from, to))
+  const sendOpponentMove = useMpGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
 
   return (
     <Card className="size-full justify-center p-3">
@@ -41,7 +41,8 @@ export default function PlayBoardPlank() {
         onUIMove={(uiMove) => {
           const gameMove = toGameMove(uiMove)
           if (tryMove(gameMove.from, gameMove.to, gameMove.promotion)) {
-            if (gameMode === "bot") sendBotMove({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
+            if (gameMode === "bot")
+              sendMoveToBot({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
             if (gameMode === "multiplayer")
               sendOpponentMove({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
           }
