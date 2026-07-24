@@ -1,4 +1,4 @@
-import type { FriendType, UserAllType, UserMeType } from "./common-types"
+import type { FriendType, MatchHistoryType, UserAllType, UserMeType } from "./common-types"
 
 import { authFetch } from "./utils"
 
@@ -46,4 +46,11 @@ export const getFriends = async () => {
   if (!response) return null
 
   return response.json() as Promise<FriendType[]>
+}
+
+export const getMatchHistory = async () => {
+  const response = await authFetch(`${SERVER_URL}/matches`)
+  if (!response) return null
+
+  return response.json() as Promise<MatchHistoryType[]>
 }
