@@ -3,7 +3,7 @@ import { useLocation } from "wouter"
 
 import { Button } from "@/components/ui/button"
 import useChessStore from "@/hooks/use-chess-store"
-import { useBotSessionStart } from "@/lib/socket/use-bot-events"
+import { useBotGameStart } from "@/lib/socket/use-bot-events"
 
 type PropsType = { difficulty: { label: string; skill: number } }
 
@@ -13,7 +13,7 @@ export default function DashboardPlayVsBotButton({ difficulty: { label, skill } 
   const setIsPlaying = useChessStore((state) => state.setIsPlaying)
   const [, setLocation] = useLocation()
 
-  const startBotGame = useBotSessionStart(() => {
+  const startBotGame = useBotGameStart(() => {
     setIsPlaying(true)
     setGameMode("bot")
     setBotDifficulty(label)
@@ -23,7 +23,7 @@ export default function DashboardPlayVsBotButton({ difficulty: { label, skill } 
   return (
     <Button className="w-full" onClick={() => startBotGame(skill)} size="lg">
       <PlayIcon />
-      <span>Start the game</span>
+      <span>Start bot game</span>
     </Button>
   )
 }
