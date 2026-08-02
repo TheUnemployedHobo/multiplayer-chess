@@ -15,8 +15,8 @@ export default function PlayBoardPlank() {
   const tryMove = useChessStore((state) => state.tryMove)
   const forceMove = useChessStore((state) => state.forceMove)
 
-  const sendMoveToBot = useBotGameMove(({ from, to }) => forceMove(from, to))
-  const sendOpponentMove = useMpGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
+  const sendMoveToBot = useBotGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
+  const sendMoveToOpponent = useMpGameMove(({ from, promotion, to }) => forceMove(from, to, promotion))
 
   return (
     <Card className="size-full justify-center p-3">
@@ -44,7 +44,7 @@ export default function PlayBoardPlank() {
             if (gameMode === "bot")
               sendMoveToBot({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
             if (gameMode === "multiplayer")
-              sendOpponentMove({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
+              sendMoveToOpponent({ from: gameMove.from, promotion: gameMove.promotion, to: gameMove.to })
           }
         }}
         orientation={orientation}
