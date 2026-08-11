@@ -8,10 +8,10 @@ export type MatchHistoryType = {
 }
 export type MovePayloadType = { from: string; promotion?: string; to: string }
 export type OpponentInfoType = Pick<UserType, "avatar" | "username"> & { color: ColorType; elo: number }
+export type StatsType = { elo: number; games: number; losses: number; wins: number }
 export type StatusType = { status: "online" | "playing" | undefined }
 export type UserAllType = Omit<UserType, "stats">
-export type UserMeType = Omit<UserType, "id"> & { jwt: string | undefined }
 
+export type UserMeType = Omit<UserType, "id"> & { jwt: string | undefined }
 type ColorType = "black" | "white"
-type StatsType = { elo: number; games: number; losses: number; wins: number }
 type UserType = { avatar: string; id: string; signup_date: string; stats: StatsType; username: string }
