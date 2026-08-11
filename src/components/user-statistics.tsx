@@ -1,6 +1,6 @@
 import { ChessKingIcon, JoystickIcon, TrophyIcon } from "lucide-react"
 
-import type { StatsType } from "@/lib/services"
+import type { StatsType } from "@/lib/common-types"
 
 import { Item, ItemContent, ItemDescription, ItemGroup, ItemMedia, ItemTitle } from "./ui/item"
 
