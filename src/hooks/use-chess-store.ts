@@ -47,7 +47,6 @@ const useChessStore = create<StoreType>()((set, get) => ({
     set((state) => ({
       externalMove: { id: state.externalMove ? +state.externalMove.id + 1 : 1, move: toBoardMove(move) },
     }))
-    syncPosition(set)
   },
   gameMode: null,
   history: chess.history(),
