@@ -13,7 +13,7 @@
     "@dicebear/core": "^10.0.1",
     "@dicebear/styles": "^10.0.0",
     "@fontsource-variable/space-grotesk": "^5.2.10",
-    "@mirasen/react-chessboard": "^1.0.2",
+    "@mirasen/react-chessboard": "^1.0.3",
     "@tailwindcss/vite": "^4.3.0",
     "chess.js": "^1.4.0",
     "class-variance-authority": "^0.7.1",
