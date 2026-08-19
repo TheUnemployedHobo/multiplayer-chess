@@ -9,6 +9,7 @@ import { useMpGameMove } from "@/lib/socket/use-game-events"
 export default function PlayBoardPlank() {
   const chess = useChessStore((state) => state.chess)
   const position = useChessStore((state) => state.position)
+  const externalMove = useChessStore((state) => state.externalMove)
   const orientation = useChessStore((state) => state.orientation)
   const gameMode = useChessStore((state) => state.gameMode)
   const isPlaying = useChessStore((state) => state.isPlaying)
@@ -22,6 +23,7 @@ export default function PlayBoardPlank() {
     <Card className="size-full justify-center p-3">
       <Chessboard
         className="aspect-square size-full"
+        externalMove={externalMove}
         movability={{
           destinations: (source) => {
             if (!isPlaying) return []
