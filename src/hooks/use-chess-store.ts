@@ -61,6 +61,7 @@ const useChessStore = create<StoreType>()((set, get) => ({
     setOrientation("white")
     setGameMode(null)
     setIsPlaying(false)
+    set({ externalMove: undefined })
   },
   setBotDifficulty: (botDifficulty) => set({ botDifficulty }),
   setGameMode: (gameMode) => set({ gameMode }),
