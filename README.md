@@ -24,6 +24,7 @@ This frontend app connects to a Socket.IO backend and provides the game UI, auth
 - Wouter for routing
 - Socket.IO client for live gameplay events
 - Chess.js for legal move validation and board logic
+- @mirasen/react-chessboard for the interactive chessboard UI
 
 ## Project Structure
 
@@ -82,3 +83,7 @@ npm run preview
 ```bash
 npm run lint
 ```
+
+## Special Thanks
+
+Special thanks to [@ktarmyshov](https://github.com/ktarmyshov) for creating [@mirasen/react-chessboard](https://github.com/mirasen-io/react-chessboard) ❤️
