@@ -38,7 +38,7 @@ const syncPosition = (set: StoreApi<StoreType>["setState"]) =>
 
 const chess = new Chess()
 
-const useChessStore = create<StoreType>()((set, get) => ({
+const useChessStore = create<StoreType>()((set) => ({
   botDifficulty: "",
   chess,
   externalMove: undefined,
@@ -46,6 +46,8 @@ const useChessStore = create<StoreType>()((set, get) => ({
     const move = chess.move({ from, promotion, to })
     set((state) => ({
       externalMove: { id: state.externalMove ? +state.externalMove.id + 1 : 1, move: toBoardMove(move) },
+      history: chess.history(),
+      turn: chess.turn(),
     }))
   },
   gameMode: null,
@@ -55,13 +57,9 @@ const useChessStore = create<StoreType>()((set, get) => ({
   orientation: "white",
   position: { id: 0, position: chess.fen() },
   reset: () => {
-    const { setGameMode, setIsPlaying, setOrientation } = get()
     chess.reset()
     syncPosition(set)
-    setOrientation("white")
-    setGameMode(null)
-    setIsPlaying(false)
-    set({ externalMove: undefined })
+    set({ externalMove: undefined, gameMode: null, isPlaying: false, orientation: "white" })
   },
   setBotDifficulty: (botDifficulty) => set({ botDifficulty }),
   setGameMode: (gameMode) => set({ gameMode }),
