@@ -1,9 +1,11 @@
+import { lazy } from "react"
+
 import useEntranceStore from "@/hooks/use-entrance-store"
 
-import EntranceAvatarForm from "./entrance-avatar-form"
-import EntranceEloRatingForm from "./entrance-elo-rating-form"
-import EntranceLogInForm from "./entrance-login-form"
-import EntranceRegisterForm from "./entrance-register-form"
+const EntranceLogInForm = lazy(() => import("./entrance-login-form"))
+const EntranceRegisterForm = lazy(() => import("./entrance-register-form"))
+const EntranceAvatarForm = lazy(() => import("./entrance-avatar-form"))
+const EntranceEloRatingForm = lazy(() => import("./entrance-elo-rating-form"))
 
 export default function EntrancePage() {
   const page = useEntranceStore((state) => state.page)
