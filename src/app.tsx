@@ -1,13 +1,14 @@
-import { useEffect } from "react"
+import { lazy, useEffect } from "react"
 import { Route, Switch } from "wouter"
 
 import { DefaultPage, ProtectedPage, PublicOnlyPage, SuperProtectedPage } from "./components/page-protection"
 import ScreenSpinner from "./components/screen-spinner"
 import { Toaster } from "./components/ui/sonner"
 import useAuthStore from "./hooks/use-auth-store"
-import DashboardPage from "./pages/dashboard"
-import EntrancePage from "./pages/entrance"
-import PlayBoardPage from "./pages/playboard"
+
+const EntrancePage = lazy(() => import("./pages/entrance"))
+const DashboardPage = lazy(() => import("./pages/dashboard"))
+const PlayBoardPage = lazy(() => import("./pages/playboard"))
 
 const routes = [
   { component: () => <PublicOnlyPage page={<EntrancePage />} />, path: "/entrance" },
